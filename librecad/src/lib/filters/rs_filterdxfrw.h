@@ -157,6 +157,8 @@ public:
 public:
     RS_Pen attributesToPen(const DRW_Layer* att) const;
 
+    static RS_Color numberToColor(int num, bool comp=false);
+    static int colorToNumber(const RS_Color& col);
     static RS_Color numberToColor(int num);
     static int colorToNumber(const RS_Color& col, int *rgb);
 

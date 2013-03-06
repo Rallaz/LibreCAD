@@ -54,6 +54,8 @@ void QG_FileDialog::getType(const QString filter) {
         ftype = RS2::FormatDXFRW14;
     } else if (filter == fDxfrw12) {
         ftype = RS2::FormatDXFRW12;
+    } else if (filter == fDwg) {
+        ftype = RS2::FormatDWG;
     } else if (filter == fJww) {
         ftype = RS2::FormatJWW;
     } else if (filter == fDxf1) {
@@ -88,6 +90,7 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     fDxfrw = tr("Drawing Exchange %1").arg("(*.dxf)");
 
     fLff = tr("LFF Font %1").arg("(*.lff)");
+    fDwg = tr("dwg Drawing %1").arg("(*.dwg)");
     fCxf = tr("QCad Font %1").arg("(*.cxf)");
     fJww = tr("Jww Drawing %1").arg("(*.jww)");
     fDxf1 = tr("QCad 1.x file %1").arg("(*.dxf)");
@@ -111,6 +114,8 @@ QString QG_FileDialog::getExtension (RS2::FormatType type){
         return QString(".jww");
     case RS2::FormatCXF:
         return QString(".cxf");
+    case RS2::FormatDWG:
+        return QString(".dwg");
     default:
         return QString(".dxf");
     }
@@ -128,7 +133,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     QString fn = "";
     QStringList filters;
-    filters << fDxfrw  << fDxf1 << fLff << fCxf << fJww;
+    filters << fDxfrw  << fDxf1 << fDwg << fLff << fCxf << fJww;
 
     setWindowTitle(tr("Open %1").arg(name));
 #if QT_VERSION >= 0x040400
@@ -444,6 +449,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QString fDxfOld(QObject::tr("Old Drawing Exchange %1").arg("(*.dxf *.DXF)"));
     QString fDxfrw(QObject::tr("Drawing Exchange %1").arg("(*.dxf)"));
 
+    QString fDwg(QObject::tr("dwg Drawing %1").arg("(*.dwg)"));
     QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
     QString fLff(QObject::tr("LFF Font %1").arg("(*.lff)"));
     QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
@@ -461,6 +467,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
 
     QStringList filters;
     filters.append(fDxfrw);
+    filters.append(fDwg);
     filters.append(fDxf1);
     filters.append(fLff);
     filters.append(fCxf);
@@ -491,6 +498,8 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
                 *type = RS2::FormatDXF1;
             } else if (fileDlg->selectedNameFilter()==fDxfrw) {
                 *type = RS2::FormatDXFRW;
+            } else if (fileDlg->selectedNameFilter()==fDwg) {
+                *type = RS2::FormatDWG;
             } else if (fileDlg->selectedNameFilter()==fCxf) {
                 *type = RS2::FormatCXF;
             } else if (fileDlg->selectedNameFilter()==fJww) {

@@ -121,6 +121,8 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
         type = RS2::FormatLFF;
     } else if (ext=="cxf") {
         type = RS2::FormatCXF;
+    } else if (ext=="dwg") {
+        type = RS2::FormatDWG;
     } else if (ext=="dxf") {
         type = RS2::FormatDXF1;
         QFile f(file);

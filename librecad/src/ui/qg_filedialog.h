@@ -62,6 +62,7 @@ private:
     QString fDxfrw14;
     QString fDxfrw12;
     QString fDxfrw;
+    QString fDwg;
     QString fDxf1;
     QString fLff;
     QString fCxf;
