@@ -3701,7 +3701,6 @@ QStringRS_FilterDXFRW::printDwgVersion(int v){
 
 
 void RS_FilterDXFRW::printDwgError(int le){
-    RS_DIALOGFACTORY->commandMessage(QObject::tr("Opening dwg file."));
     switch (le) {
     case DRW::BAD_UNKNOWN:
         RS_DIALOGFACTORY->commandMessage(QObject::tr("unknown error opening dwg file"));
