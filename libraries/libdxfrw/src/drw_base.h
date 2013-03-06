@@ -13,6 +13,7 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
+#define DRW_VERSION "0.5.7"
 
 #include <string>
 #include <cmath>
@@ -43,6 +44,7 @@ using std::string;
 namespace DRW {
 //! Version numbers for the DXF Format.
 enum Version {
+    UNKNOWNV,     /*!< UNKNOWN VERSION. */
     AC1006,       /*!< R10. */
     AC1009,       /*!< R11 & R12. */
     AC1012,       /*!< R13. */
@@ -51,6 +53,17 @@ enum Version {
     AC1018,       /*!< ACAD 2004. */
     AC1021,       /*!< ACAD 2007. */
     AC1024        /*!< ACAD 2010. */
+};
+
+enum error {
+BAD_NONE,             /*!< No error. */
+BAD_UNKNOWN,          /*!< UNKNOWN. */
+BAD_OPEN,             /*!< error opening file. */
+BAD_VERSION,          /*!< unsupported version. */
+BAD_READ_FILE_HEADER, /*!< error in file header read process. */
+BAD_READ_OFFSETS,     /*!< error in object map read process. */
+BAD_READ_TABLES,      /*!< error in tables read process. */
+BAD_READ_ENTITIES     /*!< error in entities read process. */
 };
 
 }

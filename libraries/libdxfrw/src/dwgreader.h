@@ -14,6 +14,7 @@
 #define DWGREADER_H
 
 #include <map>
+#include <list>
 #include "drw_textcodec.h"
 #include "dwgbuffer.h"
 #include "libdwgr.h"

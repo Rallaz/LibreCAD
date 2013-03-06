@@ -29,6 +29,9 @@ SOURCES += \
     src/drw_objects.cpp \
     src/drw_textcodec.cpp \
     src/dxfreader.cpp \
+    src/libdwgr.cpp \
+    src/dwgbuffer.cpp \
+    src/dwgreader.cpp \
     src/dxfwriter.cpp
 
 HEADERS += \
@@ -38,6 +41,9 @@ HEADERS += \
     src/drw_objects.h \
     src/drw_textcodec.h \
     src/dxfreader.h \
+    src/libdwgr.h \
+    src/dwgbuffer.h \
+    src/dwgreader.h \
     src/dxfwriter.h \
     src/drw_interface.h \
     src/drw_cptables.h \

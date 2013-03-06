@@ -15,6 +15,7 @@
 #include "drw_objects.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
+#include "libdwgr.h"// for debug
 
 //! Base class for tables entries
 /*!
@@ -38,6 +39,59 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
     default:
         break;
     }
+}
+
+bool DRW_TableEntry::parseDwg(DRW::Version version, dwgBuffer *buf){
+    duint32 objSize;
+//    duint8 ltFlags; //BB
+//    duint8 plotFlags; //BB
+DBG("\n***************************** parsing table entry *********************************************\n");
+    /*dint16 oType =*/ buf->getBitShort();
+    if (version > DRW::AC1014) {//2000+
+        objSize = buf->getRawLong32();  //RL 32bits size in bits
+    }
+    dwgHandle ho = buf->getHandle();
+    handle = ho.ref;
+    DBG("TableEntry Handle: "); DBG(ho.code); DBG(".");
+    DBG(ho.size); DBG("."); DBG(ho.ref);
+    dint16 extDataSize = buf->getBitShort(); //BS
+    DBG(" ext data size: "); DBG(extDataSize);
+    while (extDataSize>0) {
+        dwgHandle ah = buf->getHandle();
+        DBG("App Handle: "); DBG(ah.code); DBG(".");
+        DBG(ah.size); DBG("."); DBG(ah.ref);
+        duint8 dxfCode = buf->getRawChar8();
+        DBG(" dxfCode: "); DBG(dxfCode);
+        switch (dxfCode){
+        case 0:{
+            duint8 strLength = buf->getRawChar8();
+            DBG(" strLength: "); DBG(strLength);
+            duint16 cp = buf->getRawShort16();
+            DBG(" str codepage: "); DBG(cp);
+            for (int i=0;i< strLength+1;i++) {//string length + null terminating char
+                duint8 dxfChar = buf->getRawChar8();
+                DBG(" dxfChar: "); DBG(dxfChar);
+            }
+            break;
+        }
+        default:
+            /* RLZ: TODO */
+            break;
+        }
+        extDataSize = buf->getBitShort(); //BS
+        DBG(" ext data size: "); DBG(extDataSize);
+    } //end parsing extData (EED)
+    if (version < DRW::AC1015) {//14-
+        objSize = buf->getRawLong32();  //RL 32bits size in bits
+    }
+    DBG(" objSize in bits: "); DBG(objSize);
+
+    dint32 numReactors = buf->getBitLong(); //BL
+    DBG(", numReactors: "); DBG(numReactors); DBG("\n");
+    if (version > DRW::AC1015) {//2004+
+        /*duint8 xDictFlag =*/ buf->getBit();
+    }
+    return buf->isGood();
 }
 
 //! Class to handle dimstyle entries
@@ -302,6 +356,79 @@ void DRW_LType::update(){
     length = d;
 }
 
+bool DRW_LType::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing line type *********************************************\n");
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("linetype name: "); DBG(name.c_str()); DBG("\n");
+    flags = buf->getBit()<< 6;
+    DBG("flags: "); DBG(flags);
+    dint16 xrefindex = buf->getBitShort();
+    DBG(" xrefindex: "); DBG(xrefindex);
+    duint8 xdep = buf->getBit();
+    DBG(" xdep: "); DBG(xdep);
+    flags |= xdep<< 4;
+    DBG(" flags: "); DBG(flags);
+    desc = buf->getVariableUtf8Text();
+    DBG(" desc: "); DBG(desc.c_str());
+    length = buf->getBitDouble();
+    DBG(" length: "); DBG(length);
+    char align = buf->getRawChar8();
+    DBG(" align: "); DBG(align);
+    size = buf->getRawChar8();
+    DBG(" num dashes, size: "); DBG(size);
+    DBG("\n    dashes:\n");
+    for (int i=0; i< size; i++){
+        path.push_back(buf->getBitDouble());
+        /*int bs1 =*/ buf->getBitShort();
+        /*double d1= */buf->getRawDouble();
+        /*double d2=*/ buf->getRawDouble();
+        /*double d3= */buf->getBitDouble();
+        /*double d4= */buf->getBitDouble();
+        /*int bs2 = */buf->getBitShort();
+    }
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    if (version < DRW::AC1021) { //2004-
+        char strarea[256];
+        buf->getBytes(strarea, 256);
+        DBG("string area 256 bytes:\n"); DBG(strarea); DBG("\n");
+    } else { //2007+
+        char strarea[512];
+        buf->getBytes(strarea, 512);
+        DBG("string area 512 bytes:\n"); DBG(strarea); DBG("\n");
+    }
+
+//    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    dwgHandle ltControlH = buf->getHandle();
+    DBG("linetype control Handle: "); DBG(ltControlH.code); DBG(".");
+    DBG(ltControlH.size); DBG("."); DBG(ltControlH.ref);
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    dwgHandle reactorsH = buf->getHandle();
+    DBG(" reactorsH control Handle: "); DBG(reactorsH.code); DBG(".");
+    DBG(reactorsH.size); DBG("."); DBG(reactorsH.ref); DBG("\n");
+    dwgHandle XDicObjH = buf->getHandle();
+    DBG(" XDicObj control Handle: "); DBG(XDicObjH.code); DBG(".");
+    DBG(XDicObjH.size); DBG("."); DBG(XDicObjH.ref); DBG("\n");
+    if(size>0){
+        dwgHandle XRefH = buf->getHandle();
+        DBG(" XRefH control Handle: "); DBG(XRefH.code); DBG(".");
+        DBG(XRefH.size); DBG("."); DBG(XRefH.ref); DBG("\n");
+        dwgHandle shpHandle = buf->getHandle();
+        DBG(" shapeFile Handle: "); DBG(shpHandle.code); DBG(".");
+        DBG(shpHandle.size); DBG("."); DBG(shpHandle.ref); DBG("\n");
+    }
+
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+//    RS crc;   //RS */
+    return buf->isGood();
+}
+
 //! Class to handle layer entries
 /*!
 *  Class to handle layer symbol table entries
@@ -334,6 +461,63 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
         DRW_TableEntry::parseCode(code, reader);
         break;
     }
+}
+
+bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing layer *********************************************\n");
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("layer name: "); DBG(name.c_str());
+
+    flags |= buf->getBit()<< 6;//layer have entity
+    /*dint16 xrefindex =*/ buf->getBitShort();
+    flags |= buf->getBit() << 4;//is refx dependent
+    if (version < DRW::AC1015) {//14-
+        flags |= buf->getBit(); //layer frozen
+        /*flags |=*/ buf->getBit(); //unused, negate the color
+        flags |= buf->getBit() << 1;//frozen in new
+        flags |= buf->getBit()<< 3;//locked
+    }
+    if (version > DRW::AC1014) {//2000+
+        dint16 f = buf->getBitShort();//bit2 are layer on
+        DBG(", flags 2000+: "); DBG(f); DBG("\n");
+        flags |= f & 0x0001; //layer frozen
+        flags |= ( f>> 1) & 0x0002;//frozen in new
+        flags |= ( f>> 1) & 0x0004;//locked
+        plotF = ( f>> 4) & 0x0001;
+        lWeight = (f & 0x03E0) >> 5;
+    }
+    color = buf->getBitShort(); //BS or CMC //ok for R14 or negate
+    DBG(", entity color: "); DBG(color); DBG("\n");
+
+    dwgHandle layerControlH = buf->getHandle();
+    DBG("layer control Handle: "); DBG(layerControlH.code); DBG(".");
+    DBG(layerControlH.size); DBG("."); DBG(layerControlH.ref);
+
+    dwgHandle XDicObjH = buf->getHandle();
+    DBG(" XDicObj control Handle: "); DBG(XDicObjH.code); DBG(".");
+    DBG(XDicObjH.size); DBG("."); DBG(XDicObjH.ref); DBG("\n");
+    dwgHandle XRefH = buf->getHandle();
+    DBG(" XRefH control Handle: "); DBG(XRefH.code); DBG(".");
+    DBG(XRefH.size); DBG("."); DBG(XRefH.ref); DBG("\n");
+    if (version > DRW::AC1014) {//2000+
+        dwgHandle plotStyH = buf->getHandle();
+        DBG(" PLot style control Handle: "); DBG(plotStyH.code); DBG(".");
+        DBG(plotStyH.size); DBG("."); DBG(plotStyH.ref); DBG("\n");
+    }
+    //lineType handle
+    lTypeH = buf->getHandle();
+    DBG("line type Handle: "); DBG(lTypeH.code); DBG(".");
+    DBG(lTypeH.size); DBG("."); DBG(lTypeH.ref);
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+//    RS crc;   //RS */
+    return buf->isGood();
 }
 
 //! Class to handle text style entries

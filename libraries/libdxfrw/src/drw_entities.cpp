@@ -17,6 +17,7 @@
 
 //! Calculate arbitary axis
 /*!
+*   Calculate arbitary axis for aplly extrusions
 *   Calculate arbitary axis for apply extrusions
 *  @author Rallaz
 */
@@ -190,6 +191,30 @@ void DRW_Ellipse::parseCode(int code, dxfReader *reader){
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //if ratio > 1 minor axis are greather than major axis, correct it
 void DRW_Ellipse::correctAxis(){
     bool complete = false;
@@ -216,6 +241,11 @@ void DRW_Ellipse::correctAxis(){
     }
 }
 
+
+
+
+
+
 void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
     double cosCurr, sinCurr;
@@ -239,6 +269,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
         pol->addVertex( DRW_Vertex(x, y, 0.0, 0.0));
         curAngle = (++i)*incAngle;
     } while (i<128);
+    if ( fabs(endparam - 6.28318530718) < 1.0e-10){
     if ( fabs(endparam - staparam - M_PIx2) < 1.0e-10){
         pol->flags = 1;
     }
@@ -601,10 +632,12 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     case 50:
         if (arc) arc->staangle = reader->getDouble();
+        else if (ellipse) ellipse->staparam = reader->getDouble();
         else if (ellipse) ellipse->staparam = reader->getDouble()/ARAD;
         break;
     case 51:
         if (arc) arc->endangle = reader->getDouble();
+        else if (ellipse) ellipse->endparam = reader->getDouble();
         else if (ellipse) ellipse->endparam = reader->getDouble()/ARAD;
         break;
     case 52:

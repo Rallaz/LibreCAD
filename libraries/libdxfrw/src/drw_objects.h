@@ -18,7 +18,9 @@
 #include <vector>
 #include <map>
 #include "drw_base.h"
+#include "dwgbuffer.h" //RLZ TODO: move type defs to drw_base.h
 
+//class dwgBuffer;
 class dxfReader;
 class dxfWriter;
 
@@ -52,6 +54,8 @@ public:
         tType = DRW::UNKNOWNT;
         flags = 0;
     }
+
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -195,6 +199,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
     void update();
 
 public:
@@ -217,7 +222,6 @@ private:
 class DRW_Layer : public DRW_TableEntry {
 public:
     DRW_Layer() { reset();}
-
     void reset() {
         tType = DRW::LAYER;
         lineType = "CONTINUOUS";
@@ -228,6 +232,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     UTF8STRING lineType;           /*!< line type, code 6 */
@@ -237,6 +242,8 @@ public:
     int lWeight;               /*!< layer lineweight, code 370 */
     string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
     string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+/*only used for read dwg*/
+    dwgHandle lTypeH;
 };
 
 //! Class to handle text style entries
