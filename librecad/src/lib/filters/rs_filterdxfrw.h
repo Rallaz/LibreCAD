@@ -166,8 +166,8 @@ public:
     static QString lineTypeToName(RS2::LineType lineType);
     //static QString lineTypeToDescription(RS2::LineType lineType);
 
-    static RS2::LineWidth numberToWidth(int num);
-    static int widthToNumber(RS2::LineWidth width);
+    static RS2::LineWidth numberToWidth(DRW_LW_Conv::lineWidth lw);
+    static DRW_LW_Conv::lineWidth widthToNumber(RS2::LineWidth width);
 
 	static RS2::AngleFormat numberToAngleFormat(int num);
 	static int angleFormatToNumber(RS2::AngleFormat af);

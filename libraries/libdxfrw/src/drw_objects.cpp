@@ -446,7 +446,7 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
         plotF = reader->getBool();
         break;
     case 370:
-        lWeight = reader->getInt32();
+        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 390:
         handlePlotS = reader->getString();
@@ -491,7 +491,7 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf){
         flags |= ( f>> 1) & 0x0002;//frozen in new
         flags |= ( f>> 1) & 0x0004;//locked
         plotF = ( f>> 4) & 0x0001;
-        lWeight = (f & 0x03E0) >> 5;
+        lWeight = DRW_LW_Conv::dwgInt2lineWidth( (f & 0x03E0) >> 5 );
     }
     color = buf->getBitShort(); //BS or CMC //ok for R14 or negate
     DBG(", entity color: "); DBG(color); DBG("\n");
