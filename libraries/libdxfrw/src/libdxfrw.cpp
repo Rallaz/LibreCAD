@@ -590,8 +590,8 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbArc");
     }
-    writer->writeDouble(50, ent->staangle);
-    writer->writeDouble(51, ent->endangle);
+    writer->writeDouble(50, ent->staangle*ARAD);
+    writer->writeDouble(51, ent->endangle*ARAD);
     return true;
 }
 

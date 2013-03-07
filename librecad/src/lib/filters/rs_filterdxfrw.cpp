@@ -396,8 +396,8 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
     RS_DEBUG->print("RS_FilterDXF::addArc");
     RS_Vector v(data.basePoint.x, data.basePoint.y);
     RS_ArcData d(v, data.radious,
-                 data.staangle/ARAD,
-                 data.endangle/ARAD,
+                 data.staangle,
+                 data.endangle,
                  false);
     RS_Arc* entity = new RS_Arc(currentContainer, d);
     setEntityAttributes(entity, &data);
@@ -1967,11 +1967,11 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
     arc.basePoint.y = a->getCenter().y;
     arc.radious = a->getRadius();
     if (a->isReversed()) {
-        arc.staangle = a->getAngle2()*ARAD;
-        arc.endangle = a->getAngle1()*ARAD;
+        arc.staangle = a->getAngle2();
+        arc.endangle = a->getAngle1();
     } else {
-        arc.staangle = a->getAngle1()*ARAD;
-        arc.endangle = a->getAngle2()*ARAD;
+        arc.staangle = a->getAngle1();
+        arc.endangle = a->getAngle2();
     }
     dxfW->writeArc(&arc);
     dxf->writeArc(&arc);

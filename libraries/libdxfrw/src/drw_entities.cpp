@@ -163,10 +163,10 @@ void DRW_Circle::parseCode(int code, dxfReader *reader){
 void DRW_Arc::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 50:
-        staangle = reader->getDouble();
+        staangle = reader->getDouble()/ ARAD;
         break;
     case 51:
-        endangle = reader->getDouble();
+        endangle = reader->getDouble()/ ARAD;
         break;
     default:
         DRW_Circle::parseCode(code, reader);

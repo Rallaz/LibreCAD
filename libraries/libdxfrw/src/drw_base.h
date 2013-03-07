@@ -66,6 +66,7 @@ BAD_READ_TABLES,      /*!< error in tables read process. */
 BAD_READ_ENTITIES     /*!< error in entities read process. */
 };
 
+#define ARAD 57.29577951308232
 }
 
 //! Class to handle 3D coordinate point
