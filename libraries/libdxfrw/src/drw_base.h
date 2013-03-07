@@ -68,36 +68,6 @@ BAD_READ_ENTITIES     /*!< error in entities read process. */
 
 #define ARAD 57.29577951308232
 
-//enum lineWidth {
-//    width00 = 0,       /*!< 0.00mm */
-//    width01 = 1,       /*!< 0.05mm */
-//    width02 = 2,       /*!< 0.09mm */
-//    width03 = 3,       /*!< 0.13mm */
-//    width04 = 4,       /*!< 0.15mm */
-//    width05 = 5,       /*!< 0.18mm */
-//    width06 = 6,       /*!< 0.20mm */
-//    width07 = 7,       /*!< 0.25mm */
-//    width08 = 8,       /*!< 0.30mm */
-//    width09 = 9,       /*!< 0.35mm */
-//    width10 = 10,      /*!< 0.40mm */
-//    width11 = 11,      /*!< 0.50mm */
-//    width12 = 12,      /*!< 0.53mm */
-//    width13 = 13,      /*!< 0.60mm */
-//    width14 = 14,      /*!< 0.70mm */
-//    width15 = 15,      /*!< 0.80mm */
-//    width16 = 16,      /*!< 0.90mm */
-//    width17 = 17,      /*!< 1.00mm */
-//    width18 = 18,      /*!< 1.06mm */
-//    width19 = 19,      /*!< 1.20mm */
-//    width20 = 20,      /*!< 1.40mm */
-//    width21 = 21,      /*!< 1.58mm */
-//    width22 = 22,      /*!< 2.00mm */
-//    width23 = 23,      /*!< 2.11mm */
-//    widthByLayer = 29, /*!< by layer (dxf -1) */
-//    widthByBlock = 30, /*!< by block (dxf -2) */
-//    widthDefault = 31  /*!< by default (dxf -3) */
-//};
-
 }
 
 //! Class to handle 3D coordinate point

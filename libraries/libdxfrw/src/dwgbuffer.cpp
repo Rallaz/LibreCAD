@@ -75,6 +75,7 @@ union typeCast  {
     duint16 i16;
     duint32 i32;
     duint64 i64;
+    ddouble64 d64;
 };
 
 bool dwgFileStream::setPos(int p){
@@ -442,8 +443,10 @@ double dwgBuffer::getDefaultDouble(double d){
         filestr->read (buffer,6);
         }
         tmp = reinterpret_cast<char*>(&d);
-        for (int i = 0; i < 4; i++)
-            tmp[i] = buffer[i];
+        for (int i = 2; i < 6; i++)
+            tmp[i-2] = buffer[i];
+        tmp[4] = buffer[0];
+        tmp[5] = buffer[1];
         double ret = *reinterpret_cast<double*>( tmp );
         return ret;
     }
