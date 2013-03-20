@@ -61,6 +61,7 @@ public:
     std::map<int, DRW_Layer*> layermap;
     std::map<int, DRW_Block_Record*> block_recmap;
     std::map<int, DRW_Block*> blockmap;
+    int currBlock;
 
 protected:
     dwgBuffer *buf;

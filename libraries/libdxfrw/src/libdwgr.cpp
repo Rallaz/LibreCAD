@@ -151,6 +151,13 @@ bool dwgR::processDwg() {
         iface->endBlock();
     }
 
+    std::map<int, DRW_Block*>::iterator bkit = reader->blockmap.find(0);
+    if (bkit == reader->blockmap.end()){//fail, find by name
+        reader->currBlock = 0;
+    } else
+        reader->currBlock = 0;
+
+    iface->setBlock(0);
     for (std::list<objHandle>::iterator it=reader->ObjectMap.begin(); it != reader->ObjectMap.end(); ++it){
         DBG("object map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
         ret2 = reader->readDwgEntity(*it, *iface);

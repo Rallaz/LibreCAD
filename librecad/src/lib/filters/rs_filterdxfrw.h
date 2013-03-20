@@ -59,6 +59,7 @@ public:
     ~RS_FilterDXFRW();
 	
     virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFRW || t==RS2::FormatDWG);
         return (t==RS2::FormatDXFRW);
 	}
 	
@@ -68,6 +69,7 @@ public:
     }
 
     // Import:
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type);
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     // Methods from DRW_CreationInterface:
@@ -181,6 +183,9 @@ public:
 
 private:
     void writeEntity(RS_Entity* e);
+    void printDwgError(int le);
+    QString printDwgVersion(int v);
+
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
@@ -201,6 +206,7 @@ private:
     QHash <RS_Entity*, QString> noNameBlock;
     QHash <QString, QString> fontList;
     bool oldMText;
+    dxfRW *dxfW;
     dxfRW *dxf;
     /** If saved version are 2004 or above can save color in RGB value. */
     bool exactColor;

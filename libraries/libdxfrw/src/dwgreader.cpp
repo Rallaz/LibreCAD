@@ -277,6 +277,7 @@ bool dwgReader15::readDwgTables() {
     }
 
     //parse blocks records
+    std::map<int, DRW_Block*> tmpBlockmap;
     for (std::list<objHandle>::iterator it=BlockRecordMap.begin(); it != BlockRecordMap.end(); ++it){
         DBG("BlockMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
         buf->setPosition(it->loc);
@@ -289,7 +290,7 @@ bool dwgReader15::readDwgTables() {
             DRW_Block *e= new DRW_Block();
             ret2 = e->parseDwg(version, &buff);
             parseAttribs(e);
-            blockmap[e->handle] = e;
+            tmpBlockmap[e->handle] = e;
             break; }
         case 5: {
             DRW_Block e;
@@ -308,13 +309,13 @@ bool dwgReader15::readDwgTables() {
         if(ret)
             ret = ret2;
     }
-//TODO: clear BlockRecordMap
+//TODO: clear BlockRecordMap & tmpBlockmap
 
     //complete block entity with block record data
     for (std::map<int, DRW_Block_Record*>::iterator it=block_recmap.begin(); it!=block_recmap.end(); ++it) {
         DRW_Block_Record* bkR = it->second;
-        std::map<int, DRW_Block*>::iterator bkit = blockmap.find(bkR->handleBlock);
-        if (bkit == blockmap.end()){//fail, set error
+        std::map<int, DRW_Block*>::iterator bkit = tmpBlockmap.find(bkR->handleBlock);
+        if (bkit == tmpBlockmap.end()){//fail, set error
             if(ret)
                 ret = ret2;
         } else {
@@ -322,7 +323,17 @@ bool dwgReader15::readDwgTables() {
             parseAttribs(bk);
             bk->basePoint = bkR->basePoint;
             bk->flags = bkR->flags;
-            bk->handleBlock = bkR->handle;
+//            bk->handleBlock = bkR->handle;
+            if (bk->handleBlock==0){
+                char ppp = bk->name[1];
+                if (ppp=='P'){
+//                if (bk->name[1]=='P')
+                    bk->handleBlock==-1;}
+            }
+//            if (bk->handleBlock==0 && bk->name[1]=='P'){
+//                bk->handleBlock==-1;
+//            }
+            blockmap[bk->handleBlock] = bk;
         }
 
     }
@@ -351,36 +362,60 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
         case 17: {
             DRW_Arc e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addArc(e);
             break; }
         case 18: {
             DRW_Circle e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addCircle(e);
             break; }
         case 19:{
             DRW_Line e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addLine(e);
             break;}
         case 27: {
             DRW_Point e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addPoint(e);
             break; }
         case 35: {
             DRW_Ellipse e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addEllipse(e);
             break; }
 /*        case 7: {//minsert = 8
             DRW_Insert e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addInsert(e);
             break; }*/
@@ -388,12 +423,20 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             DRW_LWPolyline e;
             e.isEnd = true;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addLWPolyline();
             break; }*/
         case 1: {
             DRW_Text e;
             ret = e.parseDwg(version, &buff);
+            if (e.handleBlock != currBlock) {
+                currBlock = e.handleBlock;
+                intfa.setBlock(e.handleBlock);
+            }
             parseAttribs(&e);
             intfa.addText(e);
             break; }

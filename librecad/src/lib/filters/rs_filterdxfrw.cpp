@@ -98,6 +98,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     graphic = &g;
     currentContainer = graphic;
+    dummyContainer = new RS_EntityContainer(NULL, true);
+
     this->file = file;
     // add some variables that need to be there for DXF drawings:
     graphic->addVariable("$DIMSTYLE", "Standard", 2);
@@ -156,6 +158,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         return false;
     }
 
+    delete dummyContainer;
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
     graphic->updateInserts();
 
@@ -247,11 +250,26 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
 
             if (graphic->addBlock(block)) {
                 currentContainer = block;
-            }
+                blockHash.insert(data.handleBlock, currentContainer);
+            } else
+                blockHash.insert(data.handleBlock, dummyContainer);
+    } else {
+        if (mid.toLower() == "model_space") {
+            blockHash.insert(data.handleBlock, graphic);
+        } else {
+            blockHash.insert(data.handleBlock, dummyContainer);
+        }
     }
 }
+QHash<int, RS_EntityContainer> blockHash;
 
 
+void RS_FilterDXFRW::setBlock(const int handle){
+    if (blockHash.contains(handle)) {
+        currentContainer = blockHash.value(handle);
+    } else
+        currentContainer = graphic;
+}
 
 /**
  * Implementation of the method which closes blocks.
