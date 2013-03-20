@@ -130,9 +130,9 @@ public:
     //H, T, TU, TV, X, U, SN,
     std::string getVariableText();
     std::string getVariableUtf8Text();
-//    void getExtrusion(DRW_Coord *ext); //BE
+    void getExtrusion(DRW_Coord *ext); //BE
     double getDefaultDouble(double d); //DD
-//    void getThickness();//BT
+    double getThickness(bool b_R2000_style);//BT
     //3DD, CMC, TC
 
     duint16 getBERawShort16();

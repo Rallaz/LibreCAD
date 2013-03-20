@@ -479,6 +479,7 @@ public:
 
     virtual void applyExtrusion(){} //RLZ TODO
     void parseCode(int code, dxfReader *reader);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     double height;             /*!< height text, code 40 */
@@ -486,10 +487,11 @@ public:
     double angle;              /*!< rotation angle in degrees (360), code 50 */
     double widthscale;         /*!< width factor, code 41 */
     double oblique;            /*!< oblique angle, code 51 */
-    UTF8STRING style;          /*!< stile name, code 7 */
+    UTF8STRING style;          /*!< style name, code 7 */
     int textgen;               /*!< text generation, code 71 */
     enum HAlign alignH;        /*!< horizontal align, code 72 */
     enum VAlign alignV;        /*!< vertical align, code 73 */
+    dwgHandle styleH;          /*!< handle for text style */
 };
 
 //! Class to handle insert entries

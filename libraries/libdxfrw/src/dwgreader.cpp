@@ -430,7 +430,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             parseAttribs(&e);
             intfa.addLWPolyline();
             break; }*/
-/*        case 1: {
+        case 1: {
             DRW_Text e;
             ret = e.parseDwg(version, &buff);
             if (e.handleBlock != currBlock) {
@@ -439,7 +439,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             }
             parseAttribs(&e);
             intfa.addText(e);
-            break; }*/
+            break; }
         default:
             break;
         }

@@ -819,6 +819,89 @@ void DRW_Text::parseCode(int code, dxfReader *reader){
     }
 }
 
+bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_Entity::parseDwg(version, buf);
+    if (!ret)
+        return ret;
+    DBG("\n***************************** parsing text *********************************************\n");
+
+    if (version < DRW::AC1015) {//14-
+        basePoint.z = buf->getBitDouble(); /* Elevation BD --- */
+        basePoint.x = buf->getRawDouble(); /* Insertion pt 2RD 10 */
+        basePoint.y = buf->getRawDouble();
+        secPoint.x = buf->getRawDouble();  /* Alignment pt 2RD 11 */
+        secPoint.y = buf->getRawDouble();
+        extPoint.x = buf->getBitDouble(); /* Extrusion 3BD 210 */
+        extPoint.y = buf->getBitDouble();
+        extPoint.z = buf->getBitDouble();
+        thickness = buf->getBitDouble(); /* Thickness BD 39 */
+        oblique = buf->getBitDouble(); /* Oblique ang BD 51 */
+        angle = buf->getBitDouble(); /* Rotation ang BD 50 */
+        height = buf->getBitDouble(); /* Height BD 40 */
+        widthscale = buf->getBitDouble(); /* Width factor BD 41 */
+        text = buf->getVariableUtf8Text(); /* Text value TV 1 */
+        textgen = buf->getBitShort(); /* Generation BS 71 */
+        alignH = (HAlign)buf->getBitShort(); /* Horiz align. BS 72 */
+        alignV = (VAlign)buf->getBitShort(); /* Vert align. BS 73 */
+    }
+    if (version > DRW::AC1014) {//2000+
+        duint8 data_flags = buf->getRawChar8(); /* DataFlags RC Used to determine presence of subsquent data */
+        if ( data_flags & 0x01 )
+        { /* Elevation RD --- present if !(DataFlags & 0x01) */
+            basePoint.z = buf->getRawDouble();
+        }
+        basePoint.x = buf->getRawDouble(); /* Insertion pt 2RD 10 */
+        basePoint.y = buf->getRawDouble();
+        if ( data_flags & 0x02 )
+        { /* Alignment pt 2DD 11 present if !(DataFlags & 0x02), use 10 & 20 values for 2 default values.*/
+            extPoint.x = buf->getDefaultDouble(basePoint.x);
+            extPoint.y = buf->getDefaultDouble(basePoint.y);
+        }
+        else
+        {
+            extPoint = basePoint;
+        }
+        buf->getExtrusion(&extPoint); /* Extrusion BE 210 */
+        thickness = buf->getThickness(true); /* Thickness BT 39 */
+        if ( data_flags & 0x04 )
+        { /* Oblique ang RD 51 present if !(DataFlags & 0x04) */
+            oblique = buf->getRawDouble();
+        }
+        if ( data_flags & 0x08 )
+        { /* Rotation ang RD 50 present if !(DataFlags & 0x08) */
+            angle = buf->getRawDouble();
+        }
+        height = buf->getRawDouble(); /* Height RD 40 */
+        if ( data_flags & 0x10 )
+        { /* Width factor RD 41 present if !(DataFlags & 0x10) */
+            widthscale = buf->getRawDouble();
+        }
+        text = buf->getVariableUtf8Text(); /* Text value TV 1 */
+        if ( data_flags & 0x20 )
+        { /* Generation BS 71 present if !(DataFlags & 0x20) */
+            textgen = buf->getBitShort();
+        }
+        if ( data_flags & 0x40 )
+        { /* Horiz align. BS 72 present if !(DataFlags & 0x40) */
+            alignH = (HAlign)buf->getBitShort();
+        }
+        if ( data_flags & 0x80 )
+        { /* Vert align. BS 73 present if !(DataFlags & 0x80) */
+            alignV = (VAlign)buf->getBitShort();
+        }
+    }
+    
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+    
+    styleH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
+    
+    /* CRC X --- */
+    return buf->isGood();
+}
+
 void DRW_MText::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:

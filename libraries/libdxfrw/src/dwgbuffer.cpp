@@ -412,7 +412,35 @@ std::string dwgBuffer::getVariableUtf8Text(){
     return decoder->toUtf8(strData);
 }
 
-//void getExtrusion(DRW_Coord *ext); //BE
+void dwgBuffer::getExtrusion(DRW_Coord *ext)
+{
+
+    /*
+    Bit Extrusion
+    
+    For R13-R14 this is 3BD. 
+    We are asserting that the version is not R13-R14; this values should
+    be read by the user
+    */
+    
+    /*
+    For R2000, this is a single bit, followed optionally
+    by 3BD.*/
+    duint8 def_val = getBit();
+    if ( def_val )
+    {  /* If the single bit is 1, the extrusion value is assumed to be 0,0,1 and
+    no explicit extrusion is stored. */
+        ext->x = 0;
+        ext->y = 0;
+        ext->z = 1;
+    }
+    else
+    { /* If the single bit is 0, then it will be followed by 3BD. */
+        ext->x = getBitDouble();
+        ext->y = getBitDouble();
+        ext->z = getBitDouble();
+    }
+}
 
 /**Reads compresed Double with default (max. 64 + 2 bits) returns a floating point double of 64 bits (DD) **/
 double dwgBuffer::getDefaultDouble(double d){
@@ -454,7 +482,21 @@ double dwgBuffer::getDefaultDouble(double d){
     return getRawDouble();
 }
 
-//void getThickness();//BT
+
+/* BitThickness
+* For R13-R14, this is a BD. We are asserting that the version
+* is not R13-R14; this value should be read by the user
+* For R2000+, this is a single bit, If the bit is one,
+* the thickness value is assumed to be 0.0, if not a BD follow
+*/
+double dwgBuffer::getThickness(bool b_R2000_style) {
+    if ( b_R2000_style )
+        /* If the bit is one, the thickness value is assumed to be 0.0.*/
+        if ( getBit() == 1 )
+            return 0.0;
+    /*R13-R14 or bit == 0*/
+    return getBitDouble();
+}
 
 /**Reads raw short 16 bits big-endian order, returns a unsigned short crc & size **/
 duint16 dwgBuffer::getBERawShort16(){
