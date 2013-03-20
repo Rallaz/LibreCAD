@@ -56,20 +56,27 @@ DBG("\n***************************** parsing table entry ***********************
     DBG(ho.size); DBG("."); DBG(ho.ref);
     dint16 extDataSize = buf->getBitShort(); //BS
     DBG(" ext data size: "); DBG(extDataSize);
-    while (extDataSize>0) {
+    while (extDataSize>0 && buf->isGood()) {
+        /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
         DBG("App Handle: "); DBG(ah.code); DBG(".");
         DBG(ah.size); DBG("."); DBG(ah.ref);
-        duint8 dxfCode = buf->getRawChar8();
+        char byteStr[extDataSize];
+        buf->getBytes(byteStr, extDataSize);
+        dwgBuffer buff(byteStr, extDataSize, buf->decoder);
+        int pos = buff.getPosition();
+        int bpos = buff.getBitPos();
+        DBG("ext data pos: "); DBG(pos); DBG("."); DBG(bpos); DBG("\n");
+        duint8 dxfCode = buff.getRawChar8();
         DBG(" dxfCode: "); DBG(dxfCode);
         switch (dxfCode){
         case 0:{
-            duint8 strLength = buf->getRawChar8();
+            duint8 strLength = buff.getRawChar8();
             DBG(" strLength: "); DBG(strLength);
-            duint16 cp = buf->getRawShort16();
+            duint16 cp = buff.getBERawShort16();
             DBG(" str codepage: "); DBG(cp);
             for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                duint8 dxfChar = buf->getRawChar8();
+                duint8 dxfChar = buff.getRawChar8();
                 DBG(" dxfChar: "); DBG(dxfChar);
             }
             break;
@@ -78,6 +85,7 @@ DBG("\n***************************** parsing table entry ***********************
             /* RLZ: TODO */
             break;
         }
+        DBG("ext data pos: "); DBG(buff.getPosition()); DBG("."); DBG(buff.getBitPos()); DBG("\n");
         extDataSize = buf->getBitShort(); //BS
         DBG(" ext data size: "); DBG(extDataSize);
     } //end parsing extData (EED)
@@ -86,7 +94,7 @@ DBG("\n***************************** parsing table entry ***********************
     }
     DBG(" objSize in bits: "); DBG(objSize);
 
-    dint32 numReactors = buf->getBitLong(); //BL
+    numReactors = buf->getBitLong(); //BL
     DBG(", numReactors: "); DBG(numReactors); DBG("\n");
     if (version > DRW::AC1015) {//2004+
         /*duint8 xDictFlag =*/ buf->getBit();
@@ -515,6 +523,119 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf){
     lTypeH = buf->getHandle();
     DBG("line type Handle: "); DBG(lTypeH.code); DBG(".");
     DBG(lTypeH.size); DBG("."); DBG(lTypeH.ref);
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+//    RS crc;   //RS */
+    return buf->isGood();
+}
+
+bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing block record ******************************************\n");
+    if (!ret)
+        return ret;
+    duint32 insertCount = 0;//only 2000+
+    duint32 objectCount = 0; //only 2004+
+
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("block record name: "); DBG(name.c_str());DBG("\n");
+
+    flags |= buf->getBit()<< 6;//referenced external reference, block code 70, bit 7 (64)
+    /*dint16 xrefindex =*/ buf->getBitShort();
+    flags |= buf->getBit() << 4;//is refx dependent, block code 70, bit 5 (16)
+    flags |= buf->getBit(); //if is anonimous block (*U) block code 70, bit 1 (1)
+    flags |= buf->getBit() << 1; //if block contains attdefs, block code 70, bit 2 (2)
+    bool blockIsXref = buf->getBit(); //if is a Xref, block code 70, bit 3 (4)
+    bool xrefOverlaid = buf->getBit(); //if is a overlaid Xref, block code 70, bit 4 (8)
+    flags |= blockIsXref << 2; //if is a Xref, block code 70, bit 3 (4)
+    flags |= xrefOverlaid << 3; //if is a overlaid Xref, block code 70, bit 4 (8)
+    if (version > DRW::AC1014) {//2000+
+        flags |= buf->getBit() << 5; //if is a loaded Xref, block code 70, bit 6 (32)
+    }
+    if (version > DRW::AC1015) {//2004+
+        objectCount = buf->getBitLong(); //Number of objects owned by this
+    }
+    basePoint.x = buf->getBitDouble();
+    basePoint.y = buf->getBitDouble();
+    basePoint.z = buf->getBitDouble();
+    DBG("insertion point X: "); DBG(basePoint.x); DBG(", Y: "); DBG(basePoint.y); DBG(", Z: "); DBG(basePoint.z); DBG("\n");
+    if (version > DRW::AC1018) {//2007+
+        UTF8STRING path = buf->getVariableText();
+    } else {//2004-
+        UTF8STRING path = buf->getVariableUtf8Text();
+    }
+    if (version > DRW::AC1014) {//2000+
+        insertCount = 0;
+        while (duint8 i = buf->getRawChar8() != 0)
+            insertCount +=i;
+        if (version > DRW::AC1018) {//2007+
+            UTF8STRING bkdesc = buf->getVariableText();
+        } else {//2004-
+            UTF8STRING bkdesc = buf->getVariableUtf8Text();
+        }
+        duint32 prevData = buf->getBitLong();
+        for (unsigned int i= 0; i < prevData; i++)
+            buf->getRawChar8();
+    }
+    if (version > DRW::AC1018) {//2007+
+        duint16 insUnits = buf->getBitShort();
+        bool canExplode = buf->getBit(); //if block can be exploded
+        duint8 bkScaling = buf->getRawChar8();
+    }
+
+    dwgHandle blockControlH = buf->getHandle();
+    DBG("block control Handle: "); DBG(blockControlH.code); DBG(".");
+    DBG(blockControlH.size); DBG("."); DBG(blockControlH.ref);
+
+    for (int i=0; i<numReactors; i++){
+        dwgHandle reactorH = buf->getHandle();
+        DBG(" reactor Handle #"); DBG(i); DBG(": "); DBG(reactorH.code); DBG(".");
+        DBG(reactorH.size); DBG("."); DBG(reactorH.ref); DBG("\n");
+    }
+    dwgHandle XDicObjH = buf->getHandle();
+    DBG(" XDicObj control Handle: "); DBG(XDicObjH.code); DBG(".");
+    DBG(XDicObjH.size); DBG("."); DBG(XDicObjH.ref); DBG("\n");
+    dwgHandle NullH = buf->getHandle();
+    DBG(" NullH control Handle: "); DBG(NullH.code); DBG(".");
+    DBG(NullH.size); DBG("."); DBG(NullH.ref); DBG("\n");
+    dwgHandle blockH = buf->getHandle();
+    DBG(" blockH control Handle: "); DBG(blockH.code); DBG(".");
+    DBG(blockH.size); DBG("."); DBG(blockH.ref); DBG("\n");
+    handleBlock = blockH.ref;
+
+    if (version > DRW::AC1015) {//2004+
+        for (unsigned int i=0; i< objectCount; i++){
+            dwgHandle entityH = buf->getHandle();
+            DBG(" entityH Handle #"); DBG(i); DBG(": "); DBG(entityH.code); DBG(".");
+            DBG(entityH.size); DBG("."); DBG(entityH.ref); DBG("\n");
+        }
+    } else {//2000-
+        if(!blockIsXref && !xrefOverlaid){
+            dwgHandle firstH = buf->getHandle();
+            DBG(" firstH entity Handle: "); DBG(firstH.code); DBG(".");
+            DBG(firstH.size); DBG("."); DBG(firstH.ref); DBG("\n");
+            dwgHandle lastH = buf->getHandle();
+            DBG(" lastH entity Handle: "); DBG(lastH.code); DBG(".");
+            DBG(lastH.size); DBG("."); DBG(lastH.ref); DBG("\n");
+        }
+    }
+    dwgHandle endBlockH = buf->getHandle();
+    DBG(" endBlockHl Handle: "); DBG(endBlockH.code); DBG(".");
+    DBG(endBlockH.size); DBG("."); DBG(endBlockH.ref); DBG("\n");
+
+    if (version > DRW::AC1014) {//2000+
+        for (unsigned int i=0; i< insertCount; i++){
+            dwgHandle insertsH = buf->getHandle();
+            DBG(" insertsH Handle #"); DBG(i); DBG(": "); DBG(insertsH.code); DBG(".");
+            DBG(insertsH.size); DBG("."); DBG(insertsH.ref); DBG("\n");
+        }
+        dwgHandle layoutH = buf->getHandle();
+        DBG(" layoutH Handle: "); DBG(layoutH.code); DBG(".");
+        DBG(layoutH.size); DBG("."); DBG(layoutH.ref); DBG("\n");
+    }
     DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
 //    RS crc;   //RS */
     return buf->isGood();

@@ -211,11 +211,11 @@ bool dwgReader15::readDwgTables() {
     std::list<objHandle>ObjectControlMap;
     std::list<objHandle>LineTypeMap;
     std::list<objHandle>LayerMap;
-    std::list<objHandle>BlockMap;
+    std::list<objHandle>BlockRecordMap;
 
 //separate control object, layers and linetypes
     for (std::list<objHandle>::iterator it=ObjectMap.begin(); it != ObjectMap.end(); /*++it*/){
-        DBG("object map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
+//        DBG("object map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
         if (it->type == 0x30 || it->type == 0x32 || it->type == 0x34 || it->type == 0x38 || it->type == 0x3C
                 || it->type == 0x3E || it->type == 0x40 || it->type == 0x42 || it->type == 0x44 || it->type == 0x46){
             ObjectControlMap.push_back(*it);
@@ -227,7 +227,8 @@ bool dwgReader15::readDwgTables() {
             LayerMap.push_back(*it);
             it = ObjectMap.erase(it);
         } else if (it->type == 0x31 || it->type == 0x4 || it->type == 0x5){
-            BlockMap.push_back(*it);
+//        } else if (it->type == 0x31){
+            BlockRecordMap.push_back(*it);
             it = ObjectMap.erase(it);
         } else
             it++;
@@ -244,10 +245,10 @@ bool dwgReader15::readDwgTables() {
         dwgBuffer buff(byteStr, size, &decoder);
         ret2 = lt->parseDwg(version, &buff);
         ltypemap[lt->handle] = lt;
+        if(ret)
+            ret = ret2;
     }
 //TODO: clear LineTypeMap
-    if(ret)
-        ret = ret2;
 
     //parse layers
     for (std::list<objHandle>::iterator it=LayerMap.begin(); it != LayerMap.end(); ++it){
@@ -260,28 +261,12 @@ bool dwgReader15::readDwgTables() {
         dwgBuffer buff(byteStr, size, &decoder);
         ret2 = la->parseDwg(version, &buff);
         layermap[la->handle] = la;
+        if(ret)
+            ret = ret2;
     }
 //TODO: clear LayerMap
-    if(ret)
-        ret = ret2;
 
-    //parse blocks
-//    for (std::list<objHandle>::iterator it=BlockMap.begin(); it != BlockMap.end(); ++it){
-//        DBG("BlockMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
-//        DRW_Layer *la = new DRW_Layer();
-//        buf->setPosition(it->loc);
-//        int size = buf->getModularShort();
-//        char byteStr[size];
-//        buf->getBytes(byteStr, size);
-//        dwgBuffer buff(byteStr, size, &decoder);
-//        ret2 = la->parseDwg(version, &buff);
-//        layermap[la->handle] = la;
-//    }
-//TODO: clear BlockMap
-    if(ret)
-        ret = ret2;
-
-//set linetype in layer
+    //set linetype in layer
     for (std::map<int, DRW_Layer*>::iterator it=layermap.begin(); it!=layermap.end(); ++it) {
         DRW_Layer *ly = it->second;
         duint32 ref =ly->lTypeH.ref;
@@ -290,6 +275,58 @@ bool dwgReader15::readDwgTables() {
             ly->lineType = (lt_it->second)->name;
         }
     }
+
+    //parse blocks records
+    for (std::list<objHandle>::iterator it=BlockRecordMap.begin(); it != BlockRecordMap.end(); ++it){
+        DBG("BlockMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
+        buf->setPosition(it->loc);
+        int size = buf->getModularShort();
+        char byteStr[size];
+        buf->getBytes(byteStr, size);
+        dwgBuffer buff(byteStr, size, &decoder);
+        switch (it->type){
+        case 4: {
+            DRW_Block *e= new DRW_Block();
+            ret2 = e->parseDwg(version, &buff);
+            parseAttribs(e);
+            blockmap[e->handle] = e;
+            break; }
+        case 5: {
+            DRW_Block e;
+            e.isEnd = true;
+            ret2 = e.parseDwg(version, &buff);
+            parseAttribs(&e);
+            break; }
+        case 49: {
+            DRW_Block_Record *br = new DRW_Block_Record();
+            ret2 = br->parseDwg(version, &buff);
+            block_recmap[br->handle] = br;
+            break; }
+        default:
+            break;
+        }
+        if(ret)
+            ret = ret2;
+    }
+//TODO: clear BlockRecordMap
+
+    //complete block entity with block record data
+    for (std::map<int, DRW_Block_Record*>::iterator it=block_recmap.begin(); it!=block_recmap.end(); ++it) {
+        DRW_Block_Record* bkR = it->second;
+        std::map<int, DRW_Block*>::iterator bkit = blockmap.find(bkR->handleBlock);
+        if (bkit == blockmap.end()){//fail, set error
+            if(ret)
+                ret = ret2;
+        } else {
+            DRW_Block *bk = bkit->second;
+            parseAttribs(bk);
+            bk->basePoint = bkR->basePoint;
+            bk->flags = bkR->flags;
+            bk->handleBlock = bkR->handle;
+        }
+
+    }
+
     return ret;
 }
 
@@ -304,6 +341,11 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
         char byteStr[size];
         buf->getBytes(byteStr, size);
         dwgBuffer buff(byteStr, size, &decoder);
+//            ARC, CIRCLE, LINE, POINT, ELLIPSE, BLOCK
+//            INSERT, LWPOLYLINE, TEXT,
+/*            POLYLINE, VERTEX, SPLINE, HATCH, MTEXT, E3DFACE, IMAGE,
+            LEADER, DIMENSION, DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC,
+            DIMANGULAR, DIMANGULAR3P, DIMORDINATE, TRACE, SOLID, RAY, XLINE, VIEWPORT,*/
 
         switch (obj.type){
         case 17: {
@@ -336,12 +378,32 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             parseAttribs(&e);
             intfa.addEllipse(e);
             break; }
+/*        case 7: {//minsert = 8
+            DRW_Insert e;
+            ret = e.parseDwg(version, &buff);
+            parseAttribs(&e);
+            intfa.addInsert(e);
+            break; }*/
+/*        case 77: {
+            DRW_LWPolyline e;
+            e.isEnd = true;
+            ret = e.parseDwg(version, &buff);
+            parseAttribs(&e);
+            intfa.addLWPolyline();
+            break; }*/
+/*        case 1: {
+            DRW_Text e;
+            ret = e.parseDwg(version, &buff);
+            parseAttribs(&e);
+            intfa.addText(e);
+            break; }*/
         default:
             break;
         }
 
     return ret;
 }
+//        } else if (it->type == 0x31 || it->type == 0x4 || it->type == 0x5){
 
 
 ///////////////////////////////////////////////////////////////////////

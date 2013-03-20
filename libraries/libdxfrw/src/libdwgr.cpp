@@ -145,6 +145,12 @@ bool dwgR::processDwg() {
         iface->addLayer(const_cast<DRW_Layer&>(*ly));
     }
 
+    for (std::map<int, DRW_Block*>::iterator it=reader->blockmap.begin(); it!=reader->blockmap.end(); ++it) {
+        DRW_Block *bk = it->second;
+        iface->addBlock(const_cast<DRW_Block&>(*bk));
+        iface->endBlock();
+    }
+
     for (std::list<objHandle>::iterator it=reader->ObjectMap.begin(); it != reader->ObjectMap.end(); ++it){
         DBG("object map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
         ret2 = reader->readDwgEntity(*it, *iface);

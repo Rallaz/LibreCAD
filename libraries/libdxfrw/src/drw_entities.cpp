@@ -112,7 +112,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
     DBG(ho.size); DBG("."); DBG(ho.ref);
     dint16 extDataSize = buf->getBitShort(); //BS
     DBG(" ext data size: "); DBG(extDataSize);
-    if (extDataSize>0) {
+    if (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
         DBG("App Handle: "); DBG(ah.code); DBG(".");
         DBG(ah.size); DBG("."); DBG(ah.ref);
@@ -122,7 +122,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
         case 0:{
             duint8 strLength = buf->getRawChar8();
             DBG(" strLength: "); DBG(strLength);
-            duint16 cp = buf->getRawShort16();
+            duint16 cp = buf->getBERawShort16();
             DBG(" str codepage: "); DBG(cp);
             for (int i=0;i< strLength+1;i++) {//string length + null terminating char
                 duint8 dxfChar = buf->getRawChar8();
@@ -215,7 +215,12 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
             DBG("owner Handle: "); DBG(ownerH.code); DBG(".");
             DBG(ownerH.size); DBG("."); DBG(ownerH.ref); DBG("\n");
             DBG("   Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+            if (ownerH.code == 12)
+                handleBlock = handle - ownerH.ref;
+            else if (ownerH.code == 10)
+                handleBlock = handle + ownerH.ref;
         }
+        DBG(" Block Handle: "); DBG(handleBlock); DBG(".");
         dwgHandle XDicObjH = buf->getHandle();
         DBG(" XDicObj control Handle: "); DBG(XDicObjH.code); DBG(".");
         DBG(XDicObjH.size); DBG("."); DBG(XDicObjH.ref); DBG("\n");
@@ -878,6 +883,28 @@ void DRW_Block::parseCode(int code, dxfReader *reader){
         DRW_Point::parseCode(code, reader);
         break;
     }
+}
+bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_Entity::parseDwg(version, buf);
+    if (!ret)
+        return ret;
+    if (!isEnd){
+        DBG("\n***************************** parsing block *********************************************\n");
+        if (version > DRW::AC1018) {//2007+
+            name = buf->getVariableText();
+        } else {//2004-
+            name = buf->getVariableUtf8Text();
+        }
+        DBG("Block name: "); DBG(name.c_str()); DBG("\n");
+    } else
+    DBG("\n***************************** parsing end block *********************************************\n");
+
+//    X handleAssoc;   //X
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+//    RS crc;   //RS */
+    return buf->isGood();
 }
 
 void DRW_Insert::parseCode(int code, dxfReader *reader){
