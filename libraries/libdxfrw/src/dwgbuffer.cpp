@@ -482,30 +482,20 @@ double dwgBuffer::getDefaultDouble(double d){
     return getRawDouble();
 }
 
-double dwgBuffer::getThickness(bool b_R2000_style)
-{
-    /* BitThickness
-    
-    For R13-R14, this is a BD. 
-    We are asserting that the version is not R13-R14; this value should
-    be read by the user
-    */
-    if ( !b_R2000_style )
-        return getBitDouble();
-        
-    /*
-    For R2000+, this is a single bit followed optionally
-    by a BD.*/
-    
-    duint8 def_val = getBit();
-    if ( def_val )
-    {    /* If the bit is one, the thickness value is assumed to be 0.0.*/
-        return 0.0;
-    }
-    else
-    { /* If the bit is 0, then a BD that represents the thickness follows. */
-        return getBitDouble();
-    }
+
+/* BitThickness
+* For R13-R14, this is a BD. We are asserting that the version
+* is not R13-R14; this value should be read by the user
+* For R2000+, this is a single bit, If the bit is one,
+* the thickness value is assumed to be 0.0, if not a BD follow
+*/
+double dwgBuffer::getThickness(bool b_R2000_style) {
+    if ( b_R2000_style )
+        /* If the bit is one, the thickness value is assumed to be 0.0.*/
+        if ( getBit() == 1 )
+            return 0.0;
+    /*R13-R14 or bit == 0*/
+    return getBitDouble();
 }
 
 /**Reads raw short 16 bits big-endian order, returns a unsigned short crc & size **/

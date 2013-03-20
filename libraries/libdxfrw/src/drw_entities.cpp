@@ -1119,8 +1119,7 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf){
     if (!ret)
         return ret;
     
-    /** @todo H 7 STYLE (hard pointer) */
-    buf->getHandle();
+    styleH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
     
     /* CRC X --- */
     return buf->isGood();

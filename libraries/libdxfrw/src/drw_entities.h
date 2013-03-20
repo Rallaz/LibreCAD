@@ -509,6 +509,7 @@ public:
     int textgen;               /*!< text generation, code 71 */
     enum HAlign alignH;        /*!< horizontal align, code 72 */
     enum VAlign alignV;        /*!< vertical align, code 73 */
+    dwgHandle styleH;          /*!< handle for text style */
 };
 
 //! Class to handle insert entries
