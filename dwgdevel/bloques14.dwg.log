@@ -1,0 +1,3087 @@
+FilterDXFRW::RS_FilterDXFRW()
+FilterDXFRW::RS_FilterDXFRW(): OK
+FilterDXFRW::fileImport
+DXFRW Filter: importing file '/home/rallaz/progs/proyectos/librecad/LibreCAD-rlz/dwgdevel/bloques14.dwg'
+dwgR::read 1
+dwgR::read 2
+dwgR::read line version: AC1014
+dwgR::processDwg() start processing dwg
+dwgReader15::readFileHeader
+seekerImageData= 88
+UNKNOUWN SECTION= 17181
+codepage= 30
+count records= 5
+Section HEADERS seek= 15687 size= 386
+Section CLASSES seek= 16073 size= 2035
+Section OBJECTS seek= 183444 size= 1205
+Section UNKNOWN seek= 0 size= 0
+Section R14DATA seek= 184795 size= 4
+position after read section locator records= 70, bit are= 0
+file header crc8 0 result= 36484
+file header crc8 xor result= 45632
+file header CRC= 45632
+file header sentinel= 95 a0 4e 28 99 82 1a e5 5e 41 e0 5f 9d 3a 4d 00 position after read file header sentinel= 88, bit are= 0
+dwgReader15::readFileHeader END
+dwgReader15::readDwgObjectOffsets
+Section OBJECTS offset= 183444
+Section OBJECTS size= 1205
+Section OBJECTS maxPos= 184649
+Section OBJECTS buf->curPosition()= 183444
+start object section buf->curPosition()= 183444
+object map section size= 1199
+object map lastHandle= 1
+object map lastLoc= 18112
+object map lastHandle= 2
+object map lastLoc= 18198
+object map lastHandle= 3
+object map lastLoc= 18218
+object map lastHandle= 5
+object map lastLoc= 18241
+object map lastHandle= 6
+object map lastLoc= 18262
+object map lastHandle= 7
+object map lastLoc= 18276
+object map lastHandle= 8
+object map lastLoc= 18290
+object map lastHandle= 9
+object map lastLoc= 18309
+object map lastHandle= 10
+object map lastLoc= 18679
+object map lastHandle= 12
+object map lastLoc= 18717
+object map lastHandle= 13
+object map lastLoc= 35601
+object map lastHandle= 14
+object map lastLoc= 21071
+object map lastHandle= 15
+object map lastLoc= 36478
+object map lastHandle= 16
+object map lastLoc= 33548
+object map lastHandle= 17
+object map lastLoc= 33574
+object map lastHandle= 18
+object map lastLoc= 34861
+object map lastHandle= 20
+object map lastLoc= 34084
+object map lastHandle= 21
+object map lastLoc= 34370
+object map lastHandle= 22
+object map lastLoc= 33783
+object map lastHandle= 23
+object map lastLoc= 21017
+object map lastHandle= 24
+object map lastLoc= 36411
+object map lastHandle= 25
+object map lastLoc= 21052
+object map lastHandle= 26
+object map lastLoc= 35619
+object map lastHandle= 31
+object map lastLoc= 32534
+object map lastHandle= 32
+object map lastLoc= 40101
+object map lastHandle= 33
+object map lastLoc= 33390
+object map lastHandle= 34
+object map lastLoc= 41650
+object map lastHandle= 39
+object map lastLoc= 35372
+object map lastHandle= 94
+object map lastLoc= 26225
+object map lastHandle= 95
+object map lastLoc= 26480
+object map lastHandle= 99
+object map lastLoc= 26502
+object map lastHandle= 106
+object map lastLoc= 20911
+object map lastHandle= 107
+object map lastLoc= 35582
+object map lastHandle= 126
+object map lastLoc= 21752
+object map lastHandle= 127
+object map lastLoc= 36888
+object map lastHandle= 132
+object map lastLoc= 38630
+object map lastHandle= 158
+object map lastLoc= 34885
+object map lastHandle= 210
+object map lastLoc= 18139
+object map lastHandle= 211
+object map lastLoc= 41982
+object map lastHandle= 212
+object map lastLoc= 33475
+object map lastHandle= 213
+object map lastLoc= 18179
+object map lastHandle= 214
+object map lastLoc= 27579
+object map lastHandle= 215
+object map lastLoc= 42200
+object map lastHandle= 216
+object map lastLoc= 39799
+object map lastHandle= 217
+object map lastLoc= 27619
+object map lastHandle= 234
+object map lastLoc= 34699
+object map lastHandle= 236
+object map lastLoc= 35822
+object map lastHandle= 237
+object map lastLoc= 35728
+object map lastHandle= 238
+object map lastLoc= 35916
+object map lastHandle= 239
+object map lastLoc= 21798
+object map lastHandle= 240
+object map lastLoc= 22721
+object map lastHandle= 241
+object map lastLoc= 22824
+object map lastHandle= 242
+object map lastLoc= 22939
+object map lastHandle= 243
+object map lastLoc= 23046
+object map lastHandle= 244
+object map lastLoc= 37300
+object map lastHandle= 245
+object map lastLoc= 37188
+object map lastHandle= 246
+object map lastLoc= 24309
+object map lastHandle= 247
+object map lastLoc= 23164
+object map lastHandle= 248
+object map lastLoc= 22265
+object map lastHandle= 249
+object map lastLoc= 23617
+object map lastHandle= 250
+object map lastLoc= 22385
+object map lastHandle= 251
+object map lastLoc= 37405
+object map lastHandle= 252
+object map lastLoc= 24200
+object map lastHandle= 253
+object map lastLoc= 23391
+object map lastHandle= 254
+object map lastLoc= 22608
+object map lastHandle= 255
+object map lastLoc= 22152
+object map lastHandle= 268
+object map lastLoc= 21106
+object map lastHandle= 269
+object map lastLoc= 36496
+object map lastHandle= 301
+object map lastLoc= 20966
+object map lastHandle= 302
+object map lastLoc= 36255
+object map lastHandle= 306
+object map lastLoc= 33642
+object map lastHandle= 307
+object map lastLoc= 34915
+object map lastHandle= 308
+object map lastLoc= 34948
+object map lastHandle= 309
+object map lastLoc= 18361
+object map lastHandle= 310
+object map lastLoc= 18400
+object map lastHandle= 311
+object map lastLoc= 35193
+object map lastHandle= 315
+object map lastLoc= 36141
+object map lastHandle= 316
+object map lastLoc= 40254
+object map lastHandle= 325
+object map lastLoc= 38599
+object map lastHandle= 326
+object map lastLoc= 38573
+object map lastHandle= 354
+object map lastLoc= 43210
+object map lastHandle= 357
+object map lastLoc= 18440
+object map lastHandle= 371
+object map lastLoc= 42634
+object map lastHandle= 372
+object map lastLoc= 76052
+object map lastHandle= 373
+object map lastLoc= 76022
+object map lastHandle= 374
+object map lastLoc= 42755
+object map lastHandle= 375
+object map lastLoc= 42785
+object map lastHandle= 430
+object map lastLoc= 26549
+object map lastHandle= 431
+object map lastLoc= 26573
+object map lastHandle= 432
+object map lastLoc= 35073
+object map lastHandle= 446
+object map lastLoc= 36522
+object map lastHandle= 447
+object map lastLoc= 36557
+object map lastHandle= 448
+object map lastLoc= 21251
+object map lastHandle= 449
+object map lastLoc= 21286
+object map lastHandle= 450
+object map lastLoc= 21321
+object map lastHandle= 451
+object map lastLoc= 21357
+object map lastHandle= 452
+object map lastLoc= 21393
+object map lastHandle= 453
+object map lastLoc= 21429
+object map lastHandle= 454
+object map lastLoc= 21465
+object map lastHandle= 455
+object map lastLoc= 21501
+object map lastHandle= 456
+object map lastLoc= 21537
+object map lastHandle= 457
+object map lastLoc= 21574
+object map lastHandle= 458
+object map lastLoc= 21609
+object map lastHandle= 459
+object map lastLoc= 21644
+object map lastHandle= 460
+object map lastLoc= 21679
+object map lastHandle= 461
+object map lastLoc= 21715
+object map lastHandle= 462
+object map lastLoc= 39993
+object map lastHandle= 484
+object map lastLoc= 23280
+object map lastHandle= 485
+object map lastLoc= 23504
+object map lastHandle= 486
+object map lastLoc= 22494
+object map lastHandle= 495
+object map lastLoc= 23959
+object map lastHandle= 496
+object map lastLoc= 24083
+object map lastHandle= 497
+object map lastLoc= 24418
+object map lastHandle= 498
+object map lastLoc= 23837
+object map lastHandle= 499
+object map lastLoc= 23727
+object map lastHandle= 503
+object map lastLoc= 42578
+object map lastHandle= 504
+object map lastLoc= 70081
+object map lastHandle= 505
+object map lastLoc= 42522
+object map lastHandle= 506
+object map lastLoc= 64140
+object map lastHandle= 507
+object map lastLoc= 76081
+object map lastHandle= 511
+object map lastLoc= 33508
+object map lastHandle= 512
+object map lastLoc= 40234
+object map lastHandle= 517
+object map lastLoc= 63876
+object map lastHandle= 518
+object map lastLoc= 86341
+object map lastHandle= 536
+object map lastLoc= 26852
+object map lastHandle= 537
+object map lastLoc= 27175
+object map lastHandle= 538
+object map lastLoc= 27222
+object map lastHandle= 539
+object map lastLoc= 39691
+object map lastHandle= 540
+object map lastLoc= 38876
+object map lastHandle= 541
+object map lastLoc= 38855
+object map lastHandle= 543
+object map lastLoc= 39522
+object map lastHandle= 544
+object map lastLoc= 33744
+object map lastHandle= 545
+object map lastLoc= 36635
+object map lastHandle= 546
+object map lastLoc= 62164
+object map lastHandle= 547
+object map lastLoc= 39620
+object map lastHandle= 548
+object map lastLoc= 18476
+object map lastHandle= 549
+object map lastLoc= 86222
+object map lastHandle= 550
+object map lastLoc= 86171
+object map lastHandle= 551
+object map lastLoc= 183298
+object map lastHandle= 552
+object map lastLoc= 62685
+object map lastHandle= 553
+object map lastLoc= 38833
+object map lastHandle= 554
+object map lastLoc= 27249
+object map lastHandle= 555
+object map lastLoc= 40962
+object map lastHandle= 556
+object map lastLoc= 62490
+object map lastHandle= 557
+object map lastLoc= 18524
+object map lastHandle= 558
+object map lastLoc= 26815
+object map lastHandle= 561
+object map lastLoc= 18548
+object map lastHandle= 564
+object map lastLoc= 18577
+object map lastHandle= 574
+object map lastLoc= 18702
+object map lastHandle= 577
+object map lastLoc= 35532
+object map lastHandle= 582
+object map lastLoc= 32578
+object map lastHandle= 583
+object map lastLoc= 32616
+object map lastHandle= 584
+object map lastLoc= 32660
+object map lastHandle= 585
+object map lastLoc= 32712
+object map lastHandle= 586
+object map lastLoc= 32756
+object map lastHandle= 587
+object map lastLoc= 32792
+object map lastHandle= 588
+object map lastLoc= 32836
+object map lastHandle= 589
+object map lastLoc= 32888
+object map lastHandle= 590
+object map lastLoc= 32932
+object map lastHandle= 591
+object map lastLoc= 32960
+object map lastHandle= 592
+object map lastLoc= 33004
+object map lastHandle= 593
+object map lastLoc= 33048
+object map lastHandle= 598
+object map lastLoc= 27640
+object map lastHandle= 599
+object map lastLoc= 39896
+object map lastHandle= 600
+object map lastLoc= 30185
+object map lastHandle= 601
+object map lastLoc= 29845
+object map lastHandle= 602
+object map lastLoc= 29902
+object map lastHandle= 603
+object map lastLoc= 29957
+object map lastHandle= 604
+object map lastLoc= 30012
+object map lastHandle= 605
+object map lastLoc= 33079
+object map lastHandle= 606
+object map lastLoc= 33122
+object map lastHandle= 607
+object map lastLoc= 33175
+object map lastHandle= 608
+object map lastLoc= 33228
+object map lastHandle= 611
+object map lastLoc= 30208
+object map lastHandle= 612
+object map lastLoc= 39966
+object map lastHandle= 613
+object map lastLoc= 32511
+object map lastHandle= 614
+object map lastLoc= 32413
+object map lastHandle= 615
+object map lastLoc= 32462
+object map lastHandle= 616
+object map lastLoc= 33284
+object map lastHandle= 617
+object map lastLoc= 33327
+object map lastHandle= 627
+object map lastLoc= 30070
+object map lastHandle= 628
+object map lastLoc= 30128
+object map lastHandle= 633
+object map lastLoc= 39835
+object map lastHandle= 634
+object map lastLoc= 62329
+object map lastHandle= 639
+object map lastLoc= 18603
+object map lastHandle= 623
+object map lastLoc= 26621
+object map lastHandle= 624
+object map lastLoc= 26597
+object map lastHandle= 625
+object map lastLoc= 26732
+object map lastHandle= 626
+object map lastLoc= 26525
+object map lastHandle= 627
+object map lastLoc= 26758
+object map lastHandle= 628
+object map lastLoc= 26708
+object map lastHandle= 629
+object map lastLoc= 26677
+object map lastHandle= 630
+object map lastLoc= 26645
+object map lastHandle= 631
+object map lastLoc= 26791
+object map lastHandle= 621
+object map lastLoc= 38704
+object map lastHandle= 622
+object map lastLoc= 82815
+object map lastHandle= 623
+object map lastLoc= 42947
+object map lastHandle= 624
+object map lastLoc= 81978
+object map lastHandle= 625
+object map lastLoc= 42903
+object map lastHandle= 626
+object map lastLoc= 81916
+object map lastHandle= 627
+object map lastLoc= 43133
+object map lastHandle= 628
+object map lastLoc= 82083
+object map lastHandle= 629
+object map lastLoc= 24526
+object map lastHandle= 630
+object map lastLoc= 62761
+object map lastHandle= 631
+object map lastLoc= 33409
+object map lastHandle= 632
+object map lastLoc= 40166
+object map lastHandle= 633
+object map lastLoc= 39733
+object map lastHandle= 634
+object map lastLoc= 62259
+object map lastHandle= 635
+object map lastLoc= 62389
+object map lastHandle= 636
+object map lastLoc= 39923
+object map lastHandle= 637
+object map lastLoc= 62440
+object map lastHandle= 638
+object map lastLoc= 41310
+object map lastHandle= 639
+object map lastLoc= 63503
+object map lastHandle= 640
+object map lastLoc= 41354
+object map lastHandle= 641
+object map lastLoc= 63563
+object map lastHandle= 642
+object map lastLoc= 40445
+object map lastHandle= 643
+object map lastLoc= 63073
+object map lastHandle= 644
+object map lastLoc= 40488
+object map lastHandle= 645
+object map lastLoc= 63131
+object map lastHandle= 646
+object map lastLoc= 40402
+object map lastHandle= 647
+object map lastLoc= 63009
+object map lastHandle= 648
+object map lastLoc= 41072
+object map lastHandle= 649
+object map lastLoc= 63367
+object map lastHandle= 650
+object map lastLoc= 41116
+object map lastHandle= 651
+object map lastLoc= 63431
+object map lastHandle= 652
+object map lastLoc= 34985
+object map lastHandle= 653
+object map lastLoc= 41160
+object map lastHandle= 654
+object map lastLoc= 35029
+object map lastHandle= 655
+object map lastLoc= 41254
+object map lastHandle= 656
+object map lastLoc= 40271
+object map lastHandle= 657
+object map lastLoc= 62831
+object map lastHandle= 658
+object map lastLoc= 40314
+object map lastHandle= 659
+object map lastLoc= 62891
+object map lastHandle= 660
+object map lastLoc= 40358
+object map lastHandle= 661
+object map lastLoc= 62953
+object map lastHandle= 662
+object map lastLoc= 41029
+object map lastHandle= 663
+object map lastLoc= 63189
+object map lastHandle= 664
+object map lastLoc= 27394
+object map lastHandle= 665
+object map lastLoc= 24573
+object map lastHandle= 666
+object map lastLoc= 25727
+object map lastHandle= 667
+object map lastLoc= 25754
+object map lastHandle= 668
+object map lastLoc= 25111
+object map lastHandle= 669
+object map lastLoc= 25700
+object map lastHandle= 670
+object map lastLoc= 25166
+object map lastHandle= 671
+object map lastLoc= 25226
+object map lastHandle= 672
+object map lastLoc= 25258
+object map lastHandle= 673
+object map lastLoc= 25198
+object map lastHandle= 674
+object map lastLoc= 25138
+object map lastHandle= 675
+object map lastLoc= 38427
+object map lastHandle= 676
+object map lastLoc= 38508
+object map lastHandle= 677
+object map lastLoc= 26160
+object map lastHandle= 678
+object map lastLoc= 25290
+object map lastHandle= 679
+object map lastLoc= 38455
+object map lastHandle= 680
+object map lastLoc= 25642
+object map lastHandle= 681
+object map lastLoc= 25674
+object map lastHandle= 682
+object map lastLoc= 25322
+object map lastHandle= 683
+object map lastLoc= 25594
+object map lastHandle= 684
+object map lastLoc= 25402
+object map lastHandle= 685
+object map lastLoc= 25498
+object map lastHandle= 686
+object map lastLoc= 25546
+object map lastHandle= 687
+object map lastLoc= 25450
+object map lastHandle= 688
+object map lastLoc= 25354
+object map lastHandle= 689
+object map lastLoc= 26102
+object map lastHandle= 690
+object map lastLoc= 26134
+object map lastHandle= 691
+object map lastLoc= 25782
+object map lastHandle= 692
+object map lastLoc= 26054
+object map lastHandle= 693
+object map lastLoc= 25862
+object map lastHandle= 694
+object map lastLoc= 25958
+object map lastHandle= 695
+object map lastLoc= 26006
+object map lastHandle= 696
+object map lastLoc= 25910
+object map lastHandle= 697
+object map lastLoc= 25814
+object map lastHandle= 698
+object map lastLoc= 27270
+object map lastHandle= 699
+object map lastLoc= 34656
+object map lastHandle= 700
+object map lastLoc= 40531
+object map lastHandle= 701
+object map lastLoc= 35489
+object map lastHandle= 702
+object map lastLoc= 41441
+object map lastHandle= 703
+object map lastLoc= 36368
+object map lastHandle= 704
+object map lastLoc= 42991
+object map lastHandle= 705
+object map lastLoc= 41607
+object map lastHandle= 706
+object map lastLoc= 63750
+object map lastHandle= 707
+object map lastLoc= 62652
+object map lastHandle= 708
+object map lastLoc= 86247
+object map lastHandle= 709
+object map lastLoc= 41398
+object map lastHandle= 710
+object map lastLoc= 63677
+object map lastHandle= 711
+object map lastLoc= 35685
+object map lastHandle= 712
+object map lastLoc= 42418
+object map lastHandle= 713
+object map lastLoc= 36592
+object map lastHandle= 714
+object map lastLoc= 43051
+object map lastHandle= 715
+object map lastLoc= 83542
+object map lastHandle= 716
+object map lastLoc= 40134
+object map lastHandle= 717
+object map lastLoc= 63949
+object map lastHandle= 718
+object map lastLoc= 182844
+object map lastHandle= 719
+object map lastLoc= 62227
+object map lastHandle= 720
+object map lastLoc= 63992
+object map lastHandle= 721
+object map lastLoc= 182936
+object map lastHandle= 722
+object map lastLoc= 69976
+object map lastHandle= 723
+object map lastLoc= 64035
+object map lastHandle= 724
+object map lastLoc= 75917
+object map lastHandle= 725
+object map lastLoc= 37145
+object map lastHandle= 726
+object map lastLoc= 43286
+object map lastHandle= 727
+object map lastLoc= 37732
+object map lastHandle= 728
+object map lastLoc= 48331
+object map lastHandle= 729
+object map lastLoc= 37775
+object map lastHandle= 730
+object map lastLoc= 49170
+object map lastHandle= 731
+object map lastLoc= 37818
+object map lastHandle= 732
+object map lastLoc= 50009
+object map lastHandle= 733
+object map lastLoc= 37861
+object map lastHandle= 734
+object map lastLoc= 50848
+object map lastHandle= 735
+object map lastLoc= 44050
+object map lastHandle= 736
+object map lastLoc= 84493
+object map lastHandle= 737
+object map lastLoc= 44007
+object map lastHandle= 738
+object map lastLoc= 83654
+object map lastHandle= 739
+object map lastLoc= 38340
+object map lastHandle= 740
+object map lastLoc= 60077
+object map lastHandle= 741
+object map lastLoc= 37904
+object map lastHandle= 742
+object map lastLoc= 51687
+object map lastHandle= 743
+object map lastLoc= 37559
+object map lastHandle= 744
+object map lastLoc= 44975
+object map lastHandle= 745
+object map lastLoc= 38078
+object map lastHandle= 746
+object map lastLoc= 55043
+object map lastHandle= 747
+object map lastLoc= 37602
+object map lastHandle= 748
+object map lastLoc= 45814
+object map lastHandle= 749
+object map lastLoc= 44093
+object map lastHandle= 750
+object map lastLoc= 85332
+object map lastHandle= 751
+object map lastLoc= 38297
+object map lastHandle= 752
+object map lastLoc= 59238
+object map lastHandle= 753
+object map lastLoc= 37991
+object map lastHandle= 754
+object map lastLoc= 53365
+object map lastHandle= 755
+object map lastLoc= 37689
+object map lastHandle= 756
+object map lastLoc= 47492
+object map lastHandle= 757
+object map lastLoc= 37516
+object map lastHandle= 758
+object map lastLoc= 44136
+object map lastHandle= 759
+object map lastLoc= 36097
+object map lastHandle= 760
+object map lastLoc= 42815
+object map lastHandle= 761
+object map lastLoc= 82771
+object map lastHandle= 762
+object map lastLoc= 183141
+object map lastHandle= 763
+object map lastLoc= 37947
+object map lastHandle= 764
+object map lastLoc= 52526
+object map lastHandle= 765
+object map lastLoc= 38034
+object map lastHandle= 766
+object map lastLoc= 54204
+object map lastHandle= 767
+object map lastLoc= 37645
+object map lastHandle= 768
+object map lastLoc= 46653
+object map lastHandle= 769
+object map lastLoc= 38209
+object map lastHandle= 770
+object map lastLoc= 57560
+object map lastHandle= 771
+object map lastLoc= 38253
+object map lastHandle= 772
+object map lastLoc= 58399
+object map lastHandle= 773
+object map lastLoc= 38383
+object map lastHandle= 774
+object map lastLoc= 60916
+object map lastHandle= 775
+object map lastLoc= 38165
+object map lastHandle= 776
+object map lastLoc= 56721
+object map lastHandle= 777
+object map lastLoc= 38121
+object map lastHandle= 778
+object map lastLoc= 55882
+object map lastHandle= 779
+object map lastLoc= 38789
+object map lastHandle= 780
+object map lastLoc= 61815
+object map lastHandle= 781
+object map lastLoc= 82660
+object map lastHandle= 782
+object map lastLoc= 183254
+object map lastHandle= 783
+object map lastLoc= 183350
+object map lastHandle= 784
+object map lastLoc= 38660
+object map lastHandle= 785
+object map lastLoc= 61755
+object map lastHandle= 786
+object map lastLoc= 18642
+object map lastHandle= 788
+object map lastLoc= 82040
+object map lastHandle= 789
+object map lastLoc= 183028
+object map section crc8 read= 61819
+object map section crc8 calculated= 61819
+object section buf->curPosition()= 184645
+start object section buf->curPosition()= 184645
+object map section size= 2
+object map section crc8 read= 464
+object map section crc8 calculated= 464
+object section buf->curPosition()= 184649
+readDwgObjects() Total objects: 362
+object map Handle= 1 18112
+readDwgObject size: 23
+readDwgObject object type: 48
+object map Handle= 2 18198
+readDwgObject size: 16
+readDwgObject object type: 50
+object map Handle= 3 18218
+readDwgObject size: 19
+readDwgObject object type: 52
+object map Handle= 5 18241
+readDwgObject size: 17
+readDwgObject object type: 56
+object map Handle= 6 18262
+readDwgObject size: 10
+readDwgObject object type: 60
+object map Handle= 7 18276
+readDwgObject size: 10
+readDwgObject object type: 62
+object map Handle= 8 18290
+readDwgObject size: 15
+readDwgObject object type: 64
+object map Handle= 9 18309
+readDwgObject size: 48
+readDwgObject object type: 66
+object map Handle= 10 18679
+readDwgObject size: 19
+readDwgObject object type: 68
+object map Handle= 12 18717
+readDwgObject size: 2190
+readDwgObject object type: 42
+object map Handle= 13 35601
+readDwgObject size: 14
+readDwgObject object type: 42
+object map Handle= 14 21071
+readDwgObject size: 31
+readDwgObject object type: 500
+object map Handle= 15 36478
+readDwgObject size: 14
+readDwgObject object type: 501
+object map Handle= 16 33548
+readDwgObject size: 22
+readDwgObject object type: 51
+object map Handle= 17 33574
+readDwgObject size: 64
+readDwgObject object type: 53
+object map Handle= 18 34861
+readDwgObject size: 20
+readDwgObject object type: 67
+object map Handle= 20 34084
+readDwgObject size: 282
+readDwgObject object type: 57
+object map Handle= 21 34370
+readDwgObject size: 282
+readDwgObject object type: 57
+object map Handle= 22 33783
+readDwgObject size: 297
+readDwgObject object type: 57
+object map Handle= 23 21017
+readDwgObject size: 31
+readDwgObject object type: 42
+object map Handle= 24 36411
+readDwgObject size: 63
+readDwgObject object type: 73
+object map Handle= 25 21052
+readDwgObject size: 15
+readDwgObject object type: 42
+object map Handle= 26 35619
+readDwgObject size: 62
+readDwgObject object type: 42
+object map Handle= 31 32534
+readDwgObject size: 40
+readDwgObject object type: 49
+object map Handle= 32 40101
+readDwgObject size: 29
+readDwgObject object type: 4
+object map Handle= 33 33390
+readDwgObject size: 15
+readDwgObject object type: 5
+object map Handle= 34 41650
+readDwgObject size: 328
+readDwgObject object type: 502
+object map Handle= 39 35372
+readDwgObject size: 113
+readDwgObject object type: 69
+object map Handle= 94 26225
+readDwgObject size: 251
+readDwgObject object type: 42
+object map Handle= 95 26480
+readDwgObject size: 18
+readDwgObject object type: 503
+object map Handle= 99 26502
+readDwgObject size: 19
+readDwgObject object type: 503
+object map Handle= 106 20911
+readDwgObject size: 51
+readDwgObject object type: 42
+object map Handle= 107 35582
+readDwgObject size: 15
+readDwgObject object type: 42
+object map Handle= 126 21752
+readDwgObject size: 42
+readDwgObject object type: 42
+object map Handle= 127 36888
+readDwgObject size: 253
+readDwgObject object type: 504
+object map Handle= 132 38630
+readDwgObject size: 26
+readDwgObject object type: 503
+object map Handle= 158 34885
+readDwgObject size: 26
+readDwgObject object type: 67
+object map Handle= 210 18139
+readDwgObject size: 36
+readDwgObject object type: 49
+object map Handle= 211 41982
+readDwgObject size: 214
+readDwgObject object type: 502
+object map Handle= 212 33475
+readDwgObject size: 29
+readDwgObject object type: 4
+object map Handle= 213 18179
+readDwgObject size: 15
+readDwgObject object type: 5
+object map Handle= 214 27579
+readDwgObject size: 36
+readDwgObject object type: 49
+object map Handle= 215 42200
+readDwgObject size: 214
+readDwgObject object type: 502
+object map Handle= 216 39799
+readDwgObject size: 32
+readDwgObject object type: 4
+object map Handle= 217 27619
+readDwgObject size: 17
+readDwgObject object type: 5
+object map Handle= 234 34699
+readDwgObject size: 158
+readDwgObject object type: 65
+object map Handle= 236 35822
+readDwgObject size: 90
+readDwgObject object type: 505
+object map Handle= 237 35728
+readDwgObject size: 90
+readDwgObject object type: 505
+object map Handle= 238 35916
+readDwgObject size: 177
+readDwgObject object type: 505
+object map Handle= 239 21798
+readDwgObject size: 350
+readDwgObject object type: 42
+object map Handle= 240 22721
+readDwgObject size: 99
+readDwgObject object type: 506
+object map Handle= 241 22824
+readDwgObject size: 111
+readDwgObject object type: 506
+object map Handle= 242 22939
+readDwgObject size: 103
+readDwgObject object type: 506
+object map Handle= 243 23046
+readDwgObject size: 114
+readDwgObject object type: 506
+object map Handle= 244 37300
+readDwgObject size: 101
+readDwgObject object type: 506
+object map Handle= 245 37188
+readDwgObject size: 108
+readDwgObject object type: 506
+object map Handle= 246 24309
+readDwgObject size: 105
+readDwgObject object type: 506
+object map Handle= 247 23164
+readDwgObject size: 112
+readDwgObject object type: 506
+object map Handle= 248 22265
+readDwgObject size: 116
+readDwgObject object type: 506
+object map Handle= 249 23617
+readDwgObject size: 106
+readDwgObject object type: 506
+object map Handle= 250 22385
+readDwgObject size: 105
+readDwgObject object type: 506
+object map Handle= 251 37405
+readDwgObject size: 107
+readDwgObject object type: 506
+object map Handle= 252 24200
+readDwgObject size: 105
+readDwgObject object type: 506
+object map Handle= 253 23391
+readDwgObject size: 109
+readDwgObject object type: 506
+object map Handle= 254 22608
+readDwgObject size: 109
+readDwgObject object type: 506
+object map Handle= 255 22152
+readDwgObject size: 109
+readDwgObject object type: 506
+object map Handle= 268 21106
+readDwgObject size: 141
+readDwgObject object type: 42
+object map Handle= 269 36496
+readDwgObject size: 22
+readDwgObject object type: 507
+object map Handle= 301 20966
+readDwgObject size: 47
+readDwgObject object type: 42
+object map Handle= 302 36255
+readDwgObject size: 109
+readDwgObject object type: 508
+object map Handle= 306 33642
+readDwgObject size: 98
+readDwgObject object type: 53
+object map Handle= 307 34915
+readDwgObject size: 29
+readDwgObject object type: 67
+object map Handle= 308 34948
+readDwgObject size: 33
+readDwgObject object type: 67
+object map Handle= 309 18361
+readDwgObject size: 35
+readDwgObject object type: 67
+object map Handle= 310 18400
+readDwgObject size: 36
+readDwgObject object type: 67
+object map Handle= 311 35193
+readDwgObject size: 175
+readDwgObject object type: 69
+object map Handle= 315 36141
+readDwgObject size: 110
+readDwgObject object type: 508
+object map Handle= 316 40254
+readDwgObject size: 13
+readDwgObject object type: 42
+object map Handle= 325 38599
+readDwgObject size: 27
+readDwgObject object type: 503
+object map Handle= 326 38573
+readDwgObject size: 22
+readDwgObject object type: 503
+object map Handle= 354 43210
+readDwgObject size: 72
+readDwgObject object type: 42
+object map Handle= 357 18440
+readDwgObject size: 32
+readDwgObject object type: 67
+object map Handle= 371 42634
+readDwgObject size: 117
+readDwgObject object type: 42
+object map Handle= 372 76052
+readDwgObject size: 25
+readDwgObject object type: 532
+object map Handle= 373 76022
+readDwgObject size: 26
+readDwgObject object type: 532
+object map Handle= 374 42755
+readDwgObject size: 26
+readDwgObject object type: 532
+object map Handle= 375 42785
+readDwgObject size: 26
+readDwgObject object type: 532
+object map Handle= 430 26549
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 431 26573
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 432 35073
+readDwgObject size: 116
+readDwgObject object type: 69
+object map Handle= 446 36522
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 447 36557
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 448 21251
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 449 21286
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 450 21321
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 451 21357
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 452 21393
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 453 21429
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 454 21465
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 455 21501
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 456 21537
+readDwgObject size: 33
+readDwgObject object type: 507
+object map Handle= 457 21574
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 458 21609
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 459 21644
+readDwgObject size: 31
+readDwgObject object type: 507
+object map Handle= 460 21679
+readDwgObject size: 32
+readDwgObject object type: 507
+object map Handle= 461 21715
+readDwgObject size: 33
+readDwgObject object type: 507
+object map Handle= 462 39993
+readDwgObject size: 104
+readDwgObject object type: 42
+object map Handle= 484 23280
+readDwgObject size: 107
+readDwgObject object type: 506
+object map Handle= 485 23504
+readDwgObject size: 109
+readDwgObject object type: 506
+object map Handle= 486 22494
+readDwgObject size: 110
+readDwgObject object type: 506
+object map Handle= 495 23959
+readDwgObject size: 120
+readDwgObject object type: 506
+object map Handle= 496 24083
+readDwgObject size: 113
+readDwgObject object type: 506
+object map Handle= 497 24418
+readDwgObject size: 104
+readDwgObject object type: 506
+object map Handle= 498 23837
+readDwgObject size: 118
+readDwgObject object type: 506
+object map Handle= 499 23727
+readDwgObject size: 106
+readDwgObject object type: 506
+object map Handle= 503 42578
+readDwgObject size: 52
+readDwgObject object type: 42
+object map Handle= 504 70081
+readDwgObject size: 5832
+readDwgObject object type: 532
+object map Handle= 505 42522
+readDwgObject size: 52
+readDwgObject object type: 42
+object map Handle= 506 64140
+readDwgObject size: 5832
+readDwgObject object type: 532
+object map Handle= 507 76081
+readDwgObject size: 5831
+readDwgObject object type: 532
+object map Handle= 511 33508
+readDwgObject size: 36
+readDwgObject object type: 42
+object map Handle= 512 40234
+readDwgObject size: 16
+readDwgObject object type: 42
+object map Handle= 517 63876
+readDwgObject size: 69
+readDwgObject object type: 42
+object map Handle= 518 86341
+readDwgObject size: 96497
+readDwgObject object type: 532
+object map Handle= 536 26852
+readDwgObject size: 319
+readDwgObject object type: 42
+object map Handle= 537 27175
+readDwgObject size: 43
+readDwgObject object type: 515
+object map Handle= 538 27222
+readDwgObject size: 23
+readDwgObject object type: 516
+object map Handle= 539 39691
+readDwgObject size: 38
+readDwgObject object type: 517
+object map Handle= 540 38876
+readDwgObject size: 642
+readDwgObject object type: 518
+object map Handle= 541 38855
+readDwgObject size: 17
+readDwgObject object type: 42
+object map Handle= 543 39522
+readDwgObject size: 94
+readDwgObject object type: 520
+object map Handle= 544 33744
+readDwgObject size: 35
+readDwgObject object type: 53
+object map Handle= 545 36635
+readDwgObject size: 249
+readDwgObject object type: 504
+object map Handle= 546 62164
+readDwgObject size: 59
+readDwgObject object type: 521
+object map Handle= 547 39620
+readDwgObject size: 67
+readDwgObject object type: 522
+object map Handle= 548 18476
+readDwgObject size: 44
+readDwgObject object type: 67
+object map Handle= 549 86222
+readDwgObject size: 21
+readDwgObject object type: 523
+object map Handle= 550 86171
+readDwgObject size: 47
+readDwgObject object type: 42
+object map Handle= 551 183298
+readDwgObject size: 48
+readDwgObject object type: 524
+object map Handle= 552 62685
+readDwgObject size: 72
+readDwgObject object type: 525
+object map Handle= 553 38833
+readDwgObject size: 18
+readDwgObject object type: 526
+object map Handle= 554 27249
+readDwgObject size: 17
+readDwgObject object type: 42
+object map Handle= 555 40962
+readDwgObject size: 63
+readDwgObject object type: 527
+object map Handle= 556 62490
+readDwgObject size: 158
+readDwgObject object type: 528
+object map Handle= 557 18524
+readDwgObject size: 20
+readDwgObject object type: 67
+object map Handle= 558 26815
+readDwgObject size: 33
+readDwgObject object type: 42
+object map Handle= 561 18548
+readDwgObject size: 25
+readDwgObject object type: 67
+object map Handle= 564 18577
+readDwgObject size: 22
+readDwgObject object type: 67
+object map Handle= 574 18702
+readDwgObject size: 11
+readDwgObject object type: 70
+object map Handle= 577 35532
+readDwgObject size: 46
+readDwgObject object type: 532
+object map Handle= 582 32578
+readDwgObject size: 34
+readDwgObject object type: 19
+object map Handle= 583 32616
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 584 32660
+readDwgObject size: 48
+readDwgObject object type: 19
+object map Handle= 585 32712
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 586 32756
+readDwgObject size: 32
+readDwgObject object type: 19
+object map Handle= 587 32792
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 588 32836
+readDwgObject size: 48
+readDwgObject object type: 19
+object map Handle= 589 32888
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 590 32932
+readDwgObject size: 24
+readDwgObject object type: 19
+object map Handle= 591 32960
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 592 33004
+readDwgObject size: 40
+readDwgObject object type: 19
+object map Handle= 593 33048
+readDwgObject size: 27
+readDwgObject object type: 19
+object map Handle= 598 27640
+readDwgObject size: 2201
+readDwgObject object type: 49
+object map Handle= 599 39896
+readDwgObject size: 23
+readDwgObject object type: 4
+object map Handle= 600 30185
+readDwgObject size: 19
+readDwgObject object type: 5
+object map Handle= 601 29845
+readDwgObject size: 53
+readDwgObject object type: 19
+object map Handle= 602 29902
+readDwgObject size: 51
+readDwgObject object type: 19
+object map Handle= 603 29957
+readDwgObject size: 51
+readDwgObject object type: 19
+object map Handle= 604 30012
+readDwgObject size: 54
+readDwgObject object type: 19
+object map Handle= 605 33079
+readDwgObject size: 39
+readDwgObject object type: 7
+object map Handle= 606 33122
+readDwgObject size: 49
+readDwgObject object type: 19
+object map Handle= 607 33175
+readDwgObject size: 49
+readDwgObject object type: 19
+object map Handle= 608 33228
+readDwgObject size: 52
+readDwgObject object type: 19
+object map Handle= 611 30208
+readDwgObject size: 2201
+readDwgObject object type: 49
+object map Handle= 612 39966
+readDwgObject size: 23
+readDwgObject object type: 4
+object map Handle= 613 32511
+readDwgObject size: 19
+readDwgObject object type: 5
+object map Handle= 614 32413
+readDwgObject size: 45
+readDwgObject object type: 18
+object map Handle= 615 32462
+readDwgObject size: 45
+readDwgObject object type: 18
+object map Handle= 616 33284
+readDwgObject size: 39
+readDwgObject object type: 7
+object map Handle= 617 33327
+readDwgObject size: 59
+readDwgObject object type: 17
+object map Handle= 627 30070
+readDwgObject size: 54
+readDwgObject object type: 19
+object map Handle= 628 30128
+readDwgObject size: 53
+readDwgObject object type: 19
+object map Handle= 633 39835
+readDwgObject size: 57
+readDwgObject object type: 42
+object map Handle= 634 62329
+readDwgObject size: 56
+readDwgObject object type: 525
+object map Handle= 639 18603
+readDwgObject size: 35
+readDwgObject object type: 67
+object map Handle= 623 26621
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 624 26597
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 625 26732
+readDwgObject size: 22
+readDwgObject object type: 503
+object map Handle= 626 26525
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 627 26758
+readDwgObject size: 29
+readDwgObject object type: 503
+object map Handle= 628 26708
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 629 26677
+readDwgObject size: 27
+readDwgObject object type: 503
+object map Handle= 630 26645
+readDwgObject size: 28
+readDwgObject object type: 503
+object map Handle= 631 26791
+readDwgObject size: 20
+readDwgObject object type: 503
+object map Handle= 621 38704
+readDwgObject size: 81
+readDwgObject object type: 532
+object map Handle= 622 82815
+readDwgObject size: 723
+readDwgObject object type: 509
+object map Handle= 623 42947
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 624 81978
+readDwgObject size: 58
+readDwgObject object type: 532
+object map Handle= 625 42903
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 626 81916
+readDwgObject size: 58
+readDwgObject object type: 532
+object map Handle= 627 43133
+readDwgObject size: 73
+readDwgObject object type: 42
+object map Handle= 628 82083
+readDwgObject size: 573
+readDwgObject object type: 509
+object map Handle= 629 24526
+readDwgObject size: 43
+readDwgObject object type: 532
+object map Handle= 630 62761
+readDwgObject size: 66
+readDwgObject object type: 532
+object map Handle= 631 33409
+readDwgObject size: 62
+readDwgObject object type: 42
+object map Handle= 632 40166
+readDwgObject size: 64
+readDwgObject object type: 532
+object map Handle= 633 39733
+readDwgObject size: 62
+readDwgObject object type: 42
+object map Handle= 634 62259
+readDwgObject size: 66
+readDwgObject object type: 532
+object map Handle= 635 62389
+readDwgObject size: 47
+readDwgObject object type: 532
+object map Handle= 636 39923
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 637 62440
+readDwgObject size: 46
+readDwgObject object type: 532
+object map Handle= 638 41310
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 639 63503
+readDwgObject size: 56
+readDwgObject object type: 532
+object map Handle= 640 41354
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 641 63563
+readDwgObject size: 110
+readDwgObject object type: 532
+object map Handle= 642 40445
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 643 63073
+readDwgObject size: 54
+readDwgObject object type: 532
+object map Handle= 644 40488
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 645 63131
+readDwgObject size: 54
+readDwgObject object type: 532
+object map Handle= 646 40402
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 647 63009
+readDwgObject size: 60
+readDwgObject object type: 532
+object map Handle= 648 41072
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 649 63367
+readDwgObject size: 60
+readDwgObject object type: 532
+object map Handle= 650 41116
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 651 63431
+readDwgObject size: 68
+readDwgObject object type: 532
+object map Handle= 652 34985
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 653 41160
+readDwgObject size: 90
+readDwgObject object type: 532
+object map Handle= 654 35029
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 655 41254
+readDwgObject size: 52
+readDwgObject object type: 532
+object map Handle= 656 40271
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 657 62831
+readDwgObject size: 56
+readDwgObject object type: 532
+object map Handle= 658 40314
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 659 62891
+readDwgObject size: 58
+readDwgObject object type: 532
+object map Handle= 660 40358
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 661 62953
+readDwgObject size: 52
+readDwgObject object type: 532
+object map Handle= 662 41029
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 663 63189
+readDwgObject size: 174
+readDwgObject object type: 532
+object map Handle= 664 27394
+readDwgObject size: 181
+readDwgObject object type: 532
+object map Handle= 665 24573
+readDwgObject size: 534
+readDwgObject object type: 42
+object map Handle= 666 25727
+readDwgObject size: 23
+readDwgObject object type: 532
+object map Handle= 667 25754
+readDwgObject size: 24
+readDwgObject object type: 532
+object map Handle= 668 25111
+readDwgObject size: 23
+readDwgObject object type: 532
+object map Handle= 669 25700
+readDwgObject size: 23
+readDwgObject object type: 532
+object map Handle= 670 25166
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 671 25226
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 672 25258
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 673 25198
+readDwgObject size: 24
+readDwgObject object type: 532
+object map Handle= 674 25138
+readDwgObject size: 24
+readDwgObject object type: 532
+object map Handle= 675 38427
+readDwgObject size: 24
+readDwgObject object type: 532
+object map Handle= 676 38508
+readDwgObject size: 61
+readDwgObject object type: 532
+object map Handle= 677 26160
+readDwgObject size: 61
+readDwgObject object type: 532
+object map Handle= 678 25290
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 679 38455
+readDwgObject size: 49
+readDwgObject object type: 532
+object map Handle= 680 25642
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 681 25674
+readDwgObject size: 22
+readDwgObject object type: 532
+object map Handle= 682 25322
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 683 25594
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 684 25402
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 685 25498
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 686 25546
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 687 25450
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 688 25354
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 689 26102
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 690 26134
+readDwgObject size: 22
+readDwgObject object type: 532
+object map Handle= 691 25782
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 692 26054
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 693 25862
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 694 25958
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 695 26006
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 696 25910
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 697 25814
+readDwgObject size: 44
+readDwgObject object type: 532
+object map Handle= 698 27270
+readDwgObject size: 120
+readDwgObject object type: 532
+object map Handle= 699 34656
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 700 40531
+readDwgObject size: 427
+readDwgObject object type: 532
+object map Handle= 701 35489
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 702 41441
+readDwgObject size: 162
+readDwgObject object type: 532
+object map Handle= 703 36368
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 704 42991
+readDwgObject size: 56
+readDwgObject object type: 532
+object map Handle= 705 41607
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 706 63750
+readDwgObject size: 122
+readDwgObject object type: 532
+object map Handle= 707 62652
+readDwgObject size: 29
+readDwgObject object type: 532
+object map Handle= 708 86247
+readDwgObject size: 90
+readDwgObject object type: 532
+object map Handle= 709 41398
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 710 63677
+readDwgObject size: 69
+readDwgObject object type: 532
+object map Handle= 711 35685
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 712 42418
+readDwgObject size: 100
+readDwgObject object type: 532
+object map Handle= 713 36592
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 714 43051
+readDwgObject size: 78
+readDwgObject object type: 532
+object map Handle= 715 83542
+readDwgObject size: 108
+readDwgObject object type: 532
+object map Handle= 716 40134
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 717 63949
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 718 182844
+readDwgObject size: 88
+readDwgObject object type: 532
+object map Handle= 719 62227
+readDwgObject size: 28
+readDwgObject object type: 532
+object map Handle= 720 63992
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 721 182936
+readDwgObject size: 88
+readDwgObject object type: 532
+object map Handle= 722 69976
+readDwgObject size: 101
+readDwgObject object type: 532
+object map Handle= 723 64035
+readDwgObject size: 101
+readDwgObject object type: 532
+object map Handle= 724 75917
+readDwgObject size: 101
+readDwgObject object type: 532
+object map Handle= 725 37145
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 726 43286
+readDwgObject size: 717
+readDwgObject object type: 532
+object map Handle= 727 37732
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 728 48331
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 729 37775
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 730 49170
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 731 37818
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 732 50009
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 733 37861
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 734 50848
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 735 44050
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 736 84493
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 737 44007
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 738 83654
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 739 38340
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 740 60077
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 741 37904
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 742 51687
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 743 37559
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 744 44975
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 745 38078
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 746 55043
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 747 37602
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 748 45814
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 749 44093
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 750 85332
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 751 38297
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 752 59238
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 753 37991
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 754 53365
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 755 37689
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 756 47492
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 757 37516
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 758 44136
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 759 36097
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 760 42815
+readDwgObject size: 84
+readDwgObject object type: 532
+object map Handle= 761 82771
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 762 183141
+readDwgObject size: 109
+readDwgObject object type: 532
+object map Handle= 763 37947
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 764 52526
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 765 38034
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 766 54204
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 767 37645
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 768 46653
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 769 38209
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 770 57560
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 771 38253
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 772 58399
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 773 38383
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 774 60916
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 775 38165
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 776 56721
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 777 38121
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 778 55882
+readDwgObject size: 835
+readDwgObject object type: 532
+object map Handle= 779 38789
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 780 61815
+readDwgObject size: 345
+readDwgObject object type: 532
+object map Handle= 781 82660
+readDwgObject size: 107
+readDwgObject object type: 532
+object map Handle= 782 183254
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 783 183350
+readDwgObject size: 90
+readDwgObject object type: 532
+object map Handle= 784 38660
+readDwgObject size: 40
+readDwgObject object type: 42
+object map Handle= 785 61755
+readDwgObject size: 56
+readDwgObject object type: 532
+object map Handle= 786 18642
+readDwgObject size: 33
+readDwgObject object type: 67
+object map Handle= 788 82040
+readDwgObject size: 39
+readDwgObject object type: 42
+object map Handle= 789 183028
+readDwgObject size: 109
+readDwgObject object type: 532
+LineTypeMap map Handle= 20 34084
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.20 ext data size: 0 objSize in bits: 2208, numReactors: 0
+
+***************************** parsing line type *********************************************
+linetype name: BYBLOCK
+flags: 64 xrefindex: 0 xdep: 0 flags: 64 desc:  length: 0 align: A num dashes, size: 0
+    dashes:
+
+ Remaining bytes: 262
+string area 256 bytes:
+
+linetype control Handle: 4.1.5
+ Remaining bytes: 4
+ reactorsH control Handle: 3.2.822
+ XDicObj control Handle: 5.0.0
+
+ Remaining bytes: 0
+LineTypeMap map Handle= 21 34370
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.21 ext data size: 0 objSize in bits: 2208, numReactors: 0
+
+***************************** parsing line type *********************************************
+linetype name: BYLAYER
+flags: 64 xrefindex: 0 xdep: 0 flags: 64 desc:  length: 0 align: A num dashes, size: 0
+    dashes:
+
+ Remaining bytes: 262
+string area 256 bytes:
+
+linetype control Handle: 4.1.5
+ Remaining bytes: 4
+ reactorsH control Handle: 3.2.824
+ XDicObj control Handle: 5.0.0
+
+ Remaining bytes: 0
+LineTypeMap map Handle= 22 33783
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.22 ext data size: 0 objSize in bits: 2328, numReactors: 0
+
+***************************** parsing line type *********************************************
+linetype name: CONTINUOUS
+flags: 64 xrefindex: 0 xdep: 0 flags: 64 desc: Solid line length: 0 align: A num dashes, size: 0
+    dashes:
+
+ Remaining bytes: 262
+string area 256 bytes:
+
+linetype control Handle: 4.1.5
+ Remaining bytes: 4
+ reactorsH control Handle: 3.2.826
+ XDicObj control Handle: 5.0.0
+
+ Remaining bytes: 0
+LayerMap map Handle= 16 33548
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.16 ext data size: 0 objSize in bits: 106, numReactors: 0
+
+***************************** parsing layer *********************************************
+layer name: 0, entity color: 7
+layer control Handle: 4.1.2 XDicObj control Handle: 3.2.316
+ XRefH control Handle: 5.0.0
+line type Handle: 5.1.22
+ Remaining bytes: 0
+BlockMap map Handle= 31 32534
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.31 ext data size: 0 objSize in bits: 192, numReactors: 0
+
+***************************** parsing block record ******************************************
+block record name: *MODEL_SPACE
+insertion point X: 0, Y: 0, Z: 0
+block control Handle: 4.1.1 XDicObj control Handle: 3.2.462
+ NullH control Handle: 5.0.0
+ blockH control Handle: 3.1.32
+ firstH entity Handle: 4.2.582
+ lastH entity Handle: 4.2.617
+ endBlockHl Handle: 3.1.33
+
+ Remaining bytes: 0
+BlockMap map Handle= 32 40101
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.32 ext data size: 0 graphFlag: 0
+ objSize in bits: 187
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing block *********************************************
+Block name: *MODEL_SPACE
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 33 33390
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.33 ext data size: 0 graphFlag: 0
+ objSize in bits: 73
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing end block *********************************************
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 210 18139
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.210 ext data size: 0 objSize in bits: 192, numReactors: 0
+
+***************************** parsing block record ******************************************
+block record name: *PAPER_SPACE
+insertion point X: 0, Y: 0, Z: 0
+block control Handle: 4.1.1 XDicObj control Handle: 3.2.811
+ NullH control Handle: 5.0.0
+ blockH control Handle: 3.1.212
+ firstH entity Handle: 4.0.0
+ lastH entity Handle: 4.0.0
+ endBlockHl Handle: 3.1.213
+
+ Remaining bytes: 0
+BlockMap map Handle= 212 33475
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.212 ext data size: 0 graphFlag: 0
+ objSize in bits: 187
+entmode: 1, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing block *********************************************
+Block name: *PAPER_SPACE
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 213 18179
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.213 ext data size: 0 graphFlag: 0
+ objSize in bits: 73
+entmode: 1, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing end block *********************************************
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 214 27579
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.1.214 ext data size: 0 objSize in bits: 192, numReactors: 0
+
+***************************** parsing block record ******************************************
+block record name: *PAPER_SPACE
+insertion point X: 0, Y: 0, Z: 0
+block control Handle: 4.1.1 XDicObj control Handle: 3.2.813
+ NullH control Handle: 5.0.0
+ blockH control Handle: 3.1.216
+ firstH entity Handle: 4.0.0
+ lastH entity Handle: 4.0.0
+ endBlockHl Handle: 3.1.217
+
+ Remaining bytes: 0
+BlockMap map Handle= 216 39799
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.216 ext data size: 0 graphFlag: 0
+ objSize in bits: 195
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing block *********************************************
+Block name: *PAPER_SPACE0
+X handleAssoc: 
+owner Handle: 12.1.2
+   Remaining bytes: 5
+ Block Handle: 214. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 217 27619
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.1.217 ext data size: 0 graphFlag: 0
+ objSize in bits: 73
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing end block *********************************************
+X handleAssoc: 
+owner Handle: 12.1.3
+   Remaining bytes: 5
+ Block Handle: 214. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 598 27640
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.2.598 ext data size: 31App Handle: 5.1.18ext data pos: 0.0
+ dxfCode: 0 strLength: 17 str codepage: 30 dxfChar: 68 dxfChar: 101 dxfChar: 115 dxfChar: 105 dxfChar: 103 dxfChar: 110 dxfChar: 67 dxfChar: 101 dxfChar: 110 dxfChar: 116 dxfChar: 101 dxfChar: 114 dxfChar: 32 dxfChar: 68 dxfChar: 97 dxfChar: 116 dxfChar: 97 dxfChar: 2ext data pos: 22.0
+ ext data size: 2127App Handle: 5.2.966ext data pos: 0.0
+ dxfCode: 71ext data pos: 1.0
+ ext data size: 0 objSize in bits: 17460, numReactors: 0
+
+***************************** parsing block record ******************************************
+block record name: PEP
+insertion point X: 0, Y: 0, Z: 0
+block control Handle: 4.1.1 XDicObj control Handle: 3.2.633
+ NullH control Handle: 5.0.0
+ blockH control Handle: 3.2.599
+ firstH entity Handle: 4.2.601
+ lastH entity Handle: 4.2.628
+ endBlockHl Handle: 3.2.600
+
+ Remaining bytes: 0
+BlockMap map Handle= 599 39896
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.599 ext data size: 0 graphFlag: 0
+ objSize in bits: 131
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing block *********************************************
+Block name: PEP
+X handleAssoc: 
+owner Handle: 8.0.0
+   Remaining bytes: 5
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 600 30185
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.600 ext data size: 0 graphFlag: 0
+ objSize in bits: 89
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing end block *********************************************
+X handleAssoc: 
+owner Handle: 12.1.2
+   Remaining bytes: 5
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 611 30208
+
+***************************** parsing table entry *********************************************
+TableEntry Handle: 0.2.611 ext data size: 31App Handle: 5.1.18ext data pos: 0.0
+ dxfCode: 0 strLength: 17 str codepage: 30 dxfChar: 68 dxfChar: 101 dxfChar: 115 dxfChar: 105 dxfChar: 103 dxfChar: 110 dxfChar: 67 dxfChar: 101 dxfChar: 110 dxfChar: 116 dxfChar: 101 dxfChar: 114 dxfChar: 32 dxfChar: 68 dxfChar: 97 dxfChar: 116 dxfChar: 97 dxfChar: 2ext data pos: 22.0
+ ext data size: 2127App Handle: 5.2.966ext data pos: 0.0
+ dxfCode: 71ext data pos: 1.0
+ ext data size: 0 objSize in bits: 17460, numReactors: 0
+
+***************************** parsing block record ******************************************
+block record name: POP
+insertion point X: 0, Y: 0, Z: 0
+block control Handle: 4.1.1 XDicObj control Handle: 3.2.816
+ NullH control Handle: 5.0.0
+ blockH control Handle: 3.2.612
+ firstH entity Handle: 4.2.614
+ lastH entity Handle: 4.2.615
+ endBlockHl Handle: 3.2.613
+
+ Remaining bytes: 0
+BlockMap map Handle= 612 39966
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.612 ext data size: 0 graphFlag: 0
+ objSize in bits: 131
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing block *********************************************
+Block name: POP
+X handleAssoc: 
+owner Handle: 8.0.0
+   Remaining bytes: 5
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+BlockMap map Handle= 613 32511
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.613 ext data size: 0 graphFlag: 0
+ objSize in bits: 89
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing end block *********************************************
+X handleAssoc: 
+owner Handle: 12.1.2
+   Remaining bytes: 5
+ Block Handle: 611. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+--Layer----------------------------------------------------------------------------
+RS_FilterDXF::addLayer,  adding layer: 0
+RS_FilterDXF::EntityAttributes:
+ Color: 7 Linetype: CONTINUOUS Width: 31
+RS_FilterDXF::addLayer: flags
+ Layer is NOT frozen, Layer is NOT locked, Layer is NOT a help layer, plot it.
+RS_FilterDXF::addLayer: OK
+--end layer-------------------------------------------------------------------------
+RS_FilterDXF::addBlock  adding block: *PAPER_SPACERS_FilterDXF::addBlock  adding block: *MODEL_SPACERS_FilterDXF::addBlock  adding block: *PAPER_SPACE0RS_FilterDXF::addBlock  adding block: PEPRS_FilterDXF::addBlock  adding block: POPobject map Handle= 12 18717
+object map Handle= 13 35601
+object map Handle= 14 21071
+object map Handle= 15 36478
+object map Handle= 17 33574
+object map Handle= 18 34861
+object map Handle= 23 21017
+object map Handle= 24 36411
+object map Handle= 25 21052
+object map Handle= 26 35619
+object map Handle= 34 41650
+object map Handle= 39 35372
+object map Handle= 94 26225
+object map Handle= 95 26480
+object map Handle= 99 26502
+object map Handle= 106 20911
+object map Handle= 107 35582
+object map Handle= 126 21752
+object map Handle= 127 36888
+object map Handle= 132 38630
+object map Handle= 158 34885
+object map Handle= 211 41982
+object map Handle= 215 42200
+object map Handle= 234 34699
+object map Handle= 236 35822
+object map Handle= 237 35728
+object map Handle= 238 35916
+object map Handle= 239 21798
+object map Handle= 240 22721
+object map Handle= 241 22824
+object map Handle= 242 22939
+object map Handle= 243 23046
+object map Handle= 244 37300
+object map Handle= 245 37188
+object map Handle= 246 24309
+object map Handle= 247 23164
+object map Handle= 248 22265
+object map Handle= 249 23617
+object map Handle= 250 22385
+object map Handle= 251 37405
+object map Handle= 252 24200
+object map Handle= 253 23391
+object map Handle= 254 22608
+object map Handle= 255 22152
+object map Handle= 268 21106
+object map Handle= 269 36496
+object map Handle= 301 20966
+object map Handle= 302 36255
+object map Handle= 306 33642
+object map Handle= 307 34915
+object map Handle= 308 34948
+object map Handle= 309 18361
+object map Handle= 310 18400
+object map Handle= 311 35193
+object map Handle= 315 36141
+object map Handle= 316 40254
+object map Handle= 325 38599
+object map Handle= 326 38573
+object map Handle= 354 43210
+object map Handle= 357 18440
+object map Handle= 371 42634
+object map Handle= 372 76052
+object map Handle= 373 76022
+object map Handle= 374 42755
+object map Handle= 375 42785
+object map Handle= 430 26549
+object map Handle= 431 26573
+object map Handle= 432 35073
+object map Handle= 446 36522
+object map Handle= 447 36557
+object map Handle= 448 21251
+object map Handle= 449 21286
+object map Handle= 450 21321
+object map Handle= 451 21357
+object map Handle= 452 21393
+object map Handle= 453 21429
+object map Handle= 454 21465
+object map Handle= 455 21501
+object map Handle= 456 21537
+object map Handle= 457 21574
+object map Handle= 458 21609
+object map Handle= 459 21644
+object map Handle= 460 21679
+object map Handle= 461 21715
+object map Handle= 462 39993
+object map Handle= 484 23280
+object map Handle= 485 23504
+object map Handle= 486 22494
+object map Handle= 495 23959
+object map Handle= 496 24083
+object map Handle= 497 24418
+object map Handle= 498 23837
+object map Handle= 499 23727
+object map Handle= 503 42578
+object map Handle= 504 70081
+object map Handle= 505 42522
+object map Handle= 506 64140
+object map Handle= 507 76081
+object map Handle= 511 33508
+object map Handle= 512 40234
+object map Handle= 517 63876
+object map Handle= 518 86341
+object map Handle= 536 26852
+object map Handle= 537 27175
+object map Handle= 538 27222
+object map Handle= 539 39691
+object map Handle= 540 38876
+object map Handle= 541 38855
+object map Handle= 543 39522
+object map Handle= 544 33744
+object map Handle= 545 36635
+object map Handle= 546 62164
+object map Handle= 547 39620
+object map Handle= 548 18476
+object map Handle= 549 86222
+object map Handle= 550 86171
+object map Handle= 551 183298
+object map Handle= 552 62685
+object map Handle= 553 38833
+object map Handle= 554 27249
+object map Handle= 555 40962
+object map Handle= 556 62490
+object map Handle= 557 18524
+object map Handle= 558 26815
+object map Handle= 561 18548
+object map Handle= 564 18577
+object map Handle= 577 35532
+object map Handle= 582 32578
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.582 ext data size: 0 graphFlag: 0
+ objSize in bits: 229
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 100, endX: 150, startY: 0, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 100 , 0
+end point: 150 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 583 32616
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.583 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 150, endX: 150, startY: 0, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 150 , 0
+end point: 150 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 584 32660
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.584 ext data size: 0 graphFlag: 0
+ objSize in bits: 357
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 150, endX: 100, startY: 50, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 150 , 50
+end point: 100 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 585 32712
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.585 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 100, endX: 100, startY: 50, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 100 , 50
+end point: 100 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 586 32756
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.586 ext data size: 0 graphFlag: 0
+ objSize in bits: 229
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 50, endX: 100, startY: 0, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 50 , 0
+end point: 100 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 587 32792
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.587 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 100, endX: 100, startY: 0, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 100 , 0
+end point: 100 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 588 32836
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.588 ext data size: 0 graphFlag: 0
+ objSize in bits: 357
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 100, endX: 50, startY: 50, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 100 , 50
+end point: 50 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 589 32888
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.589 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 50, endX: 50, startY: 50, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 50 , 50
+end point: 50 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 590 32932
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.590 ext data size: 0 graphFlag: 0
+ objSize in bits: 165
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 0, endX: 50, startY: 0, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 0 , 0
+end point: 50 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 591 32960
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.591 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 50, endX: 50, startY: 0, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 50 , 0
+end point: 50 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 592 33004
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.592 ext data size: 0 graphFlag: 0
+ objSize in bits: 293
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 50, endX: 0, startY: 50, endY: 50, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 50 , 50
+end point: 0 , 50
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 593 33048
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.593 ext data size: 0 graphFlag: 0
+ objSize in bits: 165
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 256 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 0, endX: 0, startY: 50, endY: 0, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 5
+ layer Handle: 5.1.16
+   Remaining bytes: 3
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 2
+ nextLinkers Handle: 10.1.12
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 0 , 50
+end point: 0 , 0
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 256 Linetype: BYLAYER Width: 29
+object map Handle= 601 29845
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.601 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 4.57282, endX: 14.1539, startY: 1.95845, endY: 38.4076, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.3
+   Remaining bytes: 5
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 4.57282 , 1.95845
+end point: 14.1539 , 38.4076
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 1 Linetype: BYLAYER Width: 29
+object map Handle= 602 29902
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.602 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 1 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 14.1539, endX: 17.5291, startY: 38.4076, endY: 2.72008, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.4
+   Remaining bytes: 3
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 14.1539 , 38.4076
+end point: 17.5291 , 2.72008
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 1 Linetype: BYLAYER Width: 29
+object map Handle= 603 29957
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.603 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 1 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 17.5291, endX: 23.4084, startY: 2.72008, endY: 38.5164, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.5
+   Remaining bytes: 3
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 17.5291 , 2.72008
+end point: 23.4084 , 38.5164
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 1 Linetype: BYLAYER Width: 29
+object map Handle= 604 30012
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.604 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 23.4084, endX: 24.4972, startY: 38.5164, endY: 1.84965, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.6
+   Remaining bytes: 6
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 5
+ layer Handle: 5.1.16
+   Remaining bytes: 3
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 2
+ nextLinkers Handle: 10.1.23
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 23.4084 , 38.5164
+end point: 24.4972 , 1.84965
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 1 Linetype: BYLAYER Width: 29
+object map Handle= 605 33079
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.605 ext data size: 0 graphFlag: 0
+ objSize in bits: 238
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 1 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing insert *********************************************
+insertionpoint X: 5.59976, Y: 3.6473, Z: 0
+scale X: 1, Y: 1, Z: 1, angle: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 8
+ layer Handle: 5.1.16
+   Remaining bytes: 6
+ nextLinkers Handle: 12.1.12
+
+ Remaining bytes: 4
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 3
+BLOCK HEADER Handle: 5.2.598
+RS_FilterDXF::addInsertobject map Handle= 606 33122
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.606 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 2 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 58.9492, endX: 92.3743, startY: 33.2418, endY: 33.0242, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 58.9492 , 33.2418
+end point: 92.3743 , 33.0242
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 2 Linetype: BYLAYER Width: 29
+object map Handle= 607 33175
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.607 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 0, numReactors: 0, nextLinkers: 1 entity color: 2 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 92.3743, endX: 58.6226, startY: 33.0242, endY: 23.5583, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 2
+ layer Handle: 5.1.16
+   Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 92.3743 , 33.0242
+end point: 58.6226 , 23.5583
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 2 Linetype: BYLAYER Width: 29
+object map Handle= 608 33228
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.608 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 2 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 58.6226, endX: 93.4631, startY: 23.5583, endY: 23.5583, startZ: 0, endZ: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 5
+ layer Handle: 5.1.16
+   Remaining bytes: 3
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 2
+ nextLinkers Handle: 10.1.8
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 58.6226 , 23.5583
+end point: 93.4631 , 23.5583
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 2 Linetype: BYLAYER Width: 29
+object map Handle= 614 32413
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.614 ext data size: 0 graphFlag: 0
+ objSize in bits: 297
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing circle *********************************************
+startX: 0.76214, startY: 18.9318, startZ: 0 radius: 7.75198X handleAssoc: 
+owner Handle: 12.1.3
+   Remaining bytes: 5
+ Block Handle: 611. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addCircleobject map Handle= 615 32462
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.615 ext data size: 0 graphFlag: 0
+ objSize in bits: 297
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing circle *********************************************
+startX: 14.2628, startY: 4.13453, startZ: 0 radius: 7.83791X handleAssoc: 
+owner Handle: 12.1.4
+   Remaining bytes: 5
+ Block Handle: 611. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addCircleobject map Handle= 616 33284
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.616 ext data size: 0 graphFlag: 0
+ objSize in bits: 238
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing insert *********************************************
+insertionpoint X: 116.327, Y: 14.0924, Z: 0
+scale X: 1, Y: 1, Z: 1, angle: 0
+X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 8
+ layer Handle: 5.1.16
+   Remaining bytes: 6
+ nextLinkers Handle: 12.1.8
+
+ Remaining bytes: 4
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 3
+BLOCK HEADER Handle: 5.2.611
+RS_FilterDXF::addInsertobject map Handle= 617 33327
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.617 ext data size: 0 graphFlag: 0
+ objSize in bits: 429
+entmode: 0, numReactors: 0, nextLinkers: 0 entity color: 3 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing circle arc *********************************************
+startX: 72.5693, Y: 7.71587, : 0 radius: 13.2089 start angle: 0.237871 end angle: 1.82149X handleAssoc: 
+ Block Handle: 0. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addArcobject map Handle= 627 30070
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.627 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 4 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 3.04854, endX: 38.6512, startY: 30.3561, endY: 29.0505, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.29
+   Remaining bytes: 6
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 5
+ layer Handle: 5.1.16
+   Remaining bytes: 3
+ nextLinkers Handle: 12.1.23
+
+ Remaining bytes: 1
+ nextLinkers Handle: 6.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 3.04854 , 30.3561
+end point: 38.6512 , 29.0505
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 4 Linetype: BYLAYER Width: 29
+object map Handle= 628 30128
+
+***************************** parsing entity *********************************************
+Entity Handle: 0.2.628 ext data size: 0 graphFlag: 0
+ objSize in bits: 365
+entmode: 2, numReactors: 0, nextLinkers: 0 entity color: 4 ltScale: 1
+ invisibleFlag: 0
+***************************** parsing line *********************************************
+startX: 38.6512, endX: 1.85091, startY: 29.0505, endY: 21.3255, startZ: 0, endZ: 0
+X handleAssoc: 
+owner Handle: 12.1.30
+   Remaining bytes: 5
+ Block Handle: 598. XDicObj control Handle: 3.0.0
+Remaining bytes: 4
+ layer Handle: 5.1.16
+   Remaining bytes: 2
+ nextLinkers Handle: 8.0.0
+
+ Remaining bytes: 1
+ nextLinkers Handle: 4.0.0
+
+ Remaining bytes: 0
+RS_FilterDXF::addLine:
+start point: 38.6512 , 29.0505
+end point: 1.85091 , 21.3255
+RS_FilterDXF::EntityAttributes
+Layer: 0 Color: 4 Linetype: BYLAYER Width: 29
+object map Handle= 633 39835
+object map Handle= 634 62329
+object map Handle= 639 18603
+object map Handle= 623 26621
+object map Handle= 624 26597
+object map Handle= 625 26732
+object map Handle= 626 26525
+object map Handle= 627 26758
+object map Handle= 628 26708
+object map Handle= 629 26677
+object map Handle= 630 26645
+object map Handle= 631 26791
+object map Handle= 621 38704
+object map Handle= 622 82815
+object map Handle= 623 42947
+object map Handle= 624 81978
+object map Handle= 625 42903
+object map Handle= 626 81916
+object map Handle= 627 43133
+object map Handle= 628 82083
+object map Handle= 629 24526
+object map Handle= 630 62761
+object map Handle= 631 33409
+object map Handle= 632 40166
+object map Handle= 633 39733
+object map Handle= 634 62259
+object map Handle= 635 62389
+object map Handle= 636 39923
+object map Handle= 637 62440
+object map Handle= 638 41310
+object map Handle= 639 63503
+object map Handle= 640 41354
+object map Handle= 641 63563
+object map Handle= 642 40445
+object map Handle= 643 63073
+object map Handle= 644 40488
+object map Handle= 645 63131
+object map Handle= 646 40402
+object map Handle= 647 63009
+object map Handle= 648 41072
+object map Handle= 649 63367
+object map Handle= 650 41116
+object map Handle= 651 63431
+object map Handle= 652 34985
+object map Handle= 653 41160
+object map Handle= 654 35029
+object map Handle= 655 41254
+object map Handle= 656 40271
+object map Handle= 657 62831
+object map Handle= 658 40314
+object map Handle= 659 62891
+object map Handle= 660 40358
+object map Handle= 661 62953
+object map Handle= 662 41029
+object map Handle= 663 63189
+object map Handle= 664 27394
+object map Handle= 665 24573
+object map Handle= 666 25727
+object map Handle= 667 25754
+object map Handle= 668 25111
+object map Handle= 669 25700
+object map Handle= 670 25166
+object map Handle= 671 25226
+object map Handle= 672 25258
+object map Handle= 673 25198
+object map Handle= 674 25138
+object map Handle= 675 38427
+object map Handle= 676 38508
+object map Handle= 677 26160
+object map Handle= 678 25290
+object map Handle= 679 38455
+object map Handle= 680 25642
+object map Handle= 681 25674
+object map Handle= 682 25322
+object map Handle= 683 25594
+object map Handle= 684 25402
+object map Handle= 685 25498
+object map Handle= 686 25546
+object map Handle= 687 25450
+object map Handle= 688 25354
+object map Handle= 689 26102
+object map Handle= 690 26134
+object map Handle= 691 25782
+object map Handle= 692 26054
+object map Handle= 693 25862
+object map Handle= 694 25958
+object map Handle= 695 26006
+object map Handle= 696 25910
+object map Handle= 697 25814
+object map Handle= 698 27270
+object map Handle= 699 34656
+object map Handle= 700 40531
+object map Handle= 701 35489
+object map Handle= 702 41441
+object map Handle= 703 36368
+object map Handle= 704 42991
+object map Handle= 705 41607
+object map Handle= 706 63750
+object map Handle= 707 62652
+object map Handle= 708 86247
+object map Handle= 709 41398
+object map Handle= 710 63677
+object map Handle= 711 35685
+object map Handle= 712 42418
+object map Handle= 713 36592
+object map Handle= 714 43051
+object map Handle= 715 83542
+object map Handle= 716 40134
+object map Handle= 717 63949
+object map Handle= 718 182844
+object map Handle= 719 62227
+object map Handle= 720 63992
+object map Handle= 721 182936
+object map Handle= 722 69976
+object map Handle= 723 64035
+object map Handle= 724 75917
+object map Handle= 725 37145
+object map Handle= 726 43286
+object map Handle= 727 37732
+object map Handle= 728 48331
+object map Handle= 729 37775
+object map Handle= 730 49170
+object map Handle= 731 37818
+object map Handle= 732 50009
+object map Handle= 733 37861
+object map Handle= 734 50848
+object map Handle= 735 44050
+object map Handle= 736 84493
+object map Handle= 737 44007
+object map Handle= 738 83654
+object map Handle= 739 38340
+object map Handle= 740 60077
+object map Handle= 741 37904
+object map Handle= 742 51687
+object map Handle= 743 37559
+object map Handle= 744 44975
+object map Handle= 745 38078
+object map Handle= 746 55043
+object map Handle= 747 37602
+object map Handle= 748 45814
+object map Handle= 749 44093
+object map Handle= 750 85332
+object map Handle= 751 38297
+object map Handle= 752 59238
+object map Handle= 753 37991
+object map Handle= 754 53365
+object map Handle= 755 37689
+object map Handle= 756 47492
+object map Handle= 757 37516
+object map Handle= 758 44136
+object map Handle= 759 36097
+object map Handle= 760 42815
+object map Handle= 761 82771
+object map Handle= 762 183141
+object map Handle= 763 37947
+object map Handle= 764 52526
+object map Handle= 765 38034
+object map Handle= 766 54204
+object map Handle= 767 37645
+object map Handle= 768 46653
+object map Handle= 769 38209
+object map Handle= 770 57560
+object map Handle= 771 38253
+object map Handle= 772 58399
+object map Handle= 773 38383
+object map Handle= 774 60916
+object map Handle= 775 38165
+object map Handle= 776 56721
+object map Handle= 777 38121
+object map Handle= 778 55882
+object map Handle= 779 38789
+object map Handle= 780 61815
+object map Handle= 781 82660
+object map Handle= 782 183254
+object map Handle= 783 183350
+object map Handle= 784 38660
+object map Handle= 785 61755
+object map Handle= 786 18642
+object map Handle= 788 82040
+object map Handle= 789 183028
+FilterDXFRW::~RS_FilterDXFRW(): OK

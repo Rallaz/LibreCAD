@@ -22,6 +22,10 @@ include(../../settings.pro)
 include(../../common.pro)
 
 # DEFINES += DRW_DBG
+debug {
+    DEFINES += DRWG_DBG
+    QT       += core
+}
 
 SOURCES += \
     src/libdxfrw.cpp \

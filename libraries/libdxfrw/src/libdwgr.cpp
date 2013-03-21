@@ -19,6 +19,11 @@
 #include "dwgreader.h"
 //#include "dxfwriter.h"
 
+#ifdef DRWG_DBG
+#include <QTextStream>
+QString pepdbg;
+QTextStream readLog(&pepdbg);
+#endif
 
 using namespace std;
 
