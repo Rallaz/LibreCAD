@@ -394,6 +394,7 @@ public:
 
     virtual void applyExtrusion(){DRW_Point::applyExtrusion();}
     void parseCode(int code, dxfReader *reader);
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
 
 public:
     UTF8STRING name;             /*!< block name, code 2 */

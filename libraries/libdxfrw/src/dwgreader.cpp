@@ -323,16 +323,11 @@ bool dwgReader15::readDwgTables() {
             parseAttribs(bk);
             bk->basePoint = bkR->basePoint;
             bk->flags = bkR->flags;
-//            bk->handleBlock = bkR->handle;
-            if (bk->handleBlock==0){
-                char ppp = bk->name[1];
-                if (ppp=='P'){
-//                if (bk->name[1]=='P')
-                    bk->handleBlock==-1;}
-            }
-//            if (bk->handleBlock==0 && bk->name[1]=='P'){
-//                bk->handleBlock==-1;
-//            }
+            if (bk->handleBlock==0 && bk->name[0]=='*'){//verify model/paper space
+                if (bk->name[1]=='P')
+                    bk->handleBlock = -1;
+            } else
+                bk->handleBlock = bkR->handle;
             blockmap[bk->handleBlock] = bk;
         }
 
@@ -409,7 +404,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             parseAttribs(&e);
             intfa.addEllipse(e);
             break; }
-/*        case 7: {//minsert = 8
+        case 7: {//minsert = 8
             DRW_Insert e;
             ret = e.parseDwg(version, &buff);
             if (e.handleBlock != currBlock) {
@@ -418,7 +413,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             }
             parseAttribs(&e);
             intfa.addInsert(e);
-            break; }*/
+            break; }
 /*        case 77: {
             DRW_LWPolyline e;
             e.isEnd = true;

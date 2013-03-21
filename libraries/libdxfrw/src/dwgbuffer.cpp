@@ -412,34 +412,25 @@ std::string dwgBuffer::getVariableUtf8Text(){
     return decoder->toUtf8(strData);
 }
 
-void dwgBuffer::getExtrusion(DRW_Coord *ext)
-{
-
-    /*
-    Bit Extrusion
-    
-    For R13-R14 this is 3BD. 
-    We are asserting that the version is not R13-R14; this values should
-    be read by the user
-    */
-    
-    /*
-    For R2000, this is a single bit, followed optionally
-    by 3BD.*/
-    duint8 def_val = getBit();
-    if ( def_val )
-    {  /* If the single bit is 1, the extrusion value is assumed to be 0,0,1 and
-    no explicit extrusion is stored. */
-        ext->x = 0;
-        ext->y = 0;
-        ext->z = 1;
-    }
-    else
-    { /* If the single bit is 0, then it will be followed by 3BD. */
-        ext->x = getBitDouble();
-        ext->y = getBitDouble();
-        ext->z = getBitDouble();
-    }
+/* Bit Extrusion
+* For R13-R14 this is 3BD. We are asserting that the version
+* is not R13-R14; this values should be read by the user
+* For R2000, this is a single bit, If the single bit is 1,
+* the extrusion value is assumed to be 0,0,1 and no explicit
+* extrusion is stored. If the single bit is 0, then it will
+* be followed by 3BD.
+*/
+DRW_Coord dwgBuffer::getExtrusion(bool b_R2000_style) {
+    DRW_Coord ext(0.0,0.0,1.0);
+    if ( b_R2000_style )
+        /* If the bit is one, the extrusion value is assumed to be 0,0,1*/
+        if ( getBit() == 1 )
+            return ext;
+    /*R13-R14 or bit == 0*/
+    ext.x = getBitDouble();
+    ext.y = getBitDouble();
+    ext.z = getBitDouble();
+    return ext;
 }
 
 /**Reads compresed Double with default (max. 64 + 2 bits) returns a floating point double of 64 bits (DD) **/

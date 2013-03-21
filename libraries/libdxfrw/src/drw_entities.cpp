@@ -884,6 +884,7 @@ void DRW_Block::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
 bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf){
     bool ret = DRW_Entity::parseDwg(version, buf);
     if (!ret)
@@ -896,9 +897,9 @@ bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf){
             name = buf->getVariableUtf8Text();
         }
         DBG("Block name: "); DBG(name.c_str()); DBG("\n");
-    } else
-    DBG("\n***************************** parsing end block *********************************************\n");
-
+    } else {
+        DBG("\n***************************** parsing end block *********************************************\n");
+    }
 //    X handleAssoc;   //X
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
     if (!ret)
@@ -940,6 +941,60 @@ void DRW_Insert::parseCode(int code, dxfReader *reader){
         DRW_Point::parseCode(code, reader);
         break;
     }
+}
+
+bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_Entity::parseDwg(version, buf);
+    if (!ret)
+        return ret;
+    DBG("\n***************************** parsing insert *********************************************\n");
+
+    basePoint.x = buf->getBitDouble();
+    basePoint.y = buf->getBitDouble();
+    basePoint.z = buf->getBitDouble();
+    DBG("insertionpoint X: "); DBG(basePoint.x); DBG(", Y: "); DBG(basePoint.y); DBG(", Z: "); DBG(basePoint.z); DBG("\n");
+    if (version < DRW::AC1015) {//14-
+        xscale = buf->getBitDouble();
+        yscale = buf->getBitDouble();
+        zscale = buf->getBitDouble();
+    } else {
+        duint8 dataFlags = buf->get2Bits();
+        if (dataFlags == 3){
+            //none default value 1,1,1
+        } else if (dataFlags == 1){ //x default value 1, y & z can be x value
+            yscale = buf->getDefaultDouble(xscale);
+            zscale = buf->getDefaultDouble(xscale);
+        } else if (dataFlags == 2){
+            xscale = buf->getRawDouble();
+            yscale = zscale = xscale;
+        } else { //dataFlags == 0
+            xscale = buf->getRawDouble();
+            yscale = buf->getDefaultDouble(xscale);
+            zscale = buf->getDefaultDouble(xscale);
+        }
+    }
+    angle = buf->getBitDouble();
+    DBG("scale X: "); DBG(xscale); DBG(", Y: "); DBG(yscale); DBG(", Z: "); DBG(zscale); DBG(", angle: "); DBG(angle); DBG("\n");
+    if (version < DRW::AC1015) //14-
+        extPoint = buf->getExtrusion(false);
+    else
+        extPoint = buf->getExtrusion(true);
+
+    bool hasAttrib = buf->getBit();
+    if (version > DRW::AC1015) {//2004+
+        dint32 objCount = buf->getBitLong();
+    }
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    dwgHandle blockRecH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
+    DBG("BLOCK HEADER Handle: "); DBG(blockRecH.code); DBG(".");
+    DBG(blockRecH.size); DBG("."); DBG(blockRecH.ref); DBG("\n");
+    /*todo: attribs follows*/
+
+//    X handleAssoc;   //X
+    if (!ret)
+        return ret;
+//    RS crc;   //RS */
+    return buf->isGood();
 }
 
 void DRW_LWPolyline::applyExtrusion(){
