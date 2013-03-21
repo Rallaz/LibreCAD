@@ -6,6 +6,7 @@ SUBDIRS     = \
     libraries \
     librecad \
     plugins \
-    tools
+    tools \
+    dwgdevel
 
 exists( custom.pro ):include( custom.pro )
