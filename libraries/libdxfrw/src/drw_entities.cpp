@@ -884,8 +884,10 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf){
         basePoint.z = buf->getBitDouble(); /* Elevation BD --- */
         basePoint.x = buf->getRawDouble(); /* Insertion pt 2RD 10 */
         basePoint.y = buf->getRawDouble();
+        DBG("Insertion X: "); DBG(basePoint.x); DBG(", Y: "); DBG(basePoint.y); DBG(", Z: "); DBG(basePoint.z); DBG("\n");
         secPoint.x = buf->getRawDouble();  /* Alignment pt 2RD 11 */
         secPoint.y = buf->getRawDouble();
+        DBG("Alignment X: "); DBG(secPoint.x); DBG(", Y: "); DBG(secPoint.y); DBG("\n");
         extPoint.x = buf->getBitDouble(); /* Extrusion 3BD 210 */
         extPoint.y = buf->getBitDouble();
         extPoint.z = buf->getBitDouble();
@@ -894,53 +896,62 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf){
         angle = buf->getBitDouble(); /* Rotation ang BD 50 */
         height = buf->getBitDouble(); /* Height BD 40 */
         widthscale = buf->getBitDouble(); /* Width factor BD 41 */
+        DBG("thickness: "); DBG(thickness); DBG(", Oblique ang: "); DBG(oblique); DBG(", Width: "); DBG(widthscale);
+        DBG(", Rotation: "); DBG(angle); DBG(", height: "); DBG(height); DBG("\n");
         text = buf->getVariableUtf8Text(); /* Text value TV 1 */
+        DBG("text string: "); DBG(text.c_str());DBG("\n");
         textgen = buf->getBitShort(); /* Generation BS 71 */
         alignH = (HAlign)buf->getBitShort(); /* Horiz align. BS 72 */
         alignV = (VAlign)buf->getBitShort(); /* Vert align. BS 73 */
     }
     if (version > DRW::AC1014) {//2000+
         duint8 data_flags = buf->getRawChar8(); /* DataFlags RC Used to determine presence of subsquent data */
-        if ( data_flags & 0x01 )
+        DBG("data_flags: "); DBG(data_flags); DBG("\n");
+        if ( !(data_flags & 0x01) )
         { /* Elevation RD --- present if !(DataFlags & 0x01) */
             basePoint.z = buf->getRawDouble();
         }
         basePoint.x = buf->getRawDouble(); /* Insertion pt 2RD 10 */
         basePoint.y = buf->getRawDouble();
-        if ( data_flags & 0x02 )
+        DBG("Insertion X: "); DBG(basePoint.x); DBG(", Y: "); DBG(basePoint.y); DBG(", Z: "); DBG(basePoint.z); DBG("\n");
+        if ( !(data_flags & 0x02) )
         { /* Alignment pt 2DD 11 present if !(DataFlags & 0x02), use 10 & 20 values for 2 default values.*/
-            extPoint.x = buf->getDefaultDouble(basePoint.x);
-            extPoint.y = buf->getDefaultDouble(basePoint.y);
+            secPoint.x = buf->getDefaultDouble(basePoint.x);
+            secPoint.y = buf->getDefaultDouble(basePoint.y);
         }
         else
         {
-            extPoint = basePoint;
+            secPoint = basePoint;
         }
-        buf->getExtrusion(&extPoint); /* Extrusion BE 210 */
+        DBG("Alignment X: "); DBG(secPoint.x); DBG(", Y: "); DBG(secPoint.y); DBG("\n");
+        extPoint = buf->getExtrusion(true); /* Extrusion BE 210 */
         thickness = buf->getThickness(true); /* Thickness BT 39 */
-        if ( data_flags & 0x04 )
+        if ( !(data_flags & 0x04) )
         { /* Oblique ang RD 51 present if !(DataFlags & 0x04) */
             oblique = buf->getRawDouble();
         }
-        if ( data_flags & 0x08 )
+        if ( !(data_flags & 0x08) )
         { /* Rotation ang RD 50 present if !(DataFlags & 0x08) */
             angle = buf->getRawDouble();
         }
         height = buf->getRawDouble(); /* Height RD 40 */
-        if ( data_flags & 0x10 )
+        if ( !(data_flags & 0x10) )
         { /* Width factor RD 41 present if !(DataFlags & 0x10) */
             widthscale = buf->getRawDouble();
         }
+        DBG("thickness: "); DBG(thickness); DBG(", Oblique ang: "); DBG(oblique); DBG(", Width: "); DBG(widthscale);
+        DBG(", Rotation: "); DBG(angle); DBG(", height: "); DBG(height); DBG("\n");
         text = buf->getVariableUtf8Text(); /* Text value TV 1 */
-        if ( data_flags & 0x20 )
+        DBG("text string: "); DBG(text.c_str());DBG("\n");
+        if ( !(data_flags & 0x20) )
         { /* Generation BS 71 present if !(DataFlags & 0x20) */
             textgen = buf->getBitShort();
         }
-        if ( data_flags & 0x40 )
+        if ( !(data_flags & 0x40) )
         { /* Horiz align. BS 72 present if !(DataFlags & 0x40) */
             alignH = (HAlign)buf->getBitShort();
         }
-        if ( data_flags & 0x80 )
+        if ( !(data_flags & 0x80) )
         { /* Vert align. BS 73 present if !(DataFlags & 0x80) */
             alignV = (VAlign)buf->getBitShort();
         }
@@ -952,7 +963,9 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf){
         return ret;
     
     styleH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
-    
+    DBG("text style Handle: "); DBG(styleH.code); DBG(".");
+    DBG(styleH.size); DBG("."); DBG(styleH.ref); DBG("\n");
+
     /* CRC X --- */
     return buf->isGood();
 }
