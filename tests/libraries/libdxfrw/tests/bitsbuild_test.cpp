@@ -15,43 +15,43 @@
 #include	"bitsbuild.h"
 
 TEST(DRW_Text, addBits) {
-//	char buff[128] = {0};
+	char buff[128] = {0};
 	
-//	int crt_off = 0;
+	int crt_off = 0;
 	
-//	crt_off = addBits(crt_off,buff,_ 1,_ 1,_ BITS_STOP_MARKER);
-//	EXPECT_EQ(buff[0],1);
-//	crt_off = addBits(crt_off,buff,_ 1,_ 1,_ BITS_STOP_MARKER);
-//	EXPECT_EQ(buff[0],3);
-//	crt_off = addBits(crt_off,buff,_ 2,_ 3,_ BITS_STOP_MARKER);
-//	EXPECT_EQ(buff[0],15);
+	crt_off = addBits(crt_off,buff,_ 1,_ 1,_ BITS_STOP_MARKER);
+	EXPECT_EQ((unsigned char)buff[0],(unsigned char)128);
+	crt_off = addBits(crt_off,buff,_ 1,_ 1,_ BITS_STOP_MARKER);
+	EXPECT_EQ((unsigned char)buff[0],(unsigned char)192);
+	crt_off = addBits(crt_off,buff,_ 2,_ 3,_ BITS_STOP_MARKER);
+	EXPECT_EQ((unsigned char)buff[0],(unsigned char)240);
 	
-//	crt_off = 0;
-//	buff[0] = 0;
-//	crt_off = addBits(crt_off,buff,
-//					  _ 1,_ 1,
-//					  _ 1,_ 1,
-//					  _ 2,_ 3,
-//					  _ BITS_STOP_MARKER);
-//	EXPECT_EQ(buff[0],15);
+	crt_off = 0;
+	buff[0] = 0;
+	crt_off = addBits(crt_off,buff,
+					  _ 1,_ 1,
+					  _ 1,_ 1,
+					  _ 2,_ 3,
+					  _ BITS_STOP_MARKER);
+	EXPECT_EQ((unsigned char)buff[0],(unsigned char)240);
 	
 }
 
 TEST(DRW_Text, addRawBytes) {
-//	char buff[64] = {0};
-//	char buff_src[64] = {0};
-//	int crt_off = 0;
+	char buff[64] = {0};
+	char buff_src[64] = {0};
+	int crt_off = 0;
 
-//	for ( int i = 0; i < 64; i++)
-//	{
-//		buff_src[i] = (char)i;
-//	}
+	for ( int i = 0; i < 64; i++)
+	{
+		buff_src[i] = (char)i;
+	}
 
-//	crt_off = addRawBytes( crt_off, buff, buff_src, 64 );
-//	EXPECT_EQ(crt_off,64*8);
-//	for ( int i = 0; i < 64; i++)
-//	{
-//		EXPECT_EQ(buff[i],buff_src[i]);
-//	}
+	crt_off = addRawBytes( crt_off, buff, buff_src, 64 );
+	EXPECT_EQ(crt_off,64*8);
+	for ( int i = 0; i < 64; i++)
+	{
+		EXPECT_EQ(buff[i],buff_src[i]);
+	}
 }
 

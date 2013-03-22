@@ -151,8 +151,9 @@ inline bool getABit(int off, char * p_buff)
 
 inline void printBuffer(char * p_buff,int bits)
 {
-	QString s = "0x";
+	QString s = "[0x";
 	s.append( QString::number( (quint64)p_buff, 16 ) );
+	s.append( "] " );
 	for ( int i = 0; i < bits; i++ )
 	{
 		s.append( getABit(i,p_buff) ? "1 " : "0 " );
@@ -184,14 +185,14 @@ inline int addBits(int off, char * p_buff, ...)
     return off;
 }
 
-inline int addRawBytes(int off, char * p_buff, char * p_inp, int cnt )
+inline int addRawBytes(int off, char * p_buff, const char * p_inp, int cnt )
 {
 	if ( cnt <= 0 )
 		return off;
 	for ( int j = 0; j < cnt; j++ )
 	{
 		char loc_exp[8] = { BITS_D8(p_inp[j]) };
-        for ( int i = 7; i >= 0; i-- )
+        for ( int i = 0; i < 8; i++ )
         {
             addABit(off,p_buff,loc_exp[i]);
             off++;
