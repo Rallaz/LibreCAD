@@ -24,7 +24,7 @@
 	( a7 << 1 ) | \
 	( a8 << 0 ) )
 
-
+ 
 TEST(dwgBuffer, initFromChar) {
 	unsigned char tst[] = { 0x00, 0x01 };
 	dwgBuffer 	buf((char*)tst, sizeof(tst) );
@@ -367,7 +367,146 @@ TEST(dwgBuffer, getRawShort16) {
 	EXPECT_EQ( buf.getRawShort16(), 3 );
 }
 
+TEST(dwgBuffer, getRawDouble) {
+	char tst[64];
 
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	double * pd;
+	RESET_BUFF; pd = (double*)&tst[0];
+	
+	*pd = 0.0; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 0.0 );
+	*pd = 1.0; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 1.0 );
+	*pd = -1.0; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), -1.0 );
+	*pd = 1.11; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 1.11 );
+	*pd = -1.11; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), -1.11 );
+	*pd = 1.62523e-319; buf.setPosition(0);
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 1.62523e-319 );
+	
+	buf.setPosition(0);
+	*pd = 0.0; pd++;
+	*pd = 1.0; pd++;
+	*pd = -1.0; pd++;
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 0.0 );
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), 1.0 );
+	EXPECT_DOUBLE_EQ( buf.getRawDouble(), -1.0 );
+}
+
+TEST(dwgBuffer, getRawLong32) {
+	char tst[64];
+
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	
+	duint32 * pd;
+	RESET_BUFF; pd = (duint32*)&tst[0];
+	
+	*pd = 0; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)0 );
+	*pd = 1; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)1 );
+	*pd = 10; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)10 );
+	*pd = 100; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)100 );
+	*pd = 1000; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)1000 );
+	*pd = 10000; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)10000 );
+	*pd = 100000; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)100000 );
+	*pd = 0xFFFFFFFF; buf.setPosition(0);
+	EXPECT_EQ( buf.getRawLong32(), (duint32)0xFFFFFFFF );
+
+}
+
+TEST(dwgBuffer, getModularChar) {
+	char tst[64];
+
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	
+	RESET_BUFF;
+	tst[0] = 0; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)0 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 0;
+	tst[1] = 0x80 | 0;
+	tst[2] = 0; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)0 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 0;
+	tst[1] = 0x80 | 0;
+	tst[2] = 0x80 | 0;
+	tst[3] = 0; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)0 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 1;
+	tst[1] = 0x80 | 0;
+	tst[2] = 0x80 | 0;
+	tst[3] = 0; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)1 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 1;
+	tst[1] = 0x80 | 0;
+	tst[2] = 0x80 | 0;
+	tst[3] = 0x40; // ending marker and negative marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)-1 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 1;
+	tst[1] = 0x80 | 1;
+	tst[2] = 0x80 | 1;
+	tst[3] = 0; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)16513 );
+	
+	RESET_BUFF;
+	tst[0] = 0x80 | 1;
+	tst[1] = 0x80 | 1;
+	tst[2] = 0x80 | 1;
+	tst[3] = 0x05; // ending marker
+	EXPECT_EQ( buf.getModularChar(), (dint32)10502273 );
+	
+}
+
+TEST(dwgBuffer, getModularShort) {
+	char tst[64];
+	
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+
+	RESET_BUFF;
+	tst[0] =        0; tst[1] = 0;  // ending marker
+	EXPECT_EQ( buf.getModularShort(), (dint32)0 );
+
+	RESET_BUFF;
+	tst[0] = 0; tst[1] = 0x80 | 0;
+	tst[2] = 0; tst[3] =        0;  // ending marker
+	EXPECT_EQ( buf.getModularShort(), (dint32)0 );
+	
+	RESET_BUFF;
+	tst[0] = 0; tst[1] = 0x80 | 0;
+	tst[2] = 0; tst[3] = 0x80 | 0;
+	tst[4] = 0; tst[5] =        0;  // ending marker
+	EXPECT_EQ( buf.getModularShort(), (dint32)0 );
+	
+	RESET_BUFF;
+	tst[0] = 1; tst[1] = 0x80 | 0;
+	tst[2] = 0; tst[3] = 0x80 | 0;
+	tst[4] = 0; tst[5] =        0;  // ending marker
+	EXPECT_EQ( buf.getModularShort(), (dint32)1 );
+	
+	RESET_BUFF;
+	tst[0] = 1; tst[1] = 0x80 | 1;
+	tst[2] = 0; tst[3] = 0x80 | 0;
+	tst[4] = 0; tst[5] =        0;  // ending marker
+	EXPECT_EQ( buf.getModularShort(), (dint32)257 );
+}
 
 
 
