@@ -9,6 +9,7 @@ Info.plist
 *.la
 
 *~
+*.log
 
 # filenames, anywhere
 Makefile.in
