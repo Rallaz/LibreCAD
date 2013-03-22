@@ -380,7 +380,7 @@ public:
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
 
 public:
-    UTF8STRING name;             /*!< block name, code 2 */
+    UTF8STRING name;         /*!< block name, code 2 */
     double xscale;           /*!< x scale factor, code 41 */
     double yscale;           /*!< y scale factor, code 42 */
     double zscale;           /*!< z scale factor, code 43 */
@@ -389,6 +389,8 @@ public:
     int rowcount;            /*!< row count, code 71 */
     double colspace;         /*!< column space, code 44 */
     double rowspace;         /*!< row space, code 45 */
+public: //only for read dwg
+    dwgHandle blockRecH;
 };
 
 //! Class to handle lwpolyline entity

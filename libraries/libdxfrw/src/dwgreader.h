@@ -51,6 +51,7 @@ public:
     virtual bool readDwgTables() = 0;
     virtual bool readDwgEntity(objHandle& obj, DRW_Interface& intfa) = 0;
     void parseAttribs(DRW_Entity* e);
+    std::string findTableName(DRW::TTYPE table, dint32 handle);
 
     void setCodePage(std::string *c){decoder.setCodePage(c);}
     std::string getCodePage(){ return decoder.getCodePage();}
@@ -61,6 +62,9 @@ public:
     std::map<int, DRW_Layer*> layermap;
     std::map<int, DRW_Block_Record*> block_recmap;
     std::map<int, DRW_Block*> blockmap;
+    std::map<int, DRW_Textstyle*> stylemap;
+    std::map<int, DRW_Dimstyle*> dimstylemap;
+    std::map<int, DRW_Vport*> vportmap;
     int currBlock;
 
 protected:

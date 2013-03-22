@@ -41,6 +41,45 @@ void dwgReader::parseAttribs(DRW_Entity* e){
     }
 }
 
+std::string dwgReader::findTableName(DRW::TTYPE table, dint32 handle){
+    std::string name;
+    switch (table){
+    case DRW::STYLE:{
+        std::map<int, DRW_Textstyle*>::iterator st_it = stylemap.find(handle);
+        if (st_it != stylemap.end())
+            name = (st_it->second)->name;
+        break;}
+    case DRW::DIMSTYLE:{
+        std::map<int, DRW_Dimstyle*>::iterator ds_it = dimstylemap.find(handle);
+        if (ds_it != dimstylemap.end())
+            name = (ds_it->second)->name;
+        break;}
+    case DRW::BLOCK_RECORD:{ //use DRW_Block because name are more correct
+        std::map<int, DRW_Block*>::iterator bk_it = blockmap.find(handle);
+        if (bk_it != blockmap.end())
+            name = (bk_it->second)->name;
+        break;}
+    case DRW::VPORT:{
+        std::map<int, DRW_Vport*>::iterator vp_it = vportmap.find(handle);
+        if (vp_it != vportmap.end())
+            name = (vp_it->second)->name;
+        break;}
+    case DRW::LAYER:{
+        std::map<int, DRW_Layer*>::iterator ly_it = layermap.find(handle);
+        if (ly_it != layermap.end())
+            name = (ly_it->second)->name;
+        break;}
+    case DRW::LTYPE:{
+        std::map<int, DRW_LType*>::iterator lt_it = ltypemap.find(handle);
+        if (lt_it != ltypemap.end())
+            name = (lt_it->second)->name;
+        break;}
+    default:
+        break;
+    }
+    return name;
+}
+
 bool dwgReader15::readFileHeader() {
     version = parent->getVersion();
     decoder.setVersion(version);
@@ -406,7 +445,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
                 currBlock = e.handleBlock;
                 intfa.setBlock(e.handleBlock);
             }
-            parseAttribs(&e);
+            e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
             intfa.addInsert(e);
             break; }
 /*        case 77: {

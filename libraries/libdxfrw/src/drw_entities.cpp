@@ -788,7 +788,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf){
         dint32 objCount = buf->getBitLong();
     }
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
-    dwgHandle blockRecH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
+    blockRecH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
     DBG("BLOCK HEADER Handle: "); DBG(blockRecH.code); DBG(".");
     DBG(blockRecH.size); DBG("."); DBG(blockRecH.ref); DBG("\n");
     /*todo: attribs follows*/
