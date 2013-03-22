@@ -130,7 +130,7 @@ TEST(dwgBuffer, get2Bits) {
 	memset(tst,0,16)
 
 TEST(dwgBuffer, getBitShort) {
-	char tst[16];
+	char tst[64];
 	 
 	dwgBuffer 	buf((char*)tst, sizeof(tst) );
 	
@@ -212,7 +212,7 @@ TEST(dwgBuffer, getBitShort) {
 }
 
 TEST(dwgBuffer, getBitLong) {
-	char tst[16];
+	char tst[64];
 	 
 	dwgBuffer 	buf((char*)tst, sizeof(tst) );
 	
@@ -292,9 +292,42 @@ TEST(dwgBuffer, getBitLong) {
 			BITS_STOP_MARKER
 	);
 	EXPECT_EQ( (dint16)buf.getBitLong(), (dint16)32895 );
-	
 }
 
+TEST(dwgBuffer, getBitDouble) {
+	char tst[64];
+	 
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
 
+	RESET_BUFF;
+	tst[0] = FROM_BINARY(
+	  0,1, /* encodes 1.0 */
+	  0,0,0,0,0,0
+	);
+	EXPECT_EQ( buf.getBitDouble(), 1.0 );
 
+	RESET_BUFF;
+	tst[0] = FROM_BINARY(
+	  1,0, /* encodes 0.0 */
+	  0,0,0,0,0,0
+	);
+	EXPECT_EQ( buf.getBitDouble(), 0.0 );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,0), /* encodes a double */
+			BIT8(0,1,1,1,1,1,1,1),
+			BIT8(1,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_DOUBLE_EQ( buf.getBitDouble(), 1.62523e-319 );
+
+	/* more tests are welcomed */
+}
 
