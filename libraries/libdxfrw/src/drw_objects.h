@@ -392,38 +392,6 @@ public:
 };
 
 
-//! Class to handle header entries
-/*!
-*  Class to handle layer symbol table entries
-*  @author Rallaz
-*/
-class DRW_Header {
-public:
-    DRW_Header() {
-    }
-    ~DRW_Header() {
-        vars.clear();
-    }
-
-    void parseCode(int code, dxfReader *reader);
-    void write(dxfWriter *writer, DRW::Version ver);
-    void addComment(string c);
-    string getComments() const {return comments;}
-private:
-    bool getDouble(string key, double *varDouble);
-    bool getInt(string key, int *varInt);
-    bool getStr(string key, string *varStr);
-    bool getCoord(string key, DRW_Coord *varStr);
-
-public:
-    std::map<string,DRW_Variant*> vars;
-private:
-    string comments;
-    string name;
-    DRW_Variant *curr;
-    int version; //to use on read
-};
-
 namespace DRW {
 
 // Extended color palette:
