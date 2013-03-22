@@ -125,39 +125,89 @@ TEST(dwgBuffer, get2Bits) {
 	}
 }
 
+#define RESET_BUFF		\
+	buf.setPosition(0);	\
+	memset(tst,0,16)
+
 TEST(dwgBuffer, getBitShort) {
-	unsigned char tst[] = { 0x0, 0x0 };
+	char tst[16];
 	 
 	dwgBuffer 	buf((char*)tst, sizeof(tst) );
 	
-	buf.setPosition(0);
+	RESET_BUFF;
 	tst[0] = FROM_BINARY(
 	  1,1, /* encodes 256 */
 	  0,0,0,0,0,0
 	);
 	EXPECT_EQ( buf.getBitShort(), (dint16)256 );
 	
-	buf.setPosition(0);
+	RESET_BUFF;
 	tst[0] = FROM_BINARY(
 	  1,0, /* encodes 0 */
 	  0,0,0,0,0,0
 	);
 	EXPECT_EQ( buf.getBitShort(), (dint16)0 );
 	
-//	buf.setPosition(0);
-//	tst[0] = FROM_BINARY(
-//	  0,1, /* encodes a raw char */
-//	  0,0,0,0,0,0
-//	);
-//	EXPECT_EQ( buf.getBitShort(), (dint16)0 );
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,1), /* encodes a raw char */
+			BIT8(0,1,1,1,1,1,1,1), /* 127 */
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)127 );
 	
-//	buf.setPosition(0);
-//	tst[0] = FROM_BINARY(
-//	  0,0, /* encodes a raw short */
-//	  0,0,0,0,0,0
-//	);
-//	EXPECT_EQ( buf.getBitShort(), (dint16)0 );
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,1), /* encodes a raw char */
+			BIT8(0,0,1,1,1,1,1,1), /* 63 */
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)63 );
 	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,1), /* encodes a raw char */
+			BIT8(0,0,1,1,1,1,1,0), /* 62 */
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)62 );
+	
+	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,0), /* encodes a raw short */
+			BIT8(0,0,1,1,1,1,1,0), /* 62 */
+			BIT8(0,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)62 );
+	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,0), /* encodes a raw short */
+			BIT8(0,0,1,1,1,1,1,1), /* 63 */
+			BIT8(0,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)63 );
+	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,0), /* encodes a raw short */
+			BIT8(0,1,1,1,1,1,1,1), /* 127 */
+			BIT8(0,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)127 );
+	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(0,0), /* encodes a raw short */
+			BIT8(0,1,1,1,1,1,1,1), /* 0x807F */
+			BIT8(1,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_EQ( buf.getBitShort(), (dint16)0x807F );
 	
 }
 

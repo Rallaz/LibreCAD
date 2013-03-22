@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <qglobal.h>
+#include <QDebug>
+
 
 #define BITS_STOP_MARKER	(quint64)0
 #define _	(quint64)
@@ -137,7 +139,27 @@ inline void addABit(int off, char * p_buff, bool is_set)
         tmp &= ~mask;
     p_buff[byte_off] = tmp;
 }
-    
+
+inline bool getABit(int off, char * p_buff)
+{
+    int byte_off = off / 8;
+    int bit_off = 7 - (off % 8);
+    unsigned char tmp = (unsigned char)p_buff[byte_off];
+    unsigned char mask = 1 << bit_off;
+    return ( tmp & mask );
+}
+
+inline void printBuffer(char * p_buff,int bits)
+{
+	QString s = "0x";
+	s.append( QString::number( (quint64)p_buff, 16 ) );
+	for ( int i = 0; i < bits; i++ )
+	{
+		s.append( getABit(i,p_buff) ? "1 " : "0 " );
+	}
+	qDebug() << s.toLatin1().constBegin();
+}
+
 inline int addBits(int off, char * p_buff, ...)
 {
     quint64 i_len; /* number of bits to copy from source */
@@ -158,6 +180,7 @@ inline int addBits(int off, char * p_buff, ...)
         }
     }
     va_end(argp);
+    printBuffer( p_buff, off );
     return off;
 }
 
