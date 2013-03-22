@@ -12,7 +12,12 @@ debug {
     QT       += core
 }
 
+DEPENDPATH += \
+    ../../../libraries/libdxfrw/src
+INCLUDEPATH += $$DEPENDPATH
+
 # the library to test
+LIBS += -L../../../generated/lib
 LIBS += -ldxfrw
 
 # google test library
