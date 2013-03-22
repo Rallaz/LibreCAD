@@ -18,37 +18,45 @@
 #include <qglobal.h>
 #include <QDebug>
 
-
+/*! used with addBits() to indicate end of input */
 #define BITS_STOP_MARKER	(quint64)0
+
 #define _	(quint64)
 
+/* shorthands for data sizes */
+#define DSZ_BIT		_ 1
+#define DSZ_BYTE	_ 8
+#define DSZ_SHORT	_ 16
+#define DSZ_LONG	_ 32
+
+/* macros to help us enter bits */
 #define BIT1(b) \
-	_ 1, _ b
+	DSZ_BIT, _ b
 #define BIT2(b1,b2) \
-	_ 1, _ b1, _ 1, _ b2
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2
 #define BIT3(b1,b2,b3) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3
 #define BIT4(b1,b2,b3,b4) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
-	_ 1, _ b4
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3, \
+	DSZ_BIT, _ b4
 #define BIT5(b1,b2,b3,b4,b5) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
-	_ 1, _ b4, _ 1, _ b5
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3, \
+	DSZ_BIT, _ b4, DSZ_BIT, _ b5
 #define BIT6(b1,b2,b3,b4,b5,b6) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
-	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3, \
+	DSZ_BIT, _ b4, DSZ_BIT, _ b5, DSZ_BIT, _ b6
 #define BIT7(b1,b2,b3,b4,b5,b6,b7) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
-	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6, \
-	_ 1, _ b7
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3, \
+	DSZ_BIT, _ b4, DSZ_BIT, _ b5, DSZ_BIT, _ b6, \
+	DSZ_BIT, _ b7
 #define BIT8(b1,b2,b3,b4,b5,b6,b7,b8) \
-	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
-	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6, \
-	_ 1, _ b7, _ 1, _ b8
+	DSZ_BIT, _ b1, DSZ_BIT, _ b2, DSZ_BIT, _ b3, \
+	DSZ_BIT, _ b4, DSZ_BIT, _ b5, DSZ_BIT, _ b6, \
+	DSZ_BIT, _ b7, DSZ_BIT, _ b8
 
 
 
-
+/*! macro that splits a 64-bit number into 64 bits */
 #define BITS_D64(nr) \
     (char)(( nr >> 63 ) & 1 ), \
     (char)(( nr >> 62 ) & 1 ), \
@@ -84,6 +92,7 @@
     (char)(( nr >> 32 ) & 1 ), \
     BITS_D32(nr)
     
+/*! macro that splits a 32-bit number into 32 bits */
 #define BITS_D32(nr) \
     (char)(( nr >> 31 ) & 1 ), \
     (char)(( nr >> 30 ) & 1 ), \
@@ -103,6 +112,7 @@
     (char)(( nr >> 16 ) & 1 ), \
     BITS_D16(nr)
     
+/*! macro that splits a 16-bit number into 16 bits */
 #define BITS_D16(nr) \
     (char)(( nr >> 15 ) & 1 ), \
     (char)(( nr >> 14 ) & 1 ), \
@@ -114,6 +124,7 @@
     (char)(( nr >> 8 ) & 1 ), \
     BITS_D8(nr)
     
+/*! macro that splits a 8-bit number into 8 bits */
 #define BITS_D8(nr) \
     (char)(( nr >> 7 ) & 1 ), \
     (char)(( nr >> 6 ) & 1 ), \
@@ -173,12 +184,29 @@ inline int addBits(int off, char * p_buff, ...)
         if ( i_len == BITS_STOP_MARKER )
             break;
         val = va_arg(argp, quint64);
-        char loc_exp[64] = { BITS_D64(val) }; 
-        for ( int i = 64 - i_len; i < 64; i++ )
-        {
-            addABit(off,p_buff,loc_exp[i]);
-            off++;
-        }
+        if ( i_len == 1 )
+		{
+			addABit(off,p_buff,val);
+			off++;
+		} else if ( i_len == 2 ) {
+			addABit(off,p_buff,(val >> 1) & 1);
+			off++;
+			addABit(off,p_buff,(val >> 0) & 1);
+			off++;
+		} else {
+			Q_ASSERT( ( i_len % 8 ) == 0 );
+			Q_ASSERT( i_len <= 64 );
+			char loc_exp[64] = { BITS_D64(val) }; 
+			quint64 j = 64-8;
+			quint64 j_lim = 64-i_len;
+			do {
+				for ( int i = 0; i < 8; i++ )	{
+					addABit(off,p_buff,loc_exp[j+i]);
+					off++;
+				}
+				j -= 8;
+			} while ( j >= j_lim );
+		}
     }
     va_end(argp);
     printBuffer( p_buff, off );

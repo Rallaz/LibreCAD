@@ -14,7 +14,7 @@
 #include	<libdwgr.h>
 #include	"bitsbuild.h"
 
-TEST(DRW_Text, addBits) {
+TEST(bitsbuild, addBits) {
 	char buff[128] = {0};
 	
 	int crt_off = 0;
@@ -37,7 +37,7 @@ TEST(DRW_Text, addBits) {
 	
 }
 
-TEST(DRW_Text, addRawBytes) {
+TEST(bitsbuild, addRawBytes) {
 	char buff[64] = {0};
 	char buff_src[64] = {0};
 	int crt_off = 0;
