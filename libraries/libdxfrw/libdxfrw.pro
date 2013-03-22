@@ -57,6 +57,3 @@ HEADERS += \
     src/drw_cptable936.h \
     src/drw_cptable932.h \
     src/drw_header.h
-
-OTHER_FILES += \
-    TODO
