@@ -12,6 +12,9 @@ debug {
     QT       += core
 }
 
+# let the code know where to find data
+DEFINES += DRWG_TEST_DIR=\\\"$$_PRO_FILE_PWD_/../..\\\"
+
 DEPENDPATH += \
     ../../../libraries/libdxfrw/src
 INCLUDEPATH += $$DEPENDPATH
@@ -61,4 +64,5 @@ SOURCES += \
     tests/bitsbuild_test.cpp
 
 HEADERS += \
-    tests/bitsbuild.h
+    tests/bitsbuild.h \
+    tests/drw_interface_ghost.h
