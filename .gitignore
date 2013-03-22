@@ -18,6 +18,8 @@ Makefile
 .libs
 generated/*
 
+dwgdevel/dwgdevel
+
 # Unix generated directories (except Apple)
 unix/
 

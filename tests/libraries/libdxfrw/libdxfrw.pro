@@ -12,12 +12,13 @@ debug {
     QT       += core
 }
 
-INCLUDEPATH += $$_PRO_FILE_PWD_/../../../libraries/libdxfrw/src
-PRE_TARGETDEPS += ../../../generated/lib/libdxfrw.a
+DEPENDPATH += \
+    ../../../libraries/libdxfrw/src
+INCLUDEPATH += $$DEPENDPATH
 
 # the library to test
-LIBS += -L../../../generated/lib  \
-    -ldxfrw
+LIBS += -L../../../generated/lib
+LIBS += -ldxfrw
 
 # google test library
 LIBS += -lgtest_main -lgtest

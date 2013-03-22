@@ -36,7 +36,8 @@ SOURCES += \
     src/libdwgr.cpp \
     src/dwgbuffer.cpp \
     src/dwgreader.cpp \
-    src/dxfwriter.cpp
+    src/dxfwriter.cpp \
+    src/drw_header.cpp
 
 HEADERS += \
     src/libdxfrw.h \
@@ -54,7 +55,5 @@ HEADERS += \
     src/drw_cptable950.h \
     src/drw_cptable949.h \
     src/drw_cptable936.h \
-    src/drw_cptable932.h
-
-OTHER_FILES += \
-    TODO
+    src/drw_cptable932.h \
+    src/drw_header.h
