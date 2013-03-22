@@ -20,7 +20,6 @@
 //! Calculate arbitary axis
 /*!
 *   Calculate arbitary axis for aplly extrusions
-*   Calculate arbitary axis for apply extrusions
 *  @author Rallaz
 */
 void DRW_Entity::calculateAxis(DRW_Coord extPoint){
@@ -73,9 +72,7 @@ void DRW_Entity::parseCode(int code, dxfReader *reader){
         color = reader->getInt32();
         break;
     case 370:
-//        lWeight = (DRW::LWEIGHT)reader->getInt32();
-//RLZ: TODO as integer or enum??
-        lWeight = reader->getInt32();
+        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 48:
         ltypeScale = reader->getDouble();
@@ -200,7 +197,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DBG(" invisibleFlag: "); DBG(invisibleFlag);
     if (version > DRW::AC1014) {//2000+
-        lWeight = buf->getRawChar8(); //RC
+        lWeight = DRW_LW_Conv::dwgInt2lineWidth( buf->getRawChar8() ); //RC
         DBG(" lwFlag (lWeight): "); DBG(lWeight); DBG("\n");
     }
     return buf->isGood();
@@ -268,173 +265,6 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
         }
     return buf->isGood();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void DRW_Point::parseCode(int code, dxfReader *reader){
     switch (code) {
@@ -733,59 +563,7 @@ bool DRW_Ellipse::parseDwg(DRW::Version version, dwgBuffer *buf){
         return ret;
 //    RS crc;   //RS */
     return buf->isGood();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//if ratio > 1 minor axis are greather than major axis, correct it
-void DRW_Ellipse::correctAxis(){
-    bool complete = false;
-    if (staparam == endparam) {
-        staparam = 0.0;
-        endparam = M_PIx2; //2*M_PI;
-        complete = true;
-    }
-    if (ratio > 1){
-        if ( fabs(endparam - staparam - M_PIx2) < 1.0e-10)
-            complete = true;
-        double incX = secPoint.x;
-        secPoint.x = -(secPoint.y * ratio);
-        secPoint.y = incX*ratio;
-        ratio = 1/ratio;
-        if (!complete){
-            if (staparam < M_PI_2)
-                staparam += M_PI *2;
-            if (endparam < M_PI_2)
-                endparam += M_PI *2;
-            endparam -= M_PI_2;
-            staparam -= M_PI_2;
-        }
-    }
 }
-
-
-
-
-
 
 void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
@@ -811,7 +589,6 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
         curAngle = (++i)*incAngle;
     } while (i<128);
     if ( fabs(endparam - 6.28318530718) < 1.0e-10){
-    if ( fabs(endparam - staparam - M_PIx2) < 1.0e-10){
         pol->flags = 1;
     }
     pol->layer = this->layer;
@@ -1347,12 +1124,10 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
     case 50:
         if (arc) arc->staangle = reader->getDouble();
         else if (ellipse) ellipse->staparam = reader->getDouble();
-        else if (ellipse) ellipse->staparam = reader->getDouble()/ARAD;
         break;
     case 51:
         if (arc) arc->endangle = reader->getDouble();
         else if (ellipse) ellipse->endparam = reader->getDouble();
-        else if (ellipse) ellipse->endparam = reader->getDouble()/ARAD;
         break;
     case 52:
         angle = reader->getDouble();

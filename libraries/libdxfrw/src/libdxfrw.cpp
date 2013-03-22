@@ -163,9 +163,6 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
         writer->writeUtf8Caps(6, ent->lineType);
     }
     writer->writeInt16(62, ent->color);
-    if (version > DRW::AC1015 && ent->color24 >= 0) {
-        writer->writeInt32(420, ent->color24);
-    }
     if (version > DRW::AC1014) {
         writer->writeInt16(370, ent->lWeight);
     }
@@ -231,9 +228,6 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     }
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
-    if (version > DRW::AC1015 && ent->color24 >= 0) {
-        writer->writeInt32(420, ent->color24);
-    }
     if (version > DRW::AC1009) {
         writer->writeUtf8String(6, ent->lineType);
         if (! ent->plotF)
@@ -596,8 +590,8 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
 }
 
 bool dxfRW::writeEllipse(DRW_Ellipse *ent){
-    //verify axis/ratio and params for full ellipse
-    ent->correctAxis();
+    if (ent->staparam == ent->endparam)
+        ent->endparam = 6.28318530718; //2*M_PI;
     if (version > DRW::AC1009) {
         writer->writeString(0, "ELLIPSE");
         writeEntity(ent);
@@ -890,14 +884,13 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                     case DRW::ELLIPSE: {
                         writer->writeInt16(72, 3);
                         DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j);
-                        a->correctAxis();
                         writer->writeDouble(10, a->basePoint.x);
                         writer->writeDouble(20, a->basePoint.y);
                         writer->writeDouble(11, a->secPoint.x);
                         writer->writeDouble(21, a->secPoint.y);
                         writer->writeDouble(40, a->ratio);
-                        writer->writeDouble(50, a->staparam*ARAD);
-                        writer->writeDouble(51, a->endparam*ARAD);
+                        writer->writeDouble(50, a->staparam);
+                        writer->writeDouble(51, a->endparam);
                         writer->writeInt16(73, a->isccw);
                         break; }
                     case DRW::SPLINE:

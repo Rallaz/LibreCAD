@@ -59,8 +59,9 @@ public:
     ~RS_FilterDXFRW();
 	
     virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
-        return (t==RS2::FormatDXFRW || t==RS2::FormatDWG);
         return (t==RS2::FormatDXFRW);
+        return (t==RS2::FormatDXFRW || t==RS2::FormatDWG);
+
 	}
 	
     virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const {
@@ -69,8 +70,9 @@ public:
     }
 
     // Import:
-    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type);
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type);
+
 
     // Methods from DRW_CreationInterface:
     virtual void addHeader(const DRW_Header* data);
@@ -80,6 +82,7 @@ public:
     virtual void addVport(const DRW_Vport& data);
     virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
+    virtual void setBlock(const int handle);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
     virtual void addLine(const DRW_Line& data);
@@ -161,13 +164,13 @@ public:
 
     static RS_Color numberToColor(int num, bool comp=false);
     static int colorToNumber(const RS_Color& col);
-    static RS_Color numberToColor(int num);
-    static int colorToNumber(const RS_Color& col, int *rgb);
 
     static RS2::LineType nameToLineType(const QString& name);
     static QString lineTypeToName(RS2::LineType lineType);
     //static QString lineTypeToDescription(RS2::LineType lineType);
 
+    static RS2::LineWidth numberToWidth(int num);
+    static int widthToNumber(RS2::LineWidth width);
     static RS2::LineWidth numberToWidth(DRW_LW_Conv::lineWidth lw);
     static DRW_LW_Conv::lineWidth widthToNumber(RS2::LineWidth width);
 
@@ -206,10 +209,12 @@ private:
     QHash <RS_Entity*, QString> noNameBlock;
     QHash <QString, QString> fontList;
     bool oldMText;
-    dxfRW *dxfW;
     dxfRW *dxf;
-    /** If saved version are 2004 or above can save color in RGB value. */
-    bool exactColor;
+    dxfRW *dxfW;
+    /** hash of block containers and handleBlock numbers to read dwg files */
+    QHash<int, RS_EntityContainer*> blockHash;
+    /** Pointer to entity container to store posible horphan entites like paper space */
+    RS_EntityContainer* dummyContainer;
 };
 
 #endif
