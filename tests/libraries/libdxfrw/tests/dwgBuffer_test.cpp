@@ -331,3 +331,46 @@ TEST(dwgBuffer, getBitDouble) {
 	/* more tests are welcomed */
 }
 
+TEST(dwgBuffer, getRawChar8) {
+	char tst[64];
+
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	RESET_BUFF;
+	tst[0] = 0;
+	tst[1] = 1;
+	tst[2] = 2;
+	tst[3] = 3;
+	tst[4] = 255;
+	EXPECT_EQ( buf.getRawChar8(), 0 );
+	EXPECT_EQ( buf.getRawChar8(), 1 );
+	EXPECT_EQ( buf.getRawChar8(), 2 );
+	EXPECT_EQ( buf.getRawChar8(), 3 );
+	EXPECT_EQ( buf.getRawChar8(), 255 );
+}
+
+TEST(dwgBuffer, getRawShort16) {
+	char tst[64];
+
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	RESET_BUFF;
+	tst[0] = 0;
+	tst[1] = 0;
+	tst[2] = 1;
+	tst[3] = 0;
+	tst[4] = 2;
+	tst[5] = 0;
+	tst[6] = 3;
+	tst[7] = 0;
+	EXPECT_EQ( buf.getRawShort16(), 0 );
+	EXPECT_EQ( buf.getRawShort16(), 1 );
+	EXPECT_EQ( buf.getRawShort16(), 2 );
+	EXPECT_EQ( buf.getRawShort16(), 3 );
+}
+
+
+
+
+
+
+
+
