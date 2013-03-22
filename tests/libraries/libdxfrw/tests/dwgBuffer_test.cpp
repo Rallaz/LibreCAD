@@ -508,8 +508,165 @@ TEST(dwgBuffer, getModularShort) {
 	EXPECT_EQ( buf.getModularShort(), (dint32)257 );
 }
 
+TEST(dwgBuffer, getHandle) {
+	char tst[64];
+	
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+	dwgHandle	hdl;
 
+	RESET_BUFF;
+	tst[0] = 0x00 | 0x00; // code and size
+	hdl = buf.getHandle();
+	EXPECT_EQ( hdl.code, (duint32)0 );
+	EXPECT_EQ( hdl.size, (duint32)0 );
+	EXPECT_EQ( hdl.ref, (duint32)0 );
 
+	RESET_BUFF;
+	tst[0] = 0x10 | 0x00; // code and size
+	hdl = buf.getHandle();
+	EXPECT_EQ( hdl.code, (duint32)1 );
+	EXPECT_EQ( hdl.size, (duint32)0 );
+	EXPECT_EQ( hdl.ref, (duint32)0 );
 
+	RESET_BUFF;
+	tst[0] = 0x10 | 0x01; // code and size
+	tst[1] = 0;
+	hdl = buf.getHandle();
+	EXPECT_EQ( hdl.code, (duint32)1 );
+	EXPECT_EQ( hdl.size, (duint32)1 );
+	EXPECT_EQ( hdl.ref, (duint32)0 );
 
+	RESET_BUFF;
+	tst[0] = 0x10 | 0x01; // code and size
+	tst[1] = 5;
+	hdl = buf.getHandle();
+	EXPECT_EQ( hdl.code, (duint32)1 );
+	EXPECT_EQ( hdl.size, (duint32)1 );
+	EXPECT_EQ( hdl.ref, (duint32)5 );
 
+	RESET_BUFF;
+	tst[0] = 0x10 | 0x02; // code and size
+	tst[1] = 0x11;
+	tst[2] = 0x55;
+	hdl = buf.getHandle();
+	EXPECT_EQ( hdl.code, (duint32)1 );
+	EXPECT_EQ( hdl.size, (duint32)2 );
+	EXPECT_EQ( hdl.ref, (duint32)0x1155 );
+}
+
+TEST(dwgBuffer, getVariableText) {
+	char tst[64];
+	int off;
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(1,0),/* encodes 0 => empty string */
+			BITS_STOP_MARKER
+			);
+	EXPECT_EQ( buf.getVariableText(), std::string() );
+
+	RESET_BUFF;
+	off = addBits(0, tst, 
+				  BIT2(0,0), /* encodes a raw short */
+				  BIT8(0,0,0,0,0,1,1,1), /* 7 */
+				  BIT8(0,0,0,0,0,0,0,0), 
+				  BITS_STOP_MARKER
+				  );
+	addRawBytes( off, tst, "abcdefg", 7 );
+	EXPECT_EQ( buf.getVariableText(), std::string( "abcdefg" ) );
+}
+
+TEST(dwgBuffer, getVariableUtf8Text) {
+	char tst[64];
+	int off;
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT2(1,0),/* encodes 0 => empty string */
+			BITS_STOP_MARKER
+			);
+	EXPECT_EQ( buf.getVariableUtf8Text(), std::string() );
+
+	RESET_BUFF;
+	off = addBits(0, tst, 
+				  BIT2(0,0), /* encodes a raw short */
+				  BIT8(0,0,0,0,0,1,1,1), /* 7 */
+				  BIT8(0,0,0,0,0,0,0,0), 
+				  BITS_STOP_MARKER
+				  );
+	addRawBytes( off, tst, "abcdefg", 7 );
+	EXPECT_EQ( buf.getVariableUtf8Text(), std::string( "abcdefg" ) );
+}
+
+TEST(dwgBuffer, getExtrusion) {
+	char tst[64];
+	DRW_Coord crd;
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT1(1), /* encodes 0,0,1 */
+			BITS_STOP_MARKER
+			);
+	crd = buf.getExtrusion(true);
+	EXPECT_DOUBLE_EQ( crd.x, 0.0 );
+	EXPECT_DOUBLE_EQ( crd.y, 0.0 );
+	EXPECT_DOUBLE_EQ( crd.z, 1.0 );
+
+}
+
+TEST(dwgBuffer, getThickness) {
+	char tst[64];
+	
+	dwgBuffer 	buf((char*)tst, sizeof(tst) );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT1(1), /* encodes 0.0 */
+			BITS_STOP_MARKER
+			);
+	EXPECT_DOUBLE_EQ( buf.getThickness(true), 0.0 );
+	
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT1(0), /* encodes NOT 0.0 */
+			BIT2(0,1), /* encodes 1.0 */
+			BITS_STOP_MARKER
+			);
+	EXPECT_DOUBLE_EQ( buf.getThickness(true), 1.0 );
+		
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT1(0), /* encodes NOT 0.0 */
+			BIT2(1,0), /* encodes 0.0 */
+			BITS_STOP_MARKER
+			);
+	EXPECT_DOUBLE_EQ( buf.getThickness(true), 0.0 );
+
+	RESET_BUFF;
+	addBits(0, tst, 
+			BIT1(0), /* encodes NOT 0.0 */
+			BIT2(0,0), /* encodes a number */
+			BIT8(0,1,1,1,1,1,1,1),
+			BIT8(1,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BIT8(0,0,0,0,0,0,0,0), 
+			BITS_STOP_MARKER
+	);
+	EXPECT_DOUBLE_EQ( buf.getThickness(true), 1.62523e-319 );
+	
+}
+
+/* Other methods that need love:
+
+	getDefaultDouble
+	getBERawShort16
+	getBytes
+	crc8
+*/
