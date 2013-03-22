@@ -778,10 +778,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf){
     }
     angle = buf->getBitDouble();
     DBG("scale X: "); DBG(xscale); DBG(", Y: "); DBG(yscale); DBG(", Z: "); DBG(zscale); DBG(", angle: "); DBG(angle); DBG("\n");
-    if (version < DRW::AC1015) //14-
-        extPoint = buf->getExtrusion(false);
-    else
-        extPoint = buf->getExtrusion(true);
+        extPoint = buf->getExtrusion(false); //3BD R14 style
 
     bool hasAttrib = buf->getBit();
     if (version > DRW::AC1015) {//2004+
@@ -791,7 +788,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf){
     blockRecH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
     DBG("BLOCK HEADER Handle: "); DBG(blockRecH.code); DBG(".");
     DBG(blockRecH.size); DBG("."); DBG(blockRecH.ref); DBG("\n");
-    /*todo: attribs follows*/
+    /*RLZ: TODO attribs follows*/
 
 //    X handleAssoc;   //X
     if (!ret)

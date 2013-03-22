@@ -24,6 +24,8 @@ INCLUDEPATH += $$DEPENDPATH
 
 DEFINES += DRWG_DBG
 
+PRE_TARGETDEPS += ../generated/lib/libdxfrw.a
+
 # Additional libraries to load
 LIBS += -L../generated/lib  \
     -ldxfrw
