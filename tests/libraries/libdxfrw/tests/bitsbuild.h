@@ -17,8 +17,35 @@
 #include <stdarg.h>
 #include <qglobal.h>
 
-#define BITS_STOP_MARKER	0
+#define BITS_STOP_MARKER	(quint64)0
 #define _	(quint64)
+
+#define BIT1(b) \
+	_ 1, _ b
+#define BIT2(b1,b2) \
+	_ 1, _ b1, _ 1, _ b2
+#define BIT3(b1,b2,b3) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3
+#define BIT4(b1,b2,b3,b4) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
+	_ 1, _ b4
+#define BIT5(b1,b2,b3,b4,b5) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
+	_ 1, _ b4, _ 1, _ b5
+#define BIT6(b1,b2,b3,b4,b5,b6) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
+	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6
+#define BIT7(b1,b2,b3,b4,b5,b6,b7) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
+	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6, \
+	_ 1, _ b7
+#define BIT8(b1,b2,b3,b4,b5,b6,b7,b8) \
+	_ 1, _ b1, _ 1, _ b2, _ 1, _ b3, \
+	_ 1, _ b4, _ 1, _ b5, _ 1, _ b6, \
+	_ 1, _ b7, _ 1, _ b8
+
+
+
 
 #define BITS_D64(nr) \
     (char)(( nr >> 63 ) & 1 ), \
@@ -101,7 +128,7 @@
 inline void addABit(int off, char * p_buff, bool is_set)
 {
     int byte_off = off / 8;
-    int bit_off = off % 8;
+    int bit_off = 7 - (off % 8);
     unsigned char tmp = (unsigned char)p_buff[byte_off];
     unsigned char mask = 1 << bit_off;
     if ( is_set )
