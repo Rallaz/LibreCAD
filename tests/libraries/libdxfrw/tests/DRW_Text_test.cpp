@@ -11,8 +11,12 @@
 ******************************************************************************/
 
 #include	<gtest/gtest.h>
+#include	<QFile>
+#include	<QString>
+
 #include	<libdwgr.h>
 #include	"bitsbuild.h"
+#include	"drw_interface_ghost.h"
 
 static unsigned char text_OD[] = {
 /* OBJECT */
@@ -49,8 +53,9 @@ TEST(DRW_Text, parseDwg) {
 	off = addRawBytes( off, tst_bf, (char*)text_OD, sizeof(text_OD) );
 	dwgBuffer 	buf((char*)tst_bf, off/8+1);
 
-	/* DRW_Entity */
 	EXPECT_TRUE( tst.parseDwg(DRW::AC1014, &buf) );
+
+	/* DRW_Entity */
 	EXPECT_EQ( tst.color, 256 );
 	EXPECT_EQ( tst.color24,-1 );
 	EXPECT_EQ( tst.colorName, std::string() );
@@ -72,7 +77,10 @@ TEST(DRW_Text, parseDwg) {
 	EXPECT_EQ( tst.layerH.code, (duint8)0 );
 	EXPECT_EQ( tst.layerH.ref, (duint32)0 );
 	EXPECT_EQ( tst.layerH.size, (duint8)0 );
-	EXPECT_EQ( tst.lineType, std::string("BYLAYER") );
+	EXPECT_EQ( QString::compare( 
+				   QString::fromStdString( tst.lineType ),
+				   QString("BYLAYER"), 
+				   Qt::CaseInsensitive ), 0 );
 	EXPECT_DOUBLE_EQ( tst.ltypeScale, 1 );
 	EXPECT_EQ( tst.nextLinkers, (duint32)0 );
 	EXPECT_EQ( tst.plotFlags, (duint8)0 );
@@ -99,7 +107,10 @@ TEST(DRW_Text, parseDwg) {
 	EXPECT_DOUBLE_EQ( tst.angle, 0.0 );
 	EXPECT_DOUBLE_EQ( tst.height, 0.2 );
 	EXPECT_DOUBLE_EQ( tst.oblique, 0.0 );
-	EXPECT_EQ( tst.style, std::string("STANDARD") );
+	EXPECT_EQ( QString::compare( 
+				   QString::fromStdString( tst.style ),
+				   QString("STANDARD"), 
+				   Qt::CaseInsensitive ), 0 );
 	EXPECT_EQ( tst.styleH.code, (duint8)5 );
 	EXPECT_EQ( tst.styleH.ref, (duint32)16 );
 	EXPECT_EQ( tst.styleH.size, (duint8)1 );
@@ -108,3 +119,110 @@ TEST(DRW_Text, parseDwg) {
 	EXPECT_DOUBLE_EQ( tst.widthscale, 1 );
 	
 }
+
+class TextGh : public DRW_InterfaceGhost	{
+
+#	define APPLY_EXTRUSION	true
+	
+	virtual void addText(const DRW_Text& data) { 
+		
+		/* DRW_Entity */
+		EXPECT_EQ( data.color, 256 );
+		EXPECT_EQ( data.color24,-1 );
+		EXPECT_EQ( data.colorName, std::string() );
+		EXPECT_EQ( data.eType, DRW::TEXT );
+		//	EXPECT_DOUBLE_EQ( data.extAxisX.x, 0 );
+		//	EXPECT_DOUBLE_EQ( data.extAxisX.y, 0 );
+		//	EXPECT_DOUBLE_EQ( data.extAxisX.z, 0 );
+		//	EXPECT_DOUBLE_EQ( data.extAxisY.x, 0 );
+		//	EXPECT_DOUBLE_EQ( data.extAxisY.y, 0 );
+		//	EXPECT_DOUBLE_EQ( data.extAxisY.z, 0 );
+		//EXPECT_EQ( data.handle, 76 );
+		EXPECT_EQ( data.handleBlock, 0 );
+		EXPECT_EQ( data.haveExtrusion, false );
+		EXPECT_EQ( data.lTypeH.code, (duint8)0 );
+		EXPECT_EQ( data.lTypeH.ref, (duint32)0 );
+		EXPECT_EQ( data.lTypeH.size, (duint8)0 );
+		EXPECT_EQ( data.lWeight, DRW_LW_Conv::widthByLayer );
+		EXPECT_EQ( data.layer, std::string("0") );
+		EXPECT_EQ( data.layerH.code, (duint8)0 );
+		EXPECT_EQ( data.layerH.ref, (duint32)0 );
+		EXPECT_EQ( data.layerH.size, (duint8)0 );
+		EXPECT_EQ( QString::compare( 
+					   QString::fromStdString( data.lineType ),
+					   QString("BYLAYER"), 
+					   Qt::CaseInsensitive ), 0 );
+		EXPECT_DOUBLE_EQ( data.ltypeScale, 1 );
+		EXPECT_EQ( data.nextLinkers, (duint32)0 );
+		EXPECT_EQ( data.plotFlags, (duint8)0 );
+		EXPECT_EQ( data.space, 0 );
+		EXPECT_EQ( data.visible, true );
+		
+		/* DRW_Point */
+		EXPECT_DOUBLE_EQ( data.basePoint.x, 15.5 );
+		EXPECT_DOUBLE_EQ( data.basePoint.y, 16.5 );
+		EXPECT_DOUBLE_EQ( data.basePoint.z, 0 );
+		EXPECT_DOUBLE_EQ( data.extPoint.x, 0 );
+		EXPECT_DOUBLE_EQ( data.extPoint.y, 0 );
+		EXPECT_DOUBLE_EQ( data.extPoint.z, 1 );
+		EXPECT_DOUBLE_EQ( data.thickness, 0 );
+		
+		/* DRW_Line */
+		/**
+		@todo R14 and 2000 give different results,
+		either (0,0,0) or (15.5, 16.5, 0)
+		 
+		EXPECT_DOUBLE_EQ( data.secPoint.x, 15.5 );
+		EXPECT_DOUBLE_EQ( data.secPoint.y, 16.5 );
+		*/
+		EXPECT_DOUBLE_EQ( data.secPoint.z, 0 );
+		
+		/* DRW_Text */
+		EXPECT_EQ( data.alignH, DRW_Text::HLeft );
+		EXPECT_EQ( data.alignV, DRW_Text::VBaseLine );
+		EXPECT_DOUBLE_EQ( data.angle, (1.5*M_PI/180.0) );
+		EXPECT_DOUBLE_EQ( data.height, 0.54 );
+		EXPECT_DOUBLE_EQ( data.oblique, 0.0 );
+		EXPECT_EQ( QString::compare( 
+					   QString::fromStdString( data.style ),
+					   QString("STANDARD"), 
+					   Qt::CaseInsensitive ), 0 );
+		EXPECT_EQ( data.styleH.code, (duint8)5 );
+		//EXPECT_EQ( data.styleH.ref, (duint32)16 );
+		EXPECT_EQ( data.styleH.size, (duint8)1 );
+		EXPECT_EQ( data.text, std::string("123-test string-456") );
+		EXPECT_EQ( data.textgen, 0 );
+		EXPECT_DOUBLE_EQ( data.widthscale, 1 );
+	}
+	
+public:
+
+	static void testFile ( const QString & file )
+	{
+		TextGh	dwg_interf;
+		dwgR	dwg_reader(QFile::encodeName(file));
+		EXPECT_TRUE( dwg_reader.read(&dwg_interf, APPLY_EXTRUSION) );
+	}
+};
+
+TEST(DRW_Text, parseFromFile_r14) {
+	TextGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_R14_TEXT.dwg" );
+}
+
+TEST(DRW_Text, parseFromFile_2000) {
+	TextGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2000_TEXT.dwg" );
+}
+
+/*
+ 
+not implemented, yet
+
+TEST(DRW_Text, parseFromFile_2004) {
+	TextGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2004_TEXT.dwg" );
+}
+
+TEST(DRW_Text, parseFromFile_2007) {
+	TextGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2007_TEXT.dwg" );
+}
+
+*/
