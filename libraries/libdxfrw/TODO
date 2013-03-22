@@ -1,0 +1,26 @@
+remove DRW_Header from drw_objects and store in drw_header
+
+DRW_Header:
+   complete dxf-writer
+   add dwg-reader
+
+DRW_Mtext:
+   complete support in dxf & dwg (background, etc.)
+
+---DWG support---
+Pending table entries:
+STYLE
+DIMSTYLE
+VPORT
+
+Pending entities entries:
+INSERT, LWPOLYLINE, POLYLINE, VERTEX, SPLINE, HATCH, MTEXT,
+E3DFACE, IMAGE, TRACE, SOLID, RAY, XLINE, VIEWPORT
+LEADER, DIMENSION, DIMALIGNED, DIMLINEAR, DIMRADIAL,
+DIMDIAMETRIC, DIMANGULAR, DIMANGULAR3P, DIMORDINATE, 
+
+completed:
+ARC, CIRCLE, LINE, POINT, ELLIPSE, BLOCK, TEXT => ready
+
+more:
+Add dwg 2004, 2007 & 2010 support

@@ -347,11 +347,6 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
         char byteStr[size];
         buf->getBytes(byteStr, size);
         dwgBuffer buff(byteStr, size, &decoder);
-//            ARC, CIRCLE, LINE, POINT, ELLIPSE, BLOCK
-//            INSERT, LWPOLYLINE, TEXT,
-/*            POLYLINE, VERTEX, SPLINE, HATCH, MTEXT, E3DFACE, IMAGE,
-            LEADER, DIMENSION, DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC,
-            DIMANGULAR, DIMANGULAR3P, DIMORDINATE, TRACE, SOLID, RAY, XLINE, VIEWPORT,*/
 
         switch (obj.type){
         case 17: {
