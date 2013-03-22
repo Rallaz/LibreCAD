@@ -86,6 +86,7 @@ public:
         lWeight = DRW_LW_Conv::widthByLayer; // default BYLAYER  (dxf -1, dwg 29)
         handleBlock = space = 0; // default ModelSpace (0) & handleBlock = no handle (0)
         haveExtrusion = false;
+        color24 = -1; //default -1 not set
     }
 
     DRW_Entity(const DRW_Entity& d) {
@@ -266,7 +267,7 @@ public:
     void parseCode(int code, dxfReader *reader);
     void toPolyline(DRW_Polyline *pol);
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
-
+    void correctAxis();
 public:
     double ratio;           /*!< ratio, code 40 */
     double staparam;        /*!< start parameter, code 41, 0.0 for full ellipse*/
