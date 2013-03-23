@@ -13,8 +13,8 @@
 #include	<gtest/gtest.h>
 #include	<QFile>
 #include	<QString>
-
 #include	<libdwgr.h>
+
 #include	"../support/bitsbuild.h"
 #include	"../support/drw_interface_ghost.h"
 #include	"../support/odsample.h"
@@ -22,14 +22,15 @@
 TEST(DRW_Text, parseDwg) {
 	int off;
 	DRW_Text	tst;
-	char		tst_bf[128];
+	char		tst_bf[256];
 	
+	Q_ASSERT( sizeof(od_text) < 250 );
 	off = addBits(0, tst_bf, 
 			BIT2(0,0), /* raw short - type of the entry */
-			DSZ_SHORT, _ 1, /* text in this case */
-			//DSZ_LONG, _ 0x49, /* length of the object (if version > AC1014 */
+			DSZ_SHORT, _ od_text_id, /* text in this case */
+			//DSZ_LONG, _ od_text_len, /* length of the object (if version > AC1014 */
 			DSZ_BYTE, _ 0x11,
-			DSZ_BYTE, _ 0x4C, /** @todo TNick: there is sth wrong with handle */
+			DSZ_BYTE, _ od_text_hdl,
 			BITS_STOP_MARKER );
 	off = addRawBytes( off, tst_bf, (char*)od_text, sizeof(od_text) );
 	dwgBuffer 	buf((char*)tst_bf, off/8+1);
