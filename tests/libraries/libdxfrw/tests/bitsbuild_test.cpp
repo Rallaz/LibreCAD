@@ -12,7 +12,7 @@
 
 #include	<gtest/gtest.h>
 #include	<libdwgr.h>
-#include	"bitsbuild.h"
+#include	"../support/bitsbuild.h"
 
 TEST(bitsbuild, addBits) {
 	char buff[128] = {0};

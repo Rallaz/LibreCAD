@@ -15,8 +15,8 @@
 #include	<QString>
 
 #include	<libdwgr.h>
-#include	"bitsbuild.h"
-#include	"drw_interface_ghost.h"
+#include	"../support/bitsbuild.h"
+#include	"../support/drw_interface_ghost.h"
 #include	"../support/odsample.h"
 
 TEST(DRW_Text, parseDwg) {
