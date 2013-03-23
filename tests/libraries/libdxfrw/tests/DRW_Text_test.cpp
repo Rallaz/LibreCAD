@@ -104,8 +104,6 @@ TEST(DRW_Text, parseDwg) {
 
 class TextGh : public DRW_InterfaceGhost	{
 
-#	define APPLY_EXTRUSION	true
-	
 	virtual void addText(const DRW_Text& data) { 
 		
 		/* DRW_Entity */
@@ -194,6 +192,8 @@ TEST(DRW_Text, parseFromFile_r14) {
 TEST(DRW_Text, parseFromFile_2000) {
 	TextGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2000_TEXT.dwg" );
 }
+
+
 
 /*
  

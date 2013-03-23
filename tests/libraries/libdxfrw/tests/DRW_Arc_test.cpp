@@ -87,16 +87,83 @@ TEST(DRW_Arc, parseDwg) {
 
 }
 
+class ArcGh : public DRW_InterfaceGhost	{
 
+	virtual void addArc(const DRW_Arc& data) { 
 
+		EXPECT_EQ( data.color, (int)256 );
+		EXPECT_EQ( data.color24, (int)-1 );
+		EXPECT_EQ( data.colorName, std::string() );
+		EXPECT_EQ( data.eType, DRW::ARC );
+//		EXPECT_DOUBLE_EQ( data.extAxisX.x, (double)0 );
+//		EXPECT_DOUBLE_EQ( data.extAxisX.y, (double)0 );
+//		EXPECT_DOUBLE_EQ( data.extAxisX.z, (double)0 );
+//		EXPECT_DOUBLE_EQ( data.extAxisY.x, (double)0 );
+//		EXPECT_DOUBLE_EQ( data.extAxisY.y, (double)0 );
+//		EXPECT_DOUBLE_EQ( data.extAxisY.z, (double)0 );
+		EXPECT_EQ( data.handle, (int)497 );
+		EXPECT_EQ( data.handleBlock, (int)0 );
+		EXPECT_EQ( data.haveExtrusion, (bool)false );
+		EXPECT_EQ( data.lTypeH.code, (duint8)0 );
+		EXPECT_EQ( data.lTypeH.ref, (duint32)0 );
+		EXPECT_EQ( data.lTypeH.size, (duint8)0 );
+		EXPECT_EQ( data.lWeight, DRW_LW_Conv::widthByLayer );
+		EXPECT_EQ( data.layer, std::string("0") );
+		EXPECT_EQ( data.layerH.code, (duint8)0 );
+		EXPECT_EQ( data.layerH.ref, (duint32)0 );
+		EXPECT_EQ( data.layerH.size, (duint8)0 );
+		EXPECT_EQ( QString::compare( 
+					   QString::fromStdString( data.lineType ),
+					   QString("BYLAYER"), 
+					   Qt::CaseInsensitive ), 0 );
+		EXPECT_DOUBLE_EQ( data.ltypeScale, (double)1 );
+		EXPECT_EQ( data.nextLinkers, (duint8)0 );
+		EXPECT_EQ( data.plotFlags, (duint8)0 );
+		EXPECT_EQ( data.space, (int)0 );
+		EXPECT_EQ( data.visible, (bool)true );
+		EXPECT_DOUBLE_EQ( data.basePoint.x, (double)0 );
+		EXPECT_DOUBLE_EQ( data.basePoint.y, (double)0 );
+		EXPECT_DOUBLE_EQ( data.basePoint.z, (double)-11 );
+		EXPECT_DOUBLE_EQ( data.extPoint.x, (double)0 );
+		EXPECT_DOUBLE_EQ( data.extPoint.y, (double)0 );
+		EXPECT_DOUBLE_EQ( data.extPoint.z, (double)1 );
+		EXPECT_DOUBLE_EQ( data.thickness, (double)0 );
+		EXPECT_DOUBLE_EQ( data.radious, (double)15.556349186104 );
+		EXPECT_DOUBLE_EQ( data.endangle, (double)2.35619449019234 );
+		EXPECT_EQ( data.isccw, (int)1 );
+		EXPECT_DOUBLE_EQ( data.staangle, (double)3.92699081698724 );
+	}
+	
+public:
 
+	static void testFile ( const QString & file )
+	{
+		ArcGh	dwg_interf;
+		dwgR	dwg_reader(QFile::encodeName(file));
+		EXPECT_TRUE( dwg_reader.read(&dwg_interf, APPLY_EXTRUSION) );
+	}
+};
 
+TEST(DRW_Arc, parseFromFile_r14) {
+	ArcGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_R14_ARC.dwg" );
+}
 
+TEST(DRW_Arc, parseFromFile_2000) {
+	ArcGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2000_ARC.dwg" );
+}
 
+/*
+ 
+not implemented, yet
 
+TEST(DRW_Arc, parseFromFile_2004) {
+	ArcGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2004_ARC.dwg" );
+}
 
+TEST(DRW_Arc, parseFromFile_2007) {
+	ArcGh::testFile( DRWG_TEST_DIR "/data/dwg/libdwgrw_2007_ARC.dwg" );
+}
 
-
-
+*/
 
 
