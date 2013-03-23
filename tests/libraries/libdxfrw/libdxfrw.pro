@@ -61,8 +61,10 @@ SOURCES += \
     tests/DRW_Circle_test.cpp \
     tests/DRW_Block_test.cpp \
     tests/DRW_Arc_test.cpp \
-    tests/bitsbuild_test.cpp
+    tests/bitsbuild_test.cpp \
+    support/odsample.cpp
 
 HEADERS += \
-    tests/bitsbuild.h \
-    tests/drw_interface_ghost.h
+    support/bitsbuild.h \
+    support/drw_interface_ghost.h \
+    support/odsample.h
