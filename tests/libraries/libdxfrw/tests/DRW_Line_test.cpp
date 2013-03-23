@@ -23,7 +23,7 @@
 TEST(DRW_Line, parseDwg) {
 	int off;
 	DRW_Line	tst;
-	char		tst_bf[128];
+	char		tst_bf[250];
 	
 	Q_ASSERT( sizeof(od_line) < 250 );
 	off = addBits(0, tst_bf, 
