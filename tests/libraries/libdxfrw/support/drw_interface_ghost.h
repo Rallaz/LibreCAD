@@ -15,6 +15,9 @@
 
 #include <drw_interface.h>
 
+#	define APPLY_EXTRUSION	true
+
+
 /**
  * Implementation for DRW_Interface that simply ignores all input
  *
