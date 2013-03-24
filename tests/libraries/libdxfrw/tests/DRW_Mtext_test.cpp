@@ -14,6 +14,7 @@
 #include	<QFile>
 #include	<QString>
 #include	<libdwgr.h>
+#include	<libdxfrw.h>
 
 #include	"../support/bitsbuild.h"
 #include	"../support/drw_interface_ghost.h"
@@ -51,6 +52,7 @@ TEST(DRW_MText, parseDwg) {
 }
 
 class MTextGh : public DRW_InterfaceGhost	{
+	bool b_is_dwg_;
 
 	virtual void addMText(const DRW_MText& data) { 
 
@@ -65,7 +67,8 @@ class MTextGh : public DRW_InterfaceGhost	{
 //		EXPECT_DOUBLE_EQ( data.extAxisY.y, (double)0 );
 //		EXPECT_DOUBLE_EQ( data.extAxisY.z, (double)0 );
 		EXPECT_EQ( data.handle, (int)734 );
-		EXPECT_EQ( data.handleBlock, (int)0 );
+		if ( b_is_dwg_ )
+			EXPECT_EQ( data.handleBlock, (int)0 );
 		EXPECT_EQ( data.haveExtrusion, (bool)false );
 		EXPECT_EQ( data.lTypeH.code, (duint8)0 );
 		EXPECT_EQ( data.lTypeH.ref, (duint32)0 );
@@ -103,9 +106,12 @@ class MTextGh : public DRW_InterfaceGhost	{
 					   QString::fromStdString( data.style ),
 					   QString("STANDARD"), 
 					   Qt::CaseInsensitive ), 0 );
-		EXPECT_EQ( data.styleH.code, (duint8)5 );
-		EXPECT_EQ( data.styleH.ref, (duint32)17 );
-		EXPECT_EQ( data.styleH.size, (duint8)1 );
+		if ( b_is_dwg_ )
+		{
+			EXPECT_EQ( data.styleH.code, (duint8)5 );
+			EXPECT_EQ( data.styleH.ref, (duint32)17 );
+			EXPECT_EQ( data.styleH.size, (duint8)1 );
+		}
 		EXPECT_EQ( QString::compare( 
 					   QString::fromStdString( data.text ),
 					   QString("first line of text\\Psecond line of text"), 
@@ -120,8 +126,18 @@ public:
 	{
 		MTextGh	dwg_interf;
 		dwgR	dwg_reader(QFile::encodeName(file));
+		dwg_interf.b_is_dwg_ = true;
 		EXPECT_TRUE( dwg_reader.read(&dwg_interf, APPLY_EXTRUSION) );
 	}
+
+	static void testDxfFile ( const QString & file )
+	{
+		MTextGh	dxf_interf;
+		dxfRW	dxf_reader(QFile::encodeName(file));
+		dxf_interf.b_is_dwg_ = false;
+		EXPECT_TRUE( dxf_reader.read(&dxf_interf, APPLY_EXTRUSION) );
+	}
+	
 };
 
 TEST(DRW_MText, parseFromFile_r14) {
@@ -145,4 +161,21 @@ TEST(DRW_MText, parseFromFile_2007) {
 }
 
 */
+
+TEST(DRW_MText, parseDxfFromFile_r12) {
+	/* R12 does not have MTEXT */
+	MTextGh::testDxfFile(DRWG_TEST_DIR "/data/dxf/libdwgrw_R12_MTEXT.dxf" );
+}
+
+TEST(DRW_MText, parseDxfFromFile_2000) {
+	MTextGh::testDxfFile(DRWG_TEST_DIR "/data/dxf/libdwgrw_2000_MTEXT.dxf" );
+}
+
+TEST(DRW_MText, parseDxfFromFile_2004) {
+	MTextGh::testDxfFile(DRWG_TEST_DIR "/data/dxf/libdwgrw_2004_MTEXT.dxf" );
+}
+
+TEST(DRW_MText, parseDxfFromFile_2007) {
+	MTextGh::testDxfFile(DRWG_TEST_DIR "/data/dxf/libdwgrw_2007_MTEXT.dxf" );
+}
 
