@@ -9,6 +9,7 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QStatusBar>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,9 +28,15 @@ MainWindow::MainWindow(QWidget *parent)
     saveAct->setStatusTip(tr("Save the log to disk"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
+    reopenAct = new QAction(tr("&Reload"), this);
+    reopenAct->setShortcuts(QKeySequence::Refresh);
+    reopenAct->setStatusTip(tr("Reload last opened file"));
+    connect(reopenAct, SIGNAL(triggered()), this, SLOT(reload()));
+
     fileToolBar = addToolBar(tr("File"));
     fileToolBar->addAction(openAct);
     fileToolBar->addAction(saveAct);
+    fileToolBar->addAction(reopenAct);
 
     statusBar()->showMessage(tr("Ready"), 2000);
     this->resize(800,300);
@@ -42,15 +49,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    QDir::currentPath (),
-                                                    tr("dwg file (*.dwg)"));
+    QSettings    stg;
+    stg.beginGroup("dwgdevel");
+    
+    QString fileName = QFileDialog::getOpenFileName(
+                this, tr("Open File"),
+                stg.value("crt_file",QDir::currentPath()).toString(),
+                tr("dwg file (*.dwg)"));
     if (!fileName.isEmpty()) {
         if (!textEdit->document()->isEmpty()) {
             textEdit->document()->clear();
         }
         loadFile(fileName);
+        stg.setValue("crt_file",fileName);
     }
+    stg.endGroup();
 }
 
 bool MainWindow::save()
@@ -58,6 +71,21 @@ bool MainWindow::save()
     return saveFile(curFile);
 }
 
+void MainWindow::reload()
+{
+    QSettings    stg;
+    stg.beginGroup("dwgdevel");
+    QString fileName = stg.value("crt_file").toString();
+    if ( QFile::exists(fileName) )
+    {
+        loadFile(fileName);
+    }
+    else
+    {
+        statusBar()->showMessage(tr("File %1 was not found").arg(fileName), 5000);
+    }
+    stg.endGroup();
+}
 
 void MainWindow::loadFile(const QString &fileName)
 {

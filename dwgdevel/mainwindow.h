@@ -19,6 +19,7 @@ public:
 private slots:
     void open();
     bool save();
+    void reload();
 
 private:
     void loadFile(const QString &fileName);
@@ -26,6 +27,7 @@ private:
 
     QAction *openAct;
     QAction *saveAct;
+    QAction *reopenAct;
     QToolBar *fileToolBar;
     QTextEdit *textEdit;
     QString curFile;
