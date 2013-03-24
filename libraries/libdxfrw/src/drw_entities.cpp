@@ -1024,6 +1024,80 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
     }
 }
 
+bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_Entity::parseDwg(version, buf);
+    if (!ret)
+        return ret;
+    DBG("\n***************************** parsing mtext *********************************************\n");
+    
+    basePoint.x = buf->getBitDouble(); /* Insertion pt 3BD 10 - First picked point. */
+    basePoint.y = buf->getBitDouble(); /* (Location relative to text depends */
+    basePoint.z = buf->getBitDouble(); /* on attachment point (71) */
+    DBG("Insertion X: "); DBG(basePoint.x); DBG(", Y: "); DBG(basePoint.y); DBG(", Z: "); DBG(basePoint.z); DBG("\n");
+    extPoint.x = buf->getBitDouble(); /* Extrusion 3BD 210 Undocumented; */
+    extPoint.y = buf->getBitDouble(); /* appears in DXF and entget, but ACAD */
+    extPoint.z = buf->getBitDouble(); /* doesn't even bother to adjust it to unit length. */
+    DRW_Coord x_axis;
+    x_axis.x = buf->getBitDouble(); /* X-axis dir 3BD 11 */
+    x_axis.y = buf->getBitDouble(); /* Apparently the text x-axis vector. */
+    x_axis.z = buf->getBitDouble(); /* ACAD maintains it as a unit vector. */
+    /** @todo compute the angle from this */
+    widthscale = buf->getBitDouble(); /* Rect width BD 41 */
+    if (version > DRW::AC1018) {//2007+
+        /* Rect height BD 46 Reference rectangle height. */
+        /** @todo */buf->getBitDouble();
+    }
+    height = buf->getBitDouble();/* Text height BD 40 Undocumented */
+    textgen = buf->getBitShort(); /* Attachment BS 71 Similar to justification; */
+    /* Drawing dir BS 72 Left to right, etc.; see DXF doc */
+    dint16 draw_dir = buf->getBitShort();
+    /* Extents ht BD Undocumented and not present in DXF or entget */
+    double ext_ht = buf->getBitDouble();
+    /* Extents wid BD Undocumented and not present in DXF or entget The extents
+    rectangle, when rotated the same as the text, fits the actual text image on
+    the screen (altough we've seen it include an extra row of text in height). */
+    double ext_wid = buf->getBitDouble();
+    /* Text TV 1 All text in one long string (without '\n's 3 for line wrapping).
+    ACAD seems to add braces ({ }) and backslash-P's to indicate paragraphs
+    based on the "\r\n"'s found in the imported file. But, all the text is in
+    this one long string -- not broken into 1- and 3-groups as in DXF and
+    entget. ACAD's entget breaks this string into 250-char pieces (not 255 as
+    doc'd) – even if it's mid-word. The 1-group always gets the tag end;
+    therefore, the 3's are always 250 chars long. */
+    text = buf->getVariableUtf8Text(); /* Text value TV 1 */
+    if (version > DRW::AC1014) {//2000+
+        buf->getBitShort();/* Linespacing Style BS 73 */
+        buf->getBitDouble();/* Linespacing Factor BD 44 */
+        buf->getBit();/* Unknown bit B */
+    }
+    if (version > DRW::AC1015) {//2004+
+        /* Background flags BL 0 = no background, 1 = background fill, 2 =background
+        fill with drawing fill color. */
+        dint32 bk_flags = buf->getBitLong(); /** @todo add to DRW_MText */
+        if ( bk_flags == 1 )
+        {
+            /* Background scale factor BL Present if background flags = 1, default = 1.5*/
+            buf->getBitLong();
+            /* Background color CMC Present if background flags = 1 */
+            /** @todo buf->getCMC */
+            /* Background transparency BL Present if background flags = 1 */
+            buf->getBitLong();
+        }
+    }
+    
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+        
+    styleH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
+    DBG("text style Handle: "); DBG(styleH.code); DBG(".");
+    DBG(styleH.size); DBG("."); DBG(styleH.ref); DBG("\n");
+
+    /* CRC X --- */
+    return buf->isGood();
+}
+
 void DRW_MText::updateAngle(){
     if (haveXAxis) {
             angle = atan2(secPoint.y, secPoint.x)*180/M_PI;
