@@ -88,6 +88,7 @@ public:
         haveExtrusion = false;
         color24 = -1; //default -1 not set
     }
+    virtual~DRW_Entity() {}
 
     DRW_Entity(const DRW_Entity& d) {
         eType = d.eType;

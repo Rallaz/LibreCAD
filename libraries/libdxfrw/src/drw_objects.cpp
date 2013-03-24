@@ -59,8 +59,7 @@ DBG("\n***************************** parsing table entry ***********************
     while (extDataSize>0 && buf->isGood()) {
         /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
-        DBG("App Handle: "); DBG(ah.code); DBG(".");
-        DBG(ah.size); DBG("."); DBG(ah.ref);
+        DBG("App Handle: "); DBG(ah.code); DBG("."); DBG(ah.size); DBG("."); DBG(ah.ref);
         char byteStr[extDataSize];
         buf->getBytes(byteStr, extDataSize);
         dwgBuffer buff(byteStr, extDataSize, buf->decoder);

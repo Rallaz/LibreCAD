@@ -150,6 +150,21 @@ bool dwgR::processDwg() {
         iface->addLayer(const_cast<DRW_Layer&>(*ly));
     }
 
+    for (std::map<int, DRW_Textstyle*>::iterator it=reader->stylemap.begin(); it!=reader->stylemap.end(); ++it) {
+        DRW_Textstyle *ly = it->second;
+        iface->addTextStyle(const_cast<DRW_Textstyle&>(*ly));
+    }
+
+    for (std::map<int, DRW_Dimstyle*>::iterator it=reader->dimstylemap.begin(); it!=reader->dimstylemap.end(); ++it) {
+        DRW_Dimstyle *ly = it->second;
+        iface->addDimStyle(const_cast<DRW_Dimstyle&>(*ly));
+    }
+
+    for (std::map<int, DRW_Vport*>::iterator it=reader->vportmap.begin(); it!=reader->vportmap.end(); ++it) {
+        DRW_Vport *ly = it->second;
+        iface->addVport(const_cast<DRW_Vport&>(*ly));
+    }
+
     for (std::map<int, DRW_Block*>::iterator it=reader->blockmap.begin(); it!=reader->blockmap.end(); ++it) {
         DRW_Block *bk = it->second;
         iface->addBlock(const_cast<DRW_Block&>(*bk));

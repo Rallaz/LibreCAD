@@ -109,20 +109,24 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
     DBG(ho.size); DBG("."); DBG(ho.ref);
     dint16 extDataSize = buf->getBitShort(); //BS
     DBG(" ext data size: "); DBG(extDataSize);
-    if (extDataSize>0 && buf->isGood()) {
+    while (extDataSize>0 && buf->isGood()) {
+        /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
-        DBG("App Handle: "); DBG(ah.code); DBG(".");
-        DBG(ah.size); DBG("."); DBG(ah.ref);
-        duint8 dxfCode = buf->getRawChar8();
+        DBG("App Handle: "); DBG(ah.code); DBG("."); DBG(ah.size); DBG("."); DBG(ah.ref);
+        char byteStr[extDataSize];
+        buf->getBytes(byteStr, extDataSize);
+        dwgBuffer buff(byteStr, extDataSize, buf->decoder);
+
+        duint8 dxfCode = buff.getRawChar8();
         DBG(" dxfCode: "); DBG(dxfCode);
         switch (dxfCode){
         case 0:{
-            duint8 strLength = buf->getRawChar8();
+            duint8 strLength = buff.getRawChar8();
             DBG(" strLength: "); DBG(strLength);
-            duint16 cp = buf->getBERawShort16();
+            duint16 cp = buff.getBERawShort16();
             DBG(" str codepage: "); DBG(cp);
             for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                duint8 dxfChar = buf->getRawChar8();
+                duint8 dxfChar = buff.getRawChar8();
                 DBG(" dxfChar: "); DBG(dxfChar);
             }
             break;
@@ -140,6 +144,11 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
         duint32 graphData = buf->getRawLong32();  //RL 32bits
         DBG("graphData in bytes: "); DBG(graphData); DBG("\n");
 // RLZ: TODO
+        //skip graphData bytes
+        char byteStr[graphData];
+        buf->getBytes(byteStr, graphData);
+        dwgBuffer buff(byteStr, graphData, buf->decoder);
+        DBG("graph data remaining bytes: "); DBG(buff.numRemainingBytes()); DBG("\n");
     }
     if (version < DRW::AC1015) {//14-
         objSize = buf->getRawLong32();  //RL 32bits size in bits

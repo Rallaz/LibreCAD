@@ -54,6 +54,7 @@ public:
         tType = DRW::UNKNOWNT;
         flags = 0;
     }
+    virtual~DRW_TableEntry() {}
 
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 

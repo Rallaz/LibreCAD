@@ -21,8 +21,21 @@
 
 
 dwgReader::~dwgReader(){
-//    std::map<int, DRW_LType*> ltypemap;
-//    std::map<int, DRW_Layer*> layermap;
+    for (std::map<int, DRW_LType*>::iterator it=ltypemap.begin(); it!=ltypemap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Layer*>::iterator it=layermap.begin(); it!=layermap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Block_Record*>::iterator it=block_recmap.begin(); it!=block_recmap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Block*>::iterator it=blockmap.begin(); it!=blockmap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Textstyle*>::iterator it=stylemap.begin(); it!=stylemap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Dimstyle*>::iterator it=dimstylemap.begin(); it!=dimstylemap.end(); ++it)
+        delete(it->second);
+    for (std::map<int, DRW_Vport*>::iterator it=vportmap.begin(); it!=vportmap.end(); ++it)
+        delete(it->second);
+
     delete buf;
 }
 
@@ -251,10 +264,12 @@ bool dwgReader15::readDwgTables() {
     std::list<objHandle>LineTypeMap;
     std::list<objHandle>LayerMap;
     std::list<objHandle>BlockRecordMap;
+    std::list<objHandle>StyleMap;
+    std::list<objHandle>DimstyleMap;
+    std::list<objHandle>VportMap;
 
 //separate control object, layers and linetypes
     for (std::list<objHandle>::iterator it=ObjectMap.begin(); it != ObjectMap.end(); /*++it*/){
-//        DBG("object map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
         if (it->type == 0x30 || it->type == 0x32 || it->type == 0x34 || it->type == 0x38 || it->type == 0x3C
                 || it->type == 0x3E || it->type == 0x40 || it->type == 0x42 || it->type == 0x44 || it->type == 0x46){
             ObjectControlMap.push_back(*it);
@@ -266,8 +281,16 @@ bool dwgReader15::readDwgTables() {
             LayerMap.push_back(*it);
             it = ObjectMap.erase(it);
         } else if (it->type == 0x31 || it->type == 0x4 || it->type == 0x5){
-//        } else if (it->type == 0x31){
             BlockRecordMap.push_back(*it);
+            it = ObjectMap.erase(it);
+        } else if (it->type == 0x35){
+            StyleMap.push_back(*it);
+            it = ObjectMap.erase(it);
+        } else if (it->type == 0x45){
+            DimstyleMap.push_back(*it);
+            it = ObjectMap.erase(it);
+        } else if (it->type == 0x41){
+            VportMap.push_back(*it);
             it = ObjectMap.erase(it);
         } else
             it++;
@@ -287,7 +310,6 @@ bool dwgReader15::readDwgTables() {
         if(ret)
             ret = ret2;
     }
-//TODO: clear LineTypeMap
 
     //parse layers
     for (std::list<objHandle>::iterator it=LayerMap.begin(); it != LayerMap.end(); ++it){
@@ -303,7 +325,51 @@ bool dwgReader15::readDwgTables() {
         if(ret)
             ret = ret2;
     }
-//TODO: clear LayerMap
+
+    //parse text styles
+    for (std::list<objHandle>::iterator it=StyleMap.begin(); it != StyleMap.end(); ++it){
+        DBG("StyleMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
+        DRW_Textstyle *la = new DRW_Textstyle();
+        buf->setPosition(it->loc);
+        int size = buf->getModularShort();
+        char byteStr[size];
+        buf->getBytes(byteStr, size);
+        dwgBuffer buff(byteStr, size, &decoder);
+        ret2 = la->parseDwg(version, &buff);
+        stylemap[la->handle] = la;
+        if(ret)
+            ret = ret2;
+    }
+
+    //parse dimstyles
+    for (std::list<objHandle>::iterator it=DimstyleMap.begin(); it != DimstyleMap.end(); ++it){
+        DBG("DimstyleMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
+        DRW_Dimstyle *la = new DRW_Dimstyle();
+        buf->setPosition(it->loc);
+        int size = buf->getModularShort();
+        char byteStr[size];
+        buf->getBytes(byteStr, size);
+        dwgBuffer buff(byteStr, size, &decoder);
+        ret2 = la->parseDwg(version, &buff);
+        dimstylemap[la->handle] = la;
+        if(ret)
+            ret = ret2;
+    }
+
+    //parse vports
+    for (std::list<objHandle>::iterator it=VportMap.begin(); it != VportMap.end(); ++it){
+        DBG("VportMap map Handle= "); DBG(it->handle); DBG(" "); DBG(it->loc); DBG("\n");
+        DRW_Vport *la = new DRW_Vport();
+        buf->setPosition(it->loc);
+        int size = buf->getModularShort();
+        char byteStr[size];
+        buf->getBytes(byteStr, size);
+        dwgBuffer buff(byteStr, size, &decoder);
+        ret2 = la->parseDwg(version, &buff);
+        vportmap[la->handle] = la;
+        if(ret)
+            ret = ret2;
+    }
 
     //set linetype in layer
     for (std::map<int, DRW_Layer*>::iterator it=layermap.begin(); it!=layermap.end(); ++it) {
@@ -348,7 +414,6 @@ bool dwgReader15::readDwgTables() {
         if(ret)
             ret = ret2;
     }
-//TODO: clear BlockRecordMap & tmpBlockmap
 
     //complete block entity with block record data
     for (std::map<int, DRW_Block_Record*>::iterator it=block_recmap.begin(); it!=block_recmap.end(); ++it) {
