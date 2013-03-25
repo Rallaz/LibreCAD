@@ -26,7 +26,14 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
-    //read: return 0 if all ok
+    /// reads the file specified in constructor
+    /*!
+     * An interface must be provided. It is used by the class to signal various
+     * components being added.
+     * @param interface_ the interface to use
+     * @param ext should the entities be extruded or not?
+     * @return true for success
+     */
     bool read(DRW_Interface *interface_, bool ext);
     void setBinary(bool b) {binary = b;}
 
@@ -61,6 +68,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
 
 private:
+    /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
     bool processTables();

@@ -18,7 +18,7 @@
 #include "drw_textcodec.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
-
+#include <assert.h>
 
 using namespace std;
 
@@ -53,9 +53,12 @@ dxfRW::~dxfRW(){
 }
 
 bool dxfRW::read(DRW_Interface *interface_, bool ext){
+    assert(fileName.empty() == false);
     bool isOk = false;
     applyExt = ext;
     ifstream filestr;
+    if ( interface_ == NULL )
+		return isOk;
     DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), ios_base::in | ios::binary);
     if (!filestr.is_open())

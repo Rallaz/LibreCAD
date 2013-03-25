@@ -77,7 +77,7 @@ TEST(DRW_Line, parseDwg) {
 	EXPECT_DOUBLE_EQ( tst.secPoint.y, (double)0 );
 	EXPECT_DOUBLE_EQ( tst.secPoint.z, (double)0 );
 	
-	/** @todo there is something fishy about these two; investigate */
+	there is something fishy about these two; investigate */
 	//EXPECT_DOUBLE_EQ( tst.extPoint.x, (double)3.37657383913876E+220 );
 	//EXPECT_DOUBLE_EQ( tst.thickness, (double)-5.22236163650598E+067 );
 	
