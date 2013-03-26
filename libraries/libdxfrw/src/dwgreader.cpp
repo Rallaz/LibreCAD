@@ -509,6 +509,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
                 currBlock = e.handleBlock;
                 intfa.setBlock(e.handleBlock);
             }
+            parseAttribs(&e);
             e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
             intfa.addInsert(e);
             break; }
@@ -531,6 +532,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
                 intfa.setBlock(e.handleBlock);
             }
             parseAttribs(&e);
+            e.style = findTableName(DRW::STYLE, e.styleH.ref);
             intfa.addText(e);
             break; }
         case 44: {
@@ -541,6 +543,7 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
                 intfa.setBlock(e.handleBlock);
             }
             parseAttribs(&e);
+            e.style = findTableName(DRW::STYLE, e.styleH.ref);
             intfa.addMText(e);
             break; }
         default:

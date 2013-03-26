@@ -318,6 +318,24 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
     }
 }
 
+bool DRW_Dimstyle::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing dimension style **************************************\n");
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("dimension style name: "); DBG(name.c_str()); DBG("\n");
+
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    //    RS crc;   //RS */
+    return buf->isGood();
+}
+
+
 //! Class to handle line type entries
 /*!
 *  Class to handle line type symbol table entries
@@ -677,6 +695,23 @@ void DRW_Textstyle::parseCode(int code, dxfReader *reader){
     }
 }
 
+bool DRW_Textstyle::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing text style *********************************************\n");
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("dimension style name: "); DBG(name.c_str()); DBG("\n");
+
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    //    RS crc;   //RS */
+    return buf->isGood();
+}
+
 //! Class to handle vport entries
 /*!
 *  Class to handle vport symbol table entries
@@ -787,6 +822,23 @@ void DRW_Vport::parseCode(int code, dxfReader *reader){
         DRW_TableEntry::parseCode(code, reader);
         break;
     }
+}
+
+bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_TableEntry::parseDwg(version, buf);
+    DBG("\n***************************** parsing VPort ************************************************\n");
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018) {//2007+
+        name = buf->getVariableText();
+    } else {//2004-
+        name = buf->getVariableUtf8Text();
+    }
+    DBG("dimension style name: "); DBG(name.c_str()); DBG("\n");
+
+    DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
+    //    RS crc;   //RS */
+    return buf->isGood();
 }
 
 void DRW_ImageDef::parseCode(int code, dxfReader *reader){

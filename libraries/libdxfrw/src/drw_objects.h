@@ -106,6 +106,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     //V12
@@ -235,7 +236,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     UTF8STRING lineType;           /*!< line type, code 6 */
@@ -263,7 +264,7 @@ public:
     }
 
 //    void parseCode(int code, dxfReader *reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
 //Note:    int DRW_TableEntry::flags; contains code 70 of block
@@ -290,6 +291,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     double height;          /*!< Fixed text height (0 not set), code 40 */
@@ -330,6 +332,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 public:
     DRW_Coord lowerLeft;     /*!< Lower left corner, code 10 & 20 */
