@@ -25,8 +25,6 @@ QString pepdbg;
 QTextStream readLog(&pepdbg);
 #endif
 
-using namespace std;
-
 #define FIRSTHANDLE 48
 
 /*enum sections {
@@ -56,9 +54,9 @@ bool dwgR::read(DRW_Interface *interface_, bool ext){
     bool isOk = false;
     error = DRW::BAD_NONE;
     applyExt = ext;
-    ifstream filestr;
+    std::ifstream filestr;
     DBG("dwgR::read 1\n");
-    filestr.open (fileName.c_str(), ios_base::in | ios::binary);
+    filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open() || !filestr.good() ){
         error = DRW::BAD_OPEN;
         return isOk;
