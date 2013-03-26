@@ -416,22 +416,21 @@ bool dwgReader15::readDwgTables() {
     }
 
     //complete block entity with block record data
-    for (std::map<int, DRW_Block_Record*>::iterator it=block_recmap.begin(); it!=block_recmap.end(); ++it) {
-        DRW_Block_Record* bkR = it->second;
-        std::map<int, DRW_Block*>::iterator bkit = tmpBlockmap.find(bkR->handleBlock);
-        if (bkit == tmpBlockmap.end()){//fail, set error
+    for (std::map<int, DRW_Block*>::iterator it=tmpBlockmap.begin(); it!=tmpBlockmap.end(); ++it) {
+        DRW_Block* bk = it->second;
+        std::map<int, DRW_Block_Record*>::iterator brit = block_recmap.find(bk->handleBlock);
+        if (brit == block_recmap.end()){//fail, set error
             if(ret)
                 ret = ret2;
         } else {
-            DRW_Block *bk = bkit->second;
+            DRW_Block_Record *bkR = brit->second;
             parseAttribs(bk);
             bk->basePoint = bkR->basePoint;
             bk->flags = bkR->flags;
-            if (bk->handleBlock==0 && bk->name[0]=='*'){//verify model/paper space
+            if(bk->handleBlock == 0 && bk->name[0]=='*'){//verify model/paper space
                 if (bk->name[1]=='P')
-                    bk->handleBlock = -1;
-            } else
-                bk->handleBlock = bkR->handle;
+                    bk->handleBlock = bkR->handle;
+            }
             blockmap[bk->handleBlock] = bk;
         }
 

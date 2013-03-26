@@ -225,6 +225,12 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
                 handleBlock = handle - ownerH.ref;
             else if (ownerH.code == 10)
                 handleBlock = handle + ownerH.ref;
+            else if (ownerH.code == 8)
+                handleBlock = handle - 1;
+            else if (ownerH.code == 6)
+                handleBlock = handle + 1;
+            else
+                handleBlock = ownerH.ref;
         }
         DBG(" Block Handle: "); DBG(handleBlock); DBG(".");
         dwgHandle XDicObjH = buf->getHandle();
