@@ -296,6 +296,58 @@ public:
     }
 };
 
+// TNick todo: wrap all elements in this namespace
+namespace libdxfrw	{
+
+//! Special codes for colors
+enum ColorCodes		{
+    ColorByLayer = 256,
+    ColorByBlock = 257
+};
+
+//! Spaces
+enum Space		{
+    ModelSpace = 0,
+    PaperSpace = 1
+};
+
+//! Special kinds of handles
+enum HandleCodes		{
+    NoHandle = -1
+};
+
+//! A group in dxf file
+struct Group {
+    UTF8STRING name;
+    UTF8STRING content;
+};
+
+//! Shadow mode
+enum ShadowMode		{
+    CastAndReceieveShadows = 0,
+    CastShadows = 1,
+    ReceiveShadows = 2,
+    IgnoreShadows = 3
+};
+
+//! Special kinds of materials
+enum MaterialCodes		{
+    MaterialByLayer = 0
+};
+
+//! Special kinds of plot styles
+enum PlotStyleCodes		{
+    DefaultPlotStyle = 0
+};
+
+//! Special kinds of transparencies
+enum TransparencyCodes		{
+    Opaque = 0,
+    Transparent = -1
+};
+
+} // namespace libdxfrw
+
 #endif
 
 // EOF

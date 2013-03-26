@@ -16,6 +16,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include "drw_base.h"
 #include "dwgbuffer.h" //RLZ TODO: move type defs to drw_base.h
 
@@ -78,19 +79,26 @@ public:
     //initializes default values
     DRW_Entity() {
         eType = DRW::UNKNOWN;
+        handle = libdxfrw::NoHandle;
         lineType = "BYLAYER";
-        color = 256; // default BYLAYER (256)
+        color = libdxfrw::ColorByLayer; // default BYLAYER (256)
         ltypeScale = 1.0;
         visible = true;
         layer = "0";
         lWeight = DRW_LW_Conv::widthByLayer; // default BYLAYER  (dxf -1, dwg 29)
-        handleBlock = space = 0; // default ModelSpace (0) & handleBlock = no handle (0)
+        handleBlock = 0; //handleBlock = no handle (0)
+        space = libdxfrw::ModelSpace; // default ModelSpace (0) 
         haveExtrusion = false;
         color24 = -1; //default -1 not set
+        shadow = libdxfrw::CastAndReceieveShadows;
+        material = libdxfrw::MaterialByLayer;
+        plotStyle = libdxfrw::DefaultPlotStyle;
+        transparency = libdxfrw::TransparencyCodes;
     }
     virtual~DRW_Entity() {}
 
     DRW_Entity(const DRW_Entity& d) {
+		/* TNick todo: why do we need an explicit copy constructor? */
         eType = d.eType;
         handle = d.handle;
         handleBlock = d.handleBlock;
@@ -104,6 +112,16 @@ public:
         lWeight = d.lWeight;
         space = d.space;
         haveExtrusion = d.haveExtrusion;
+        image = d.image;
+        groups = d.groups;
+        shadow = d.shadow;
+        material = d.material;
+        plotStyle = d.plotStyle;
+        transparency = d.transparency;
+        lTypeH = d.lTypeH;
+        layerH = d.layerH;
+        extAxisX = d.extAxisX;
+        extAxisY = d.extAxisY;
     }
 
     virtual void applyExtrusion() = 0;
@@ -118,16 +136,23 @@ public:
     enum DRW::ETYPE eType;     /*!< enum: entity type, code 0 */
     int handle;                /*!< entity identifier, code 5 */
     int handleBlock;           /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-    UTF8STRING layer;              /*!< layer name, code 8 */
-    UTF8STRING lineType;           /*!< line type, code 6 */
+    UTF8STRING layer;          /*!< layer name, code 8 */
+    UTF8STRING lineType;       /*!< line type, code 6 */
     int color;                 /*!< entity color, code 62 */
     enum DRW_LW_Conv::lineWidth lWeight; /*!< entity lineweight, code 370 */
     double ltypeScale;         /*!< linetype scale, code 48 */
     bool visible;              /*!< entity visibility, code 60 */
     int color24;               /*!< 24-bit color, code 420 */
     string colorName;          /*!< color name, code 430 */
-    int space;                 /*!< space indicator 0 = model, 1 paper, code 67*/
+    libdxfrw::Space space;     /*!< space indicator, code 67*/
     bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
+    UTF8STRING image;          /*!< proxy entity graphics, code 92 and 310 */
+    std::list<libdxfrw::Group*> groups; /*!< list of groups, code 102 */
+    libdxfrw::ShadowMode shadow; /*!< shadow mode, code 284 */
+    int material;              /*!< hard pointer id to material object, code 347 */
+    int plotStyle;             /*!< hard pointer id to plot style object, code 420 */
+    int transparency;          /*!< transparency, code 440 */
+    
 //***** dwg parse ********/
     duint8 nextLinkers; //aka nolinks //B
     duint8 plotFlags; //presence of plot style //BB
@@ -164,6 +189,8 @@ public:
     DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
     double thickness;         /*!< thickness, code 39 */
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
+    // TNick: we're not handling code 50 - Angle of the X axis for 
+    // the UCS in effect when the point was drawn
 };
 
 //! Class to handle line entity
