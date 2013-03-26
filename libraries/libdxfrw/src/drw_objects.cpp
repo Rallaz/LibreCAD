@@ -706,6 +706,33 @@ bool DRW_Textstyle::parseDwg(DRW::Version version, dwgBuffer *buf){
         name = buf->getVariableUtf8Text();
     }
     DBG("dimension style name: "); DBG(name.c_str()); DBG("\n");
+    flags |= buf->getBit()<< 6;//style are referenced for a entity, style code 70, bit 7 (64)
+    /*dint16 xrefindex =*/ buf->getBitShort();
+    flags |= buf->getBit() << 4; //is refx dependent, style code 70, bit 5 (16)
+    flags |= buf->getBit() << 2; //vertical text, stile code 70, bit 3 (4)
+    flags |= buf->getBit(); //if is a shape file instead of text, style code 70, bit 1 (1)
+    height = buf->getBitDouble();
+    width = buf->getBitDouble();
+    oblique = buf->getBitDouble();
+    genFlag = buf->getRawChar8();
+    lastHeight = buf->getBitDouble();
+    if (version > DRW::AC1018) {//2007+
+        font = buf->getVariableText();
+        bigFont = buf->getVariableText();
+    } else {//2004-
+        font = buf->getVariableUtf8Text();
+        bigFont = buf->getVariableUtf8Text();
+    }
+    dwgHandle shpControlH = buf->getHandle();
+    DBG(" shpControlH Handle: "); DBG(shpControlH.code); DBG("."); DBG(shpControlH.size); DBG("."); DBG(shpControlH.ref); DBG("\n");
+//    if(!blockIsXref && !xrefOverlaid){
+//        dwgHandle firstH = buf->getHandle();
+//        DBG(" firstH entity Handle: "); DBG(firstH.code); DBG(".");
+//        DBG(firstH.size); DBG("."); DBG(firstH.ref); DBG("\n");
+//        dwgHandle lastH = buf->getHandle();
+//        DBG(" lastH entity Handle: "); DBG(lastH.code); DBG(".");
+//        DBG(lastH.size); DBG("."); DBG(lastH.ref); DBG("\n");
+//    }
 
     DBG("\n Remaining bytes: "); DBG(buf->numRemainingBytes()); DBG("\n");
     //    RS crc;   //RS */
