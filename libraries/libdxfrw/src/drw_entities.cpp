@@ -851,6 +851,9 @@ void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
     case 38:
         elevation = reader->getDouble();
         break;
+    case 39:
+        thickness = reader->getDouble();
+        break;
     case 43:
         width = reader->getDouble();
         break;
@@ -876,6 +879,90 @@ void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf){
+    bool ret = DRW_Entity::parseDwg(version, buf);
+    if (!ret)
+        return ret;
+    DBG("\n***************************** parsing LWPolyline *******************************************\n");
+
+    flags = buf->getBitShort();
+    DBG("flags value: "); DBG(flags); DBG("\n");
+    if (flags & 4)
+        width = buf->getBitDouble();
+    if (flags & 8)
+        elevation = buf->getBitDouble();
+    if (flags & 2)
+        thickness = buf->getBitDouble();
+    if (flags & 1)
+        extPoint = buf->getExtrusion(false);
+    vertexnum = buf->getBitLong();
+    vertlist.reserve(vertexnum);
+    int bulgesnum = 0;
+    if (flags & 16)
+        bulgesnum = buf->getBitLong();
+    int vertexIdCount = 0;
+    if (version > DRW::AC1021) {//2010+
+        if (flags & 1024)
+            vertexIdCount = buf->getBitLong();
+    }
+    int widthsnum = 0;
+    if (flags & 32)
+        widthsnum = buf->getBitLong();
+
+    if (vertexnum > 0) { //verify if is lwpol without vertex (empty)
+        // add vertexs
+        vertex = new DRW_Vertex2D();
+        vertex->x = buf->getRawDouble();
+        vertex->y = buf->getRawDouble();
+        vertlist.push_back(vertex);
+        for (int i = 1; i< vertexnum; i++){
+            vertex = new DRW_Vertex2D();
+            if (version < DRW::AC1015) {//14-
+                vertex->x = buf->getRawDouble();
+                vertex->y = buf->getRawDouble();
+            } else {
+                DRW_Vertex2D *pv = vertlist.back();
+                vertex->x = buf->getDefaultDouble(pv->x);
+                vertex->y = buf->getDefaultDouble(pv->y);
+            }
+            vertlist.push_back(vertex);
+        }
+        //add bulges
+        for (unsigned int i = 0; i < bulgesnum; i++){
+            double bulge = buf->getBitDouble();
+            if (vertlist.size()< i)
+                vertlist.at(i)->bulge = bulge;
+        }
+        //add vertexId
+        if (version > DRW::AC1021) {//2010+
+            for (int i = 0; i < vertexIdCount; i++){
+                dint32 vertexId = buf->getBitLong();
+                //TODO implement vertexId, do not exist in dxf
+                DRW_UNUSED(vertexId);
+//                if (vertlist.size()< i)
+//                    vertlist.at(i)->vertexId = vertexId;
+            }
+        }
+        //add widths
+        for (unsigned int i = 0; i < widthsnum; i++){
+            double staW = buf->getBitDouble();
+            double endW = buf->getBitDouble();
+            if (vertlist.size()< i) {
+                vertlist.at(i)->stawidth = staW;
+                vertlist.at(i)->endwidth = endW;
+            }
+        }
+    }
+
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+    /* CRC X --- */
+    return buf->isGood();
+}
+
 
 void DRW_Text::parseCode(int code, dxfReader *reader){
     switch (code) {

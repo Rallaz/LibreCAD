@@ -401,7 +401,7 @@ class DRW_LWPolyline : public DRW_Entity {
 public:
     DRW_LWPolyline() {
         eType = DRW::LWPOLYLINE;
-        width = 0;
+        thickness = width = 0.0;
         elevation = flags = 0;
         extPoint.x = extPoint.y = 0;
         extPoint.z = 1;
@@ -432,13 +432,14 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf){DRW_UNUSED(v);DRW_UNUSED(buf); return false;}
+     bool parseDwg(DRW::Version v, dwgBuffer *buf);
 
 public:
     int vertexnum;            /*!< number of vertex, code 90 */
     int flags;                /*!< polyline flag, code 70, default 0 */
     double width;             /*!< constant width, code 43 */
     double elevation;         /*!< elevation, code 38 */
+    double thickness;         /*!< thickness, code 39 */
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
     DRW_Vertex2D *vertex;       /*!< current vertex to add data */
     std::vector<DRW_Vertex2D *> vertlist;  /*!< vertex list */

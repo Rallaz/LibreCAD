@@ -698,6 +698,10 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
         writer->writeInt32(90, ent->vertexnum);
         writer->writeInt16(70, ent->flags);
         writer->writeDouble(43, ent->width);
+        if (ent->elevation != 0)
+            writer->writeDouble(38, ent->elevation);
+        if (ent->thickness != 0)
+            writer->writeDouble(39, ent->thickness);
         for (int i = 0;  i< ent->vertexnum; i++){
             DRW_Vertex2D *v = ent->vertlist.at(i);
             writer->writeDouble(10, v->x);

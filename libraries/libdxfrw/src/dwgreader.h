@@ -47,6 +47,7 @@ public:
     virtual bool readFileHeader() = 0;
     //RLZ todo    virtual bool readDwgHeader() = 0;
     //RLZ todo    virtual bool readDwgClasses() = 0;
+    virtual bool readDwgClasses() = 0;
     virtual bool readDwgObjectOffsets() = 0;
     virtual bool readDwgTables() = 0;
     virtual bool readDwgEntity(objHandle& obj, DRW_Interface& intfa) = 0;
@@ -75,6 +76,7 @@ protected:
     duint32 seekerImageData;
 //sections map
     std::map<std::string, std::pair<dint32,dint32 > >sections;
+    std::map<int, DRW_Class*> classesmap;
 
 protected:
     DRW_TextCodec decoder;
@@ -89,6 +91,7 @@ public:
     bool readFileHeader();
     //RLZ todo    bool readDwgHeader();
     //RLZ todo    bool readDwgClasses();
+    bool readDwgClasses();
     bool readDwgObjectOffsets();
     bool readDwgTables();
     bool readDwgEntity(objHandle& obj, DRW_Interface& intfa);
@@ -101,6 +104,7 @@ public:
     bool readFileHeader();
     //RLZ todo    bool readDwgHeader();
     //RLZ todo    bool readDwgClasses();
+    bool readDwgClasses(){return false;}
     bool readDwgObjectOffsets(){return false;}
     bool readDwgTables(){return false;}
     bool readDwgEntity(objHandle& obj, DRW_Interface& intfa);

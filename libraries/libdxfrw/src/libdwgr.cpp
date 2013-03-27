@@ -126,7 +126,12 @@ bool dwgR::processDwg() {
         return ret;
     }
     //RLZ todo    readDwgHeader();
-    //RLZ todo    readDwgClasses();
+    ret2 = reader->readDwgClasses();
+    if (ret && !ret2) {
+        error = DRW::BAD_READ_CLASSES;
+        ret = ret2;
+    }
+
     ret = reader->readDwgObjectOffsets();
     if (!ret) {
         error = DRW::BAD_READ_OFFSETS;
