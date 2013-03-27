@@ -21,6 +21,7 @@
 using std::string;
 
 #define UTF8STRING std::string
+#define DRW_UNUSED(x) (void)x
 
 #if defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
 #  define DRW_WIN

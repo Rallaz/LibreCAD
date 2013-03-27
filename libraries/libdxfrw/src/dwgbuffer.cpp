@@ -22,8 +22,6 @@
 //#include "dxfwriter.h"
 
 
-//using namespace std;
-
 //#define FIRSTHANDLE 48
 
 /*enum sections {

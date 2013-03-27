@@ -20,8 +20,6 @@
 #include "drw_base.h"
 #include "dwgbuffer.h" //RLZ TODO: move type defs to drw_base.h
 
-#define DRW_UNUSED(x) (void)x
-
 class dxfReader;
 //class dwgBuffer;
 class DRW_Polyline;
