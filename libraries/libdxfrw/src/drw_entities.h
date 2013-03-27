@@ -1,5 +1,5 @@
 /******************************************************************************
-**  libDXFrw - Library to read/write DXF files (ascii & binary)              **
+**  DRW - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
 **                                                                           **
@@ -77,55 +77,35 @@ public:
     //initializes default values
     DRW_Entity() {
         eType = DRW::UNKNOWN;
-        handle = libdxfrw::NoHandle;
+        handle = DRW::NoHandle;
         lineType = "BYLAYER";
-        color = libdxfrw::ColorByLayer; // default BYLAYER (256)
+        color = DRW::ColorByLayer; // default BYLAYER (256)
         ltypeScale = 1.0;
         visible = true;
         layer = "0";
         lWeight = DRW_LW_Conv::widthByLayer; // default BYLAYER  (dxf -1, dwg 29)
         handleBlock = 0; //handleBlock = no handle (0)
-        space = libdxfrw::ModelSpace; // default ModelSpace (0) 
+        space = DRW::ModelSpace; // default ModelSpace (0) 
         haveExtrusion = false;
         color24 = -1; //default -1 not set
-        shadow = libdxfrw::CastAndReceieveShadows;
-        material = libdxfrw::MaterialByLayer;
-        plotStyle = libdxfrw::DefaultPlotStyle;
-        transparency = libdxfrw::TransparencyCodes;
+        shadow = DRW::CastAndReceieveShadows;
+        material = DRW::MaterialByLayer;
+        plotStyle = DRW::DefaultPlotStyle;
+        transparency = DRW::Opaque;
+        inGroup = false;
     }
     virtual~DRW_Entity() {}
-
-    DRW_Entity(const DRW_Entity& d) {
-		/* TNick todo: why do we need an explicit copy constructor? */
-        eType = d.eType;
-        handle = d.handle;
-        handleBlock = d.handleBlock;
-        layer = d.layer;
-        lineType = d.lineType;
-        color = d.color;
-        color24 = d.color24;
-        colorName = d.colorName;
-        ltypeScale = d.ltypeScale;
-        visible = d.visible;
-        lWeight = d.lWeight;
-        space = d.space;
-        haveExtrusion = d.haveExtrusion;
-        image = d.image;
-        groups = d.groups;
-        shadow = d.shadow;
-        material = d.material;
-        plotStyle = d.plotStyle;
-        transparency = d.transparency;
-        lTypeH = d.lTypeH;
-        layerH = d.layerH;
-        extAxisX = d.extAxisX;
-        extAxisY = d.extAxisY;
-    }
 
     virtual void applyExtrusion() = 0;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 protected:
-    void parseCode(int code, dxfReader *reader);
+	//! takes an action based on the provided code
+	/*!
+	 * \param code the code to interpret
+	 * \param reader the reader to use (is asserted to be non-null)
+	 * \return true if the code was parsed, false otherwise
+	 */
+    bool parseCode(int code, dxfReader *reader);
     void calculateAxis(DRW_Coord extPoint);
     void extrudePoint(DRW_Coord extPoint, DRW_Coord *point);
     bool parseDwgEntHandle(DRW::Version version, dwgBuffer *buf);
@@ -139,17 +119,19 @@ public:
     int color;                 /*!< entity color, code 62 */
     enum DRW_LW_Conv::lineWidth lWeight; /*!< entity lineweight, code 370 */
     double ltypeScale;         /*!< linetype scale, code 48 */
-    bool visible;              /*!< entity visibility, code 60 */
     int color24;               /*!< 24-bit color, code 420 */
-    string colorName;          /*!< color name, code 430 */
-    libdxfrw::Space space;     /*!< space indicator, code 67*/
+    std::string colorName;     /*!< color name, code 430 */
+    DRW::Space space;          /*!< space indicator, code 67*/
     bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
-    UTF8STRING image;          /*!< proxy entity graphics, code 92 and 310 */
-    std::list<libdxfrw::Group*> groups; /*!< list of groups, code 102 */
-    libdxfrw::ShadowMode shadow; /*!< shadow mode, code 284 */
+    std::string image;         /*!< proxy entity graphics, code 92 and 310 */
+    std::list<DRW::Group> groups; /*!< list of groups, code 102 */
+    DRW::ShadowMode shadow;    /*!< shadow mode, code 284 */
     int material;              /*!< hard pointer id to material object, code 347 */
     int plotStyle;             /*!< hard pointer id to plot style object, code 420 */
     int transparency;          /*!< transparency, code 440 */
+    bool visible:1;            /*!< entity visibility, code 60 */
+    bool inGroup:1;            /*!< used to parse dxf groups */
+   
     
 //***** dwg parse ********/
     duint8 nextLinkers; //aka nolinks //B

@@ -15,7 +15,7 @@
 #include "dxfreader.h"
 #include "dwgbuffer.h"
 #include "libdwgr.h"// for debug
-
+#include <assert.h>
 
 //! Calculate arbitary axis
 /*!
@@ -54,44 +54,83 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
     point->z = pz;
 }
 
-void DRW_Entity::parseCode(int code, dxfReader *reader){
-    switch (code) {
-    case 5:
-        handle = reader->getHandleString();
-        break;
-    case 330:
-        handleBlock = reader->getHandleString();
-        break;
-    case 8:
-        layer = reader->getUtf8String();
-        break;
-    case 6:
-        lineType = reader->getUtf8String();
-        break;
-    case 62:
-        color = reader->getInt32();
-        break;
-    case 370:
-        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
-        break;
-    case 48:
-        ltypeScale = reader->getDouble();
-        break;
-    case 60:
-        visible = reader->getBool();
-        break;
-    case 420:
-        color24 = reader->getInt32();
-        break;
-    case 430:
-        colorName = reader->getString();
-        break;
-    case 67:
-        space = reader->getInt32();
-        break;
-    default:
-        break;
+bool DRW_Entity::parseCode(int code, dxfReader *reader){
+	assert(reader!=NULL);
+	if ( inGroup )
+	{
+		switch (code) {
+		case 102:
+			inGroup = false;
+			break;
+		default:
+			assert(groups.size()>0);
+			/*
+			 * todo: save the entry in our buffer
+			 * (need to know the type of entry before doing this)
+			 *
+			 * std::string str = groups.back().content;
+			 */
+			break;
+		}
+	}
+	else
+	{
+		switch (code) {
+		case 5: //*//
+			handle = reader->getHandleString();
+			break;
+		case 330://*//
+			handleBlock = reader->getHandleString();
+			break;
+		case 8://*//
+			layer = reader->getUtf8String();
+			break;
+		case 6://*//
+			lineType = reader->getUtf8String();
+			break;
+		case 62://*//
+			color = reader->getInt32();
+			break;
+		case 370://*//
+			lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
+			break;
+		case 48://*//
+			ltypeScale = reader->getDouble();
+			break;
+		case 60://*//
+			visible = reader->getBool();
+			break;
+		case 420://*//
+			color24 = reader->getInt32();
+			break;
+		case 430://*//
+			colorName = reader->getString();
+			break;
+		case 67://*//
+			space = (DRW::Space)reader->getInt32();
+			break;
+		case 92: // number of bytes in the image proxy
+			if ( image.length() != 0 )
+			{
+				// todo: error. should be provided only once
+			}
+			image.reserve( reader->getInt32() );
+			break;
+		case 310: // image data
+			image.append( reader->getString() );
+			break;
+		case 102: { // group	
+			inGroup = true;
+			DRW::Group grp;
+			grp.name = reader->getString();
+			groups.push_back( grp );
+			break; }
+			
+		default:
+			return false;
+		}
     }
+    return true;
 }
 
 bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
@@ -159,7 +198,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf){
         entmode = 2;
     else if(entmode ==2)
         entmode = 0;
-    space = entmode;
+    space = (DRW::Space)entmode;
     DBG("entmode: "); DBG(entmode);
     duint8 numReactors = buf->getBitLong(); //BL
     DBG(", numReactors: "); DBG(numReactors);

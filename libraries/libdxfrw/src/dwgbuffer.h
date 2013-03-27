@@ -15,20 +15,7 @@
 
 #include <fstream>
 #include <sstream>
-
-typedef signed char dint8;              /* 8 bit signed */
-typedef signed short dint16;            /* 16 bit signed */
-typedef signed int dint32;              /* 32 bit signed */
-typedef long long int dint64;           /* 64 bit signed */
-
-typedef unsigned char duint8;           /* 8 bit unsigned */
-typedef unsigned short duint16;         /* 16 bit unsigned */
-typedef unsigned int duint32;           /* 32 bit unsigned */
-typedef unsigned long long int duint64; /* 64 bit unsigned */
-
-typedef float dfloat32;                 /* 32 bit floating point */
-typedef double ddouble64;               /* 64 bit floating point */
-typedef long double ddouble80;          /* 80 bit floating point */
+#include "drw_base.h"
 
 class DRW_Coord;
 class DRW_TextCodec;

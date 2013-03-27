@@ -62,7 +62,8 @@ SOURCES += \
     tests/DRW_Block_test.cpp \
     tests/DRW_Arc_test.cpp \
     tests/bitsbuild_test.cpp \
-    support/odsample.cpp
+    support/odsample.cpp \
+    tests/Reactors_test.cpp
 
 HEADERS += \
     support/bitsbuild.h \
