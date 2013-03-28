@@ -153,6 +153,16 @@ bool FilterDXFRW::fileImport(const QString& file) {
                                 + "\n" + versionStr);
             DBG(QString("DRW::BAD_READ\n"));
             break;
+        case DRW::BAD_READ_HEADER:
+            QMessageBox::warning(parentWin, "LibreCAD message", QObject::tr("error reading header vars in dwg file")
+                                + "\n" + versionStr);
+            DBG(QString("DRW::BAD_READ_HEADER"));
+            break;
+        case DRW::BAD_READ_CLASSES:
+            QMessageBox::warning(parentWin, "LibreCAD message", QObject::tr("error reading classes in dwg file")
+                                + "\n" + versionStr);
+            DBG(QString("DRW::BAD_READ_CLASSES"));
+            break;
         case DRW::BAD_READ_OFFSETS:
             QMessageBox::warning(parentWin, "LibreCAD message", QObject::tr("error reading offsets in dwg file")
                                 + "\n" + versionStr);

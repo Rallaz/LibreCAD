@@ -3662,6 +3662,14 @@ void RS_FilterDXFRW::printDwgError(int le){
         RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading file header in dwg file"));
         RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_FILE_HEADER");
         break;
+    case DRW::BAD_READ_HEADER:
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading header vars in dwg file"));
+        RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_HEADER");
+        break;
+    case DRW::BAD_READ_CLASSES:
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading classes in dwg file"));
+        RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_CLASSES");
+        break;
     case DRW::BAD_READ_OFFSETS:
         RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading offsets in dwg file"));
         RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_OFFSETS");
