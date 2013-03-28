@@ -15,7 +15,6 @@
 #include "dxfreader.h"
 #include "dwgbuffer.h"
 #include "libdwgr.h"// for debug
-#include <assert.h>
 
 //! Calculate arbitary axis
 /*!
@@ -55,75 +54,86 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
 }
 
 bool DRW_Entity::parseCode(int code, dxfReader *reader){
-	assert(reader!=NULL);
-	if ( inGroup )
-	{
-		switch (code) {
-		case 102:
-			inGroup = false;
-			break;
-		default:
-			assert(groups.size()>0);
-			groups.back().content.push_back(reader->data());
-			break;
-		}
-	}
-	else
-	{
-		switch (code) {
-		case 5: //*//
-			handle = reader->getHandleString();
-			break;
-		case 330://*//
-			handleBlock = reader->getHandleString();
-			break;
-		case 8://*//
-			layer = reader->getUtf8String();
-			break;
-		case 6://*//
-			lineType = reader->getUtf8String();
-			break;
-		case 62://*//
-			color = reader->getInt32();
-			break;
-		case 370://*//
-			lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
-			break;
-		case 48://*//
-			ltypeScale = reader->getDouble();
-			break;
-		case 60://*//
-			visible = reader->getBool();
-			break;
-		case 420://*//
-			color24 = reader->getInt32();
-			break;
-		case 430://*//
-			colorName = reader->getString();
-			break;
-		case 67://*//
-			space = (DRW::Space)reader->getInt32();
-			break;
-		case 92: // number of bytes in the image proxy
-			if ( image.length() != 0 )
-			{
-				// todo: error. should be provided only once
-			}
-			image.reserve( reader->getInt32() );
-			break;
-		case 310: // image data
-			image.append( reader->getString() );
-			break;
-		case 102: { // group	
-			inGroup = true;
-			DRW::Group grp;
-			grp.name = reader->getString();
-			groups.push_back( grp );
-			break; }
-			
-		default:
-			return false;
-		}
+    drw_assert(reader!=NULL);
+    if ( inGroup )
+    {
+        switch (code) {
+        case 102:
+            inGroup = false;
+            break;
+        default:
+            drw_assert(groups.size()>0);
+            groups.back().content.push_back(reader->data());
+            break;
+        }
+    }
+    else
+    {
+        /* TNick: it is not obvious to me if and how should the 100 code be implemented */
+        switch (code) {
+        case 5: //*//
+            handle = reader->getHandleString();
+            break;
+        case 330://*//
+            handleBlock = reader->getHandleString();
+            break;
+        case 8://*//
+            layer = reader->getUtf8String();
+            break;
+        case 6://*//
+            lineType = reader->getUtf8String();
+            break;
+        case 62://*//
+            color = reader->getInt32();
+            break;
+        case 370://*//
+            lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
+            break;
+        case 48://*//
+            ltypeScale = reader->getDouble();
+            break;
+        case 60://*//
+            visible = reader->getBool();
+            break;
+        case 420://*//
+            color24 = reader->getInt32();
+            break;
+        case 430://*//
+            colorName = reader->getString();
+            break;
+        case 67://*//
+            space = (DRW::Space)reader->getInt32();
+            break;
+        case 92: // number of bytes in the image proxy
+            if ( image.length() != 0 )
+            {
+                // todo: error. should be provided only once
+            }
+            image.reserve( reader->getInt32() );
+            break;
+        case 310: // image data
+            image.append( reader->getString() );
+            break;
+        case 102: { // group
+            inGroup = true;
+            DRW::Group grp;
+            grp.name = reader->getString();
+            groups.push_back( grp );
+            break; }
+        case 284: // shadow mode
+            shadow = (DRW::ShadowMode)reader->getInt32();
+        case 347: // material
+            material = reader->getHandleString();
+        case 390: // plot style
+            plotStyle = reader->getHandleString();
+        case 440: // transparency
+            transparency = reader->getInt32();
+        default:
+            /* as this is the last method to process the code
+             * this is an unknown code. Maybe we should track down these cases
+             */
+            return false;
+        }
     }
     return true;
 }

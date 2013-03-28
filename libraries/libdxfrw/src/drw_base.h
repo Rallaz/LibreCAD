@@ -22,7 +22,7 @@
 using std::string;
 
 #ifdef DRW_ASSERTS
-# define drw_assert(a)	assert(a)
+# define drw_assert(a) assert(a)
 #else
 # define drw_assert(a)
 #endif
@@ -91,19 +91,19 @@ BAD_READ_ENTITIES     /*!< error in entities read process. */
 };
 
 //! Special codes for colors
-enum ColorCodes		{
+enum ColorCodes        {
     ColorByLayer = 256,
     ColorByBlock = 0
 };
 
 //! Spaces
-enum Space		{
+enum Space        {
     ModelSpace = 0,
     PaperSpace = 1
 };
 
 //! Special kinds of handles
-enum HandleCodes		{
+enum HandleCodes        {
     NoHandle = -1
 };
 
@@ -114,7 +114,7 @@ struct Group {
 };
 
 //! Shadow mode
-enum ShadowMode		{
+enum ShadowMode        {
     CastAndReceieveShadows = 0,
     CastShadows = 1,
     ReceiveShadows = 2,
@@ -122,17 +122,17 @@ enum ShadowMode		{
 };
 
 //! Special kinds of materials
-enum MaterialCodes		{
+enum MaterialCodes        {
     MaterialByLayer = 0
 };
 
 //! Special kinds of plot styles
-enum PlotStyleCodes		{
+enum PlotStyleCodes        {
     DefaultPlotStyle = 0
 };
 
 //! Special kinds of transparencies
-enum TransparencyCodes		{
+enum TransparencyCodes        {
     Opaque = 0,
     Transparent = -1
 };
@@ -295,28 +295,6 @@ public:
     };
     std::string     s_;             /**< a string value or representation of the value */
 }; // class Amorph
-
-
-
-
-/*
-dint8
-dint16
-dint32
-dint64
-
-duint8
-duint16
-duint32
-duint64
-
-dfloat32
-ddouble64
-ddouble80
-
-bool
-*/
-
 
 } // namespace DRW
 
