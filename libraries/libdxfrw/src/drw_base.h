@@ -27,9 +27,6 @@ using std::string;
 # define drw_assert(a)
 #endif
 
-#define drw_unused(x) (void)x;
-
-
 #define UTF8STRING std::string
 #define DRW_UNUSED(x) (void)x
 
