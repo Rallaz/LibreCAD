@@ -63,6 +63,8 @@ namespace DRW {
         XLINE,
         VIEWPORT,
         PROXY,
+        ATTDEF,
+        ATTRIB,
         UNKNOWN
     };
 
@@ -100,12 +102,12 @@ public:
     virtual void applyExtrusion() = 0;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 protected:
-	//! takes an action based on the provided code
-	/*!
-	 * \param code the code to interpret
-	 * \param reader the reader to use (is asserted to be non-null)
-	 * \return true if the code was parsed, false otherwise
-	 */
+    //! takes an action based on the provided code
+    /*!
+     * \param code the code to interpret
+     * \param reader the reader to use (is asserted to be non-null)
+     * \return true if the code was parsed, false otherwise
+     */
     bool parseCode(int code, dxfReader *reader);
     void calculateAxis(DRW_Coord extPoint);
     void extrudePoint(DRW_Coord extPoint, DRW_Coord *point);
@@ -253,26 +255,26 @@ public:
     //! interpret code in dxf reading process or dispatch to inherited class
     void parseCode(int code, dxfReader *reader);
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);	
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);    
 
     //! center point in OCS
-	const DRW_Coord & center()
-	{ return basePoint; }
+    const DRW_Coord & center()
+    { return basePoint; }
     //! the radius of the circle
-	double radius()
-	{ return radious; }
+    double radius()
+    { return radious; }
     //! start angle in radians
-	double startAngle()
-	{ return staangle; }
+    double startAngle()
+    { return staangle; }
     //! end angle in radians
-	double endAngle()
-	{ return endangle; }
+    double endAngle()
+    { return endangle; }
     //! thickness
-	double thick()
-	{ return thickness; }
+    double thick()
+    { return thickness; }
     //! extrusion
-	const DRW_Coord & extrusion()
-	{ return extPoint; }
+    const DRW_Coord & extrusion()
+    { return extPoint; }
 
 public:
     double staangle;            /*!< start angle, code 50 in radians*/
@@ -343,26 +345,26 @@ public:
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
     
     //! first corner (2D)
-	const DRW_Coord & firstCorner()
-	{ return basePoint; }
+    const DRW_Coord & firstCorner()
+    { return basePoint; }
     //! second corner (2D)
-	const DRW_Coord & secondCorner()
-	{ return secPoint; }
+    const DRW_Coord & secondCorner()
+    { return secPoint; }
     //! third corner (2D)
-	const DRW_Coord & thirdCorner()
-	{ return thirdPoint; }
+    const DRW_Coord & thirdCorner()
+    { return thirdPoint; }
     //! fourth corner (2D)
-	const DRW_Coord & fourthCorner()
-	{ return thirdPoint; }
+    const DRW_Coord & fourthCorner()
+    { return thirdPoint; }
     //! thickness
-	double thick()
-	{ return thickness; }
+    double thick()
+    { return thickness; }
     //! elevation
-	double elevation()
-	{ return basePoint.z; }
+    double elevation()
+    { return basePoint.z; }
     //! extrusion
-	const DRW_Coord & extrusion()
-	{ return extPoint; }
+    const DRW_Coord & extrusion()
+    { return extPoint; }
 
 };
 
@@ -373,14 +375,14 @@ public:
 */
 class DRW_3Dface : public DRW_Trace {
 public:
-	enum EdgeFlags {
-	    NoEdge = 0x00,
-	    FirstEdge = 0x01,
-	    SecodEdge = 0x02,
-	    ThirdEdge = 0x04,
-	    FourthEdge = 0x08,
-	    AllEdges = 0x15
-	};
+    enum EdgeFlags {
+        NoEdge = 0x00,
+        FirstEdge = 0x01,
+        SecodEdge = 0x02,
+        ThirdEdge = 0x04,
+        FourthEdge = 0x08,
+        AllEdges = 0x15
+    };
 
     DRW_3Dface() {
         eType = DRW::E3DFACE;
@@ -395,17 +397,17 @@ public:
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
 
     //! first corner in WCS
-	const DRW_Coord & firstCorner()
-	{ return basePoint; }
+    const DRW_Coord & firstCorner()
+    { return basePoint; }
     //! second corner in WCS
-	const DRW_Coord & secondCorner()
-	{ return secPoint; }
+    const DRW_Coord & secondCorner()
+    { return secPoint; }
     //! third corner in WCS
-	const DRW_Coord & thirdCorner()
-	{ return thirdPoint; }
+    const DRW_Coord & thirdCorner()
+    { return thirdPoint; }
     //! fourth corner in WCS
-	const DRW_Coord & fourthCorner()
-	{ return thirdPoint; }
+    const DRW_Coord & fourthCorner()
+    { return thirdPoint; }
     //! edge visibility flags
     EdgeFlags edgeFlags()
     { return (EdgeFlags)invisibleflag; }
@@ -556,6 +558,12 @@ public:
             HFit           /*!< fit into point = 5 (if VAlign==0) */
         };
 
+    //! Text generation flags
+    enum GenFlags {
+        Backward = 0x02, /**< mirrored in X */
+        UpsideDown = 0x04 /**< mirrored in Y */
+    };
+        
     DRW_Text() {
         eType = DRW::TEXT;
         angle = 0;
@@ -1291,26 +1299,115 @@ public:
 class DRW_ProxyEntry : public DRW_Entity {
 public:
 
-	enum DataFormat {
-		DwgFormat = 0,
-		DxfFormat = 1		
-	};
+    enum DataFormat {
+        DwgFormat = 0,
+        DxfFormat = 1        
+    };
 
-	DRW_ProxyEntry() {
-        eType = DRW::PROXY;		
-	}
+    DRW_ProxyEntry() {
+        eType = DRW::PROXY;        
+    }
 
     //! interpret code in dxf reading process or dispatch to inherited class
     void parseCode(int code, dxfReader *reader);
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);	
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);    
 
 public:
-	int class_id;           /*!< Application entity's class ID; code 91 */
-	DataFormat format;     /*!< Original custom object data format; code 70 */
-	duint16 dwg_version;    /**< Object drawing format when it becomes a proxy - AcDbDwgVersion*/
-	duint16 mnt_version;    /**< Object drawing format when it becomes a proxy - MaintenanceReleaseVersion*/
-	std::list<DRW::Amorph> data; /*!< other data in raw format */
+    int class_id;           /*!< Application entity's class ID; code 91 */
+    DataFormat format;      /*!< Original custom object data format; code 70 */
+    duint16 dwg_version;    /**< Object drawing format when it becomes a proxy - AcDbDwgVersion*/
+    duint16 mnt_version;    /**< Object drawing format when it becomes a proxy - MaintenanceReleaseVersion*/
+    std::list<DRW::Amorph> data; /*!< other data in raw format */
+};
+
+//! Class to handle proxy entity
+/*!
+*  An attribute definition
+*  @author TNick
+*/
+class DRW_AttrDef : public DRW_Text {
+public:
+
+    //! flags for an attribute
+    enum Flags {
+        NoFlag = 0,             /*!< No flag is set */
+        
+        Invisible = 0x01,       /*!< Attribute is invisible (does not appear).*/
+        Constant = 0x02,        /*!< This is a constant attribute.*/
+        Verification = 0x04,    /*!< Verification is required on input of this attribute.*/
+        Present = 0x08,         /*!< Attribute is preset (no prompt during insertion).*/
+        
+        LockPosition = 0x10,    /*!< Locks the position of the attribute within the block reference, code 280 */
+        DuplicateRecord = 0x20, /*!< Duplicate record cloning flag (determines how to merge duplicate entries), code 280 */
+        
+        BaseFlags = 0x15,       /*!< only attribute flags, code 70 */
+        AllFlags = 0x45         /*!< All flags are set */
+    };
+    
+    DRW_AttrDef() {
+        eType = DRW::ATTDEF;
+        flg = 0;
+    }
+
+    //! interpret code in dxf reading process or dispatch to inherited class
+    void parseCode(int code, dxfReader *reader);
+    //! interpret dwg data (was already determined to be part of this object)
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);    
+
+    //! first align point in OCS
+    const DRW_Coord & firstAlignPoint()
+    { return basePoint; }
+    //! second align point in OCS
+    const DRW_Coord & secAlignPoint()
+    { return secPoint; }
+    //! text height
+    double textHeight()
+    { return height; }
+    //! default value for this attribute
+    std::string defaultValue()
+    { return text; }
+    //! text rotation
+    double rotation()
+    { return angle; }
+    //! Relative X scale factor (width)
+    double xScale()
+    { return widthscale; }
+    //! oblique angle
+    double obliqueAngle()
+    { return oblique; }
+    //! name of the text style to use
+    std::string textStyle()
+    { return style; }
+    //! text generation flags
+    GenFlags generationFlags()
+    { return (GenFlags)textgen; }
+    //! horizontal alignment
+    HAlign horizontalAlignment()
+    { return alignH; }
+    //! vertical alignment
+    VAlign verticalAlignment()
+    { return alignV; }
+    //! extrusion
+    const DRW_Coord & extrusion()
+    { return extPoint; }
+    //! prompt presented when a value for attribute is required
+    std::string promptText()
+    { return prompt; }
+    //! the tag for this attribute
+    std::string tagText()
+    { return tag; }
+    //! bit switches
+    Flags flags()
+    { return (Flags)flg; }
+
+public:
+//    dwgHandle styleH;          /*!< handle for text style */
+    std::string prompt;     /*!< the prompt, code 3 */
+    std::string tag;        /*!< the tag, code 2 */
+    int flg;                /*!< the flags, code 70 */
+    /* Field length (optional; default = 0) (not currently used), code 73 */
+    
 };
 
 #endif
