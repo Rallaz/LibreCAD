@@ -14,6 +14,7 @@
 #define DXFREADER_H
 
 #include "drw_textcodec.h"
+#include "drw_base.h"
 
 class dxfReader {
 public:
@@ -33,14 +34,18 @@ public:
     virtual bool readInt64() = 0;
     virtual bool readDouble() = 0;
     virtual bool readBool() = 0;
-    std::string getString() {return strData;}
+    DRW::Amorph::Type dataType() const
+    { return adata.ty; }
+    const DRW::Amorph & data() const
+    { return adata; }
+    std::string getString() {return adata.getString();}
     int getHandleString();//Convert hex string to int
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
-    std::string getUtf8String() {return decoder.toUtf8(strData);}
-    double getDouble() {return doubleData;}
-    int getInt32() {return intData;}
-    unsigned long long int getInt64() {return int64;}
-    bool getBool() { return (intData==0) ? false : true;}
+    std::string getUtf8String() {return decoder.toUtf8(adata.getString());}
+    double getDouble() {return adata.getDouble64();}
+    int getInt32() {return adata.getInt32();}
+    unsigned long long int getInt64() {return adata.getInt64();}
+    bool getBool() { return adata.getBool();}
     int getVersion(){return decoder.getVersion();}
     void setVersion(std::string *v){decoder.setVersion(v);}
     void setCodePage(std::string *c){decoder.setCodePage(c);}
@@ -50,10 +55,11 @@ public:
 #endif
 protected:
     std::ifstream *filestr;
-    std::string strData;
-    double doubleData;
-    signed short intData; //16 bits integer
-    unsigned long long int int64; //64 bits integer
+//    std::string strData;
+//    double doubleData;
+//    signed short intData; //16 bits integer
+//    unsigned long long int int64; //64 bits integer
+    DRW::Amorph adata;
 private:
     DRW_TextCodec decoder;
 };

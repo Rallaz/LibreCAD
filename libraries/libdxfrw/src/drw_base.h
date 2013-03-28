@@ -16,9 +16,16 @@
 #define DRW_VERSION "0.5.7"
 
 #include <string>
+#include <list>
 #include <cmath>
 
 using std::string;
+
+#ifdef DRW_ASSERTS
+# define drw_assert(a)	assert(a)
+#else
+# define drw_assert(a)
+#endif
 
 #define UTF8STRING std::string
 #define DRW_UNUSED(x) (void)x
@@ -57,6 +64,7 @@ typedef double ddouble64;               /* 64 bit floating point */
 typedef long double ddouble80;          /* 80 bit floating point */
 
 namespace DRW {
+class Amorph;
 
 //! Version numbers for the DXF Format.
 enum Version {
@@ -102,7 +110,7 @@ enum HandleCodes		{
 //! A group in dxf file
 struct Group {
     std::string name;
-    std::string content;
+    std::list<DRW::Amorph> content;
 };
 
 //! Shadow mode
@@ -128,6 +136,187 @@ enum TransparencyCodes		{
     Opaque = 0,
     Transparent = -1
 };
+
+//! Class capable of storing values of various kind
+/*!
+ * The class stores the actual value and may also store a string representation
+ * of that value, depending on the way the value was obtained.
+ *
+ * Internal string has two roles: to store the value for the string type 
+ * (Amorph::tyString) and to store a string representation for the other types.
+ * hasStringRepr() tells us if the string representation has been stored or not
+ * and stringRepr() will generate a string representation of the value in 
+ * internal string.
+ */
+class Amorph        {
+public:
+
+    enum Type {
+        tyInt8,     /**< 8 bit signed */
+        tyInt16,    /**< 16 bit signed */
+        tyInt32,    /**< 32 bit signed */
+        tyInt64,    /**< 64 bit signed */
+        
+        tyUint8,    /**< 8 bit unsigned */
+        tyUint16,   /**< 16 bit unsigned */
+        tyUint32,   /**< 32 bit unsigned */
+        tyUint64,   /**< 64 bit unsigned */
+        
+        tyFloat32,  /**< 32 bit floating point */
+        tyDouble64, /**< 64 bit floating point */
+        tyDouble80, /**< 80 bit floating point */
+        
+        tyBool,     /**< a bool value */
+        
+        tyString    /**< a string value */
+    };
+
+    //! tell if the instance has a string representation for the value
+    bool hasStringRepr()
+    { return s_.length() > 0; }
+    
+    //!@{
+    //! set the internal value and update the type
+    void setInt8 (dint8 val)
+    { int8_ = val; ty = tyInt8; s_.clear(); }
+    void setInt16 (dint16 val)
+    { int16_ = val; ty = tyInt16 ; s_.clear(); }
+    void setInt32 (dint32 val)
+    { int32_ = val; ty = tyInt32; s_.clear(); }
+    void setInt64 (dint64 val)
+    { int64_ = val; ty = tyInt64; s_.clear(); }
+    void setUint8 (duint8 val)
+    { uint8_ = val; ty = tyUint8; s_.clear(); }
+    void setUint16 (duint16 val)
+    { uint16_ = val; ty = tyUint16; s_.clear(); }
+    void setUint32 (duint32 val)
+    { uint32_ = val; ty = tyUint32; s_.clear(); }
+    void setuint64 (duint64 val)
+    { uint64_ = val; ty = tyUint64; s_.clear(); }
+    void setFloat32 (dfloat32 val)
+    { float32_ = val; ty = tyFloat32; s_.clear(); }
+    void setDouble64 (ddouble64 val)
+    { double64_ = val; ty = tyDouble64; s_.clear(); }
+    void setDouble80 (ddouble80 val)
+    { double80_ = val; ty = tyDouble80; s_.clear(); }
+    void setBool (bool val)
+    { b_ = val; ty = tyBool; s_.clear(); }
+    void setString (const std::string & val)
+    { s_ = val; ty = tyString; }
+    //!@}
+    
+    //!@{
+    //! get current value; assert corect type
+    dint8 getInt8() const
+    { drw_assert(ty==tyInt8); return int8_; }
+    dint16 getInt16() const
+    { drw_assert(ty==tyInt16); return int16_; }
+    dint32 getInt32() const
+    { drw_assert(ty==tyInt32); return int32_; }
+    dint64 getInt64() const
+    { drw_assert(ty==tyInt64); return int64_; }
+    duint8 getUint8() const
+    { drw_assert(ty==tyUint8); return uint8_; }
+    duint16 getUint16() const
+    { drw_assert(ty==tyUint16); return uint16_; }
+    duint32 getUint32() const
+    { drw_assert(ty==tyUint32); return uint32_; }
+    duint64 getUint64() const
+    { drw_assert(ty==tyUint64); return uint64_; }
+    dfloat32 getFloat32() const
+    { drw_assert(ty==tyFloat32); return float32_; }
+    ddouble64 getDouble64() const
+    { drw_assert(ty==tyDouble64); return double64_; }
+    ddouble80 getDouble80() const
+    { drw_assert(ty==tyDouble80); return double80_; }
+    bool getBool() const
+    { drw_assert(ty==tyBool); return b_; }
+    const std::string & getString() const
+    { drw_assert(ty==tyString); return s_; }
+    //!@}
+
+    //! get the string representation of current value
+    const std::string & stringRepr()
+    {
+        char buff[128];
+        switch (ty)    {
+        case tyInt8:
+            sprintf(buff,"%d",int8_); 
+        case tyInt16:
+            sprintf(buff,"%d",int16_); 
+        case tyInt32:
+            sprintf(buff,"%d",int32_); 
+        case tyInt64:
+            sprintf(buff,"%lli",int64_); 
+        case tyUint8:
+            sprintf(buff,"%d",uint8_); 
+        case tyUint16:
+            sprintf(buff,"%d",uint16_); 
+        case tyUint32:
+            sprintf(buff,"%d",uint32_); 
+        case tyUint64:
+            sprintf(buff,"%llu",uint64_); 
+        case tyFloat32:
+            sprintf(buff,"%f",float32_); 
+        case tyDouble64:
+            sprintf(buff,"%f",double64_); 
+        case tyDouble80:
+            sprintf(buff,"%Lf",double80_); 
+        case tyBool:
+            sprintf(buff,"%d",b_); 
+        case tyString:
+            return s_;
+        default:
+            drw_assert(false);
+            s_.clear();
+            return s_;
+        }
+        s_ = buff;
+        return s_;
+    }
+    
+    Type ty;                        /**< the type for current value */
+    union {
+        dint8       int8_;          /**< 8 bit signed */
+        dint16      int16_;         /**< 16 bit signed */
+        dint32      int32_;         /**< 32 bit signed */
+        dint64      int64_;         /**< 64 bit signed */
+        
+        duint8        uint8_;         /**< 8 bit unsigned */
+        duint16     uint16_;        /**< 16 bit unsigned */
+        duint32     uint32_;        /**< 32 bit unsigned */
+        duint64     uint64_;        /**< 64 bit unsigned */
+        
+        dfloat32    float32_;       /**< 32 bit floating point */
+        ddouble64   double64_;      /**< 64 bit floating point */
+        ddouble80   double80_;      /**< 80 bit floating point */
+        
+        bool        b_;             /**< a bool value */
+    };
+    std::string     s_;             /**< a string value or representation of the value */
+}; // class Amorph
+
+
+
+
+/*
+dint8
+dint16
+dint32
+dint64
+
+duint8
+duint16
+duint32
+duint64
+
+dfloat32
+ddouble64
+ddouble80
+
+bool
+*/
+
 
 } // namespace DRW
 

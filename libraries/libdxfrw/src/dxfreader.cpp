@@ -106,7 +106,7 @@ int dxfReader::getHandleString(){
     if ( !Succeeded || Succeeded == EOF )
         res = 0;
 #else
-    std::istringstream Convert(strData);
+    std::istringstream Convert(adata.getString());
     if ( !(Convert >> std::hex >>res) )
         res = 0;
 #endif
@@ -132,7 +132,8 @@ bool dxfReaderBinary::readCode(int *code) {
 }
 
 bool dxfReaderBinary::readString() {
-    std::getline(*filestr, strData, '\0');
+    std::getline(*filestr, adata.s_, '\0');
+    adata.ty = DRW::Amorph::tyString;
     DBG(strData); DBG("\n");
     return (filestr->good());
 }
@@ -146,8 +147,8 @@ bool dxfReaderBinary::readString(std::string *text) {
 bool dxfReaderBinary::readInt() {
     char buffer[2];
     filestr->read(buffer,2);
-    intData = (int)((buffer[1] << 8) | buffer[0]);
-    DBG(intData); DBG("\n");
+    adata.setInt32( (int)((buffer[1] << 8) | buffer[0]) );
+    DBG(adata.int32_); DBG("\n");
     return (filestr->good());
 }
 
@@ -156,8 +157,8 @@ bool dxfReaderBinary::readInt32() {
     char buffer[4];
     filestr->read(buffer,4);
     int32p = (unsigned int *) buffer;
-    intData = *int32p;
-    DBG(intData); DBG("\n");
+    adata.setInt32(*int32p);
+    DBG(adata.int32_); DBG("\n");
     return (filestr->good());
 }
 
@@ -166,8 +167,8 @@ bool dxfReaderBinary::readInt64() {
     char buffer[8];
     filestr->read(buffer,8);
     int64p = (unsigned long long int *) buffer;
-    int64 = *int64p;
-    DBG(int64); DBG(" int64\n");
+    adata.setuint64(*int64p);
+    DBG(adata.uint64_); DBG(" int64\n");
     return (filestr->good());
 }
 
@@ -176,8 +177,8 @@ bool dxfReaderBinary::readDouble() {
     char buffer[8];
     filestr->read(buffer,8);
     result = (double *) buffer;
-    doubleData = *result;
-    DBG(doubleData); DBG("\n");
+    adata.setDouble64(*result);
+    DBG(adata.double64_); DBG("\n");
     return (filestr->good());
 }
 
@@ -185,8 +186,8 @@ bool dxfReaderBinary::readDouble() {
 bool dxfReaderBinary::readBool() {
     char buffer[1];
     filestr->read(buffer,1);
-    intData = (int)(buffer[0]);
-    DBG(intData); DBG("\n");
+    adata.setBool((buffer[0] != 0));
+    DBG(adata.b_); DBG("\n");
     return (filestr->good());
 }
 
@@ -205,18 +206,19 @@ bool dxfReaderAscii::readString(std::string *text) {
 }
 
 bool dxfReaderAscii::readString() {
-    std::getline(*filestr, strData);
-    if (!strData.empty() && strData.at(strData.size()-1) == '\r')
-        strData.erase(strData.size()-1);
-    DBG(strData); DBG("\n");
+    std::getline(*filestr, adata.s_);
+    if (!adata.s_.empty() && adata.s_.at(adata.s_.size()-1) == '\r')
+        adata.s_.erase(adata.s_.size()-1);
+    DBG(adata.s_); DBG("\n");
+    adata.ty = DRW::Amorph::tyString;
     return (filestr->good());
 }
 
 bool dxfReaderAscii::readInt() {
-    std::string text;
-    if (readString(&text)){
-        intData = atoi(text.c_str());
-        DBG(intData); DBG("\n");
+    if (readString(&adata.s_)){
+        adata.int32_ = atoi(adata.s_.c_str());
+        adata.ty = DRW::Amorph::tyInt32;
+        DBG(adata.int32_); DBG("\n");
         return true;
     } else
         return false;
@@ -231,11 +233,11 @@ bool dxfReaderAscii::readInt64() {
 }
 
 bool dxfReaderAscii::readDouble() {
-    std::string text;
-    if (readString(&text)){
-        std::istringstream sd(text);
-        sd >> doubleData;
-        DBG(doubleData); DBG("\n");
+    if (readString(&adata.s_)){
+        std::istringstream sd(adata.s_);
+        sd >> adata.double64_;
+        adata.ty = DRW::Amorph::tyDouble64;
+        DBG(adata.double64_); DBG("\n");
         return true;
     } else
         return false;
@@ -243,10 +245,11 @@ bool dxfReaderAscii::readDouble() {
 
 //saved as int or add a bool member??
 bool dxfReaderAscii::readBool() {
-    std::string text;
-    if (readString(&text)){
-        intData = atoi(text.c_str());
-        DBG(intData); DBG("\n");
+    if (readString(&adata.s_)){
+        int i = atoi(adata.s_.c_str());
+        adata.b_ = (i!=0);
+        adata.ty = DRW::Amorph::tyBool;
+        DBG(adata.b_); DBG("\n");
         return true;
     } else
         return false;

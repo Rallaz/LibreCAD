@@ -64,12 +64,7 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
 			break;
 		default:
 			assert(groups.size()>0);
-			/*
-			 * todo: save the entry in our buffer
-			 * (need to know the type of entry before doing this)
-			 *
-			 * std::string str = groups.back().content;
-			 */
+			groups.back().content.push_back(reader->data());
 			break;
 		}
 	}
