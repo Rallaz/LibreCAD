@@ -317,6 +317,8 @@ public:
 
     //! interpret code in dxf reading process or dispatch to inherited class
     void parseCode(int code, dxfReader *reader);
+    //! interpret dwg data (was already determined to be part of this object)
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
     
     //! first corner (2D)
 	const DRW_Coord & firstCorner()
