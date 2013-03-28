@@ -16,9 +16,14 @@
 #define DRW_VERSION "0.5.7"
 
 #include <string>
+#include <list>
 #include <cmath>
 
-using std::string;
+#ifdef DRW_ASSERTS
+# define drw_assert(a) assert(a)
+#else
+# define drw_assert(a)
+#endif
 
 #define UTF8STRING std::string
 #define DRW_UNUSED(x) (void)x
@@ -245,7 +250,7 @@ public:
 //    string codepage;
 private:
 //    DRW_VarContent content;
-    string data;
+    std::string data;
 };
 
 //! Class to handle dwg handles
