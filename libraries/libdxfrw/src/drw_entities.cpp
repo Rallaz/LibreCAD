@@ -1891,3 +1891,68 @@ void DRW_Viewport::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+
+void DRW_ProxyEntry::parseCode(int code, dxfReader *reader)
+{
+    switch (code) {
+    case 91:
+		class_id = reader->getInt32();
+        break;
+    case 70:
+		format = (DataFormat)reader->getInt32();
+		drw_assert(format>=0);
+		drw_assert(format<=1);
+		break;
+    case 95: {
+		duint32 i = reader->getInt32();
+		dwg_version = i & 0xFFFF;
+		mnt_version = i / 0x10000;
+		break; }
+    default:
+		data.push_back(reader->data());
+	}
+}
+
+bool DRW_ProxyEntry::parseDwg(DRW::Version v, dwgBuffer *buf)
+{
+    /* this function is a stub; please help the project by exapanding it */
+    
+	int type = buf->getBitShort(); /* typecode (internal DWG type code) */
+	duint32 obj_size = 0; /* Entity length (not counting itself or CRC). */
+	if ( v > DRW::AC1014 ) {
+		obj_size = buf->getRawLong32();
+	}
+	dwgHandle proxy_handle = buf->getHandle();
+	/* eed section */
+	if ( v <= DRW::AC1014 ) {
+		obj_size = buf->getRawLong32();
+	}
+	dint32 reactors_count = buf->getBitLong(); /* Number of persistent reactors attached to this obj*/
+	bool b_has_xdict = true;
+	if ( v > DRW::AC1015 ) {
+		b_has_xdict = buf->getBit() !=1 ;
+	}
+	if ( v > DRW::AC1014 ) {
+		class_id = buf->getBitLong();
+		dint32 i = buf->getBitLong();
+		dwg_version = i & 0xFFFF;
+		mnt_version = i / 0x10000;
+		format = (DataFormat)buf->getBit();
+	}
+	drw_unused(type);
+	drw_unused(proxy_handle);
+	drw_unused(reactors_count);
+	drw_unused(obj_size);
+	drw_unused(b_has_xdict);
+	
+	/*
+	parenthandle (soft pointer) 
+	[Reactors (soft pointer)]
+	xdicobjhandle (hard owner)
+	objid object handles, as many as we can read until we run out of data. These are TYPEDOBJHANDLEs.
+	*/
+	
+	// crc
+	return buf->isGood();
+}

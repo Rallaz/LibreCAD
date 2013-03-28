@@ -484,6 +484,14 @@ bool dwgReader15::readDwgTables() {
 bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
     bool ret = true;
 
+#define entryParse(e) \
+            ret = e.parseDwg(version, &buff); \
+            if (e.handleBlock != currBlock) { \
+                currBlock = e.handleBlock; \
+                intfa.setBlock(e.handleBlock); \
+            } \
+            parseAttribs(&e)
+            
         buf->setPosition(obj.loc);
         int size = buf->getModularShort();
         char byteStr[size];
@@ -499,101 +507,69 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
                     obj.type = cl->dwgType;
             }
         }
-
+        
+		/* TNick: how to detect Proxy objects? */
+		
         switch (obj.type){
         case 17: {
             DRW_Arc e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addArc(e);
             break; }
         case 18: {
             DRW_Circle e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addCircle(e);
             break; }
         case 19:{
             DRW_Line e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addLine(e);
             break;}
         case 27: {
             DRW_Point e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addPoint(e);
             break; }
         case 35: {
             DRW_Ellipse e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addEllipse(e);
             break; }
         case 7: {//minsert = 8
             DRW_Insert e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
             intfa.addInsert(e);
             break; }
         case 77: {
             DRW_LWPolyline e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             intfa.addLWPolyline(e);
             break; }
         case 1: {
             DRW_Text e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             e.style = findTableName(DRW::STYLE, e.styleH.ref);
             intfa.addText(e);
             break; }
         case 44: {
             DRW_MText e;
-            ret = e.parseDwg(version, &buff);
-            if (e.handleBlock != currBlock) {
-                currBlock = e.handleBlock;
-                intfa.setBlock(e.handleBlock);
-            }
-            parseAttribs(&e);
+            entryParse(e);
             e.style = findTableName(DRW::STYLE, e.styleH.ref);
             intfa.addMText(e);
             break; }
+        case 28: {
+            DRW_3Dface e;
+            entryParse(e);
+            intfa.add3dFace(e);
+            break; }
+        case 31: {
+            DRW_Solid e;
+            entryParse(e);
+            intfa.addSolid(e);
+            break; }
+            
         default:
             break;
         }

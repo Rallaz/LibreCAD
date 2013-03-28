@@ -62,6 +62,7 @@ namespace DRW {
         RAY,
         XLINE,
         VIEWPORT,
+        PROXY,
         UNKNOWN
     };
 
@@ -1261,6 +1262,35 @@ public:
     double centerPY;          /*!< view center piont Y, code 22 */
 };
 
+//! Class to handle proxy entity
+/*!
+*  Proxy classes are custom defined classes provided by plug-in components in Autocad
+*  @author TNick
+*/
+class DRW_ProxyEntry : public DRW_Entity {
+public:
+
+	enum DataFormat {
+		DwgFormat = 0,
+		DxfFormat = 1		
+	};
+
+	DRW_ProxyEntry() {
+        eType = DRW::PROXY;		
+	}
+
+    //! interpret code in dxf reading process or dispatch to inherited class
+    void parseCode(int code, dxfReader *reader);
+    //! interpret dwg data (was already determined to be part of this object)
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);	
+
+public:
+	int class_id;           /*!< Application entity's class ID; code 91 */
+	DataFormat format;     /*!< Original custom object data format; code 70 */
+	duint16 dwg_version;    /**< Object drawing format when it becomes a proxy - AcDbDwgVersion*/
+	duint16 mnt_version;    /**< Object drawing format when it becomes a proxy - MaintenanceReleaseVersion*/
+	std::list<DRW::Amorph> data; /*!< other data in raw format */
+};
 
 #endif
 
