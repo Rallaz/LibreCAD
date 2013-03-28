@@ -35,6 +35,8 @@ dwgReader::~dwgReader(){
         delete(it->second);
     for (std::map<int, DRW_Vport*>::iterator it=vportmap.begin(); it!=vportmap.end(); ++it)
         delete(it->second);
+    for (std::map<int, DRW_Class*>::iterator it=classesmap.begin(); it!=classesmap.end(); ++it)
+        delete(it->second);
 
     delete buf;
 }
@@ -177,6 +179,43 @@ bool dwgReader15::readFileHeader() {
 
     DBG("dwgReader15::readFileHeader END\n");
     return true;
+}
+
+bool dwgReader15::readDwgClasses(){
+    DBG("dwgReader15::readDwgClasses");
+    dint32 offset = sections["CLASSES"].first;
+    dint32 secSize = sections["CLASSES"].second;
+//    dint32 maxPos = offset + sections["CLASSES"].second;
+    //secSize = 16(sentinel) + 4(size) + data + 2 (crc) + 16(sentinel)
+//    dint32 maxPos = offset + secSize;
+    if (!buf->setPosition(offset))
+        return false;
+    DBG("file header sentinel= ");
+#ifdef DRWG_DBG
+    for (int i=0; i<16;i++) {
+        DBGH(buf->getRawChar8()); DBG(" ");
+    }
+#endif
+    dint32 size = buf->getRawLong32();
+    if (size != (secSize - 38)) {
+        DBG("WARNING dwgReader15::readDwgClasses size are "); DBG(size);
+        DBG(" and secSize - 38 are "); DBG(secSize - 38); DBG("\n");
+    }
+    char byteStr[size];
+    buf->getBytes(byteStr, size);
+    dwgBuffer buff(byteStr, size, &decoder);
+    while (size > buff.getPosition()) {
+        DRW_Class *cl = new DRW_Class();
+        cl->parseDwg(version, &buff);
+        classesmap[cl->classNum] = cl;
+    }
+    return buff.isGood();
+
+    //verify crc
+//    duint16 crcCalc = buff.crc8(0xc0c1,0,size);
+//    duint16 crcRead = buf->getBERawShort16();
+//    DBG("object map section crc8 read= "); DBG(crcRead); DBG("\n");
+//    DBG("object map section crc8 calculated= "); DBG(crcCalc); DBG("\n");
 }
 
 /*********** objects map ************************/
@@ -450,6 +489,16 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
         char byteStr[size];
         buf->getBytes(byteStr, size);
         dwgBuffer buff(byteStr, size, &decoder);
+        if (obj.type > 499){
+            std::map<int, DRW_Class*>::iterator it = classesmap.find(obj.type);
+            if (it == classesmap.end()){//fail, not found in classes set error
+                return false;
+            } else {
+                DRW_Class *cl = it->second;
+                if (cl->dwgType != 0)
+                    obj.type = cl->dwgType;
+            }
+        }
 
         switch (obj.type){
         case 17: {
@@ -513,17 +562,16 @@ bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
             e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
             intfa.addInsert(e);
             break; }
-/*        case 77: {
+        case 77: {
             DRW_LWPolyline e;
-            e.isEnd = true;
             ret = e.parseDwg(version, &buff);
             if (e.handleBlock != currBlock) {
                 currBlock = e.handleBlock;
                 intfa.setBlock(e.handleBlock);
             }
             parseAttribs(&e);
-            intfa.addLWPolyline();
-            break; }*/
+            intfa.addLWPolyline(e);
+            break; }
         case 1: {
             DRW_Text e;
             ret = e.parseDwg(version, &buff);

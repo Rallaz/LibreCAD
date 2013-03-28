@@ -17,6 +17,7 @@
 //#include <deque>
 #include "drw_entities.h"
 #include "drw_objects.h"
+#include "drw_classes.h"
 #include "drw_interface.h"
 
 #ifdef DRWG_DBG
