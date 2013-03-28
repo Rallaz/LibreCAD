@@ -338,8 +338,26 @@ public:
     }
 
     virtual void applyExtrusion(){}
+    
+    //! interpret code in dxf reading process or dispatch to inherited class
     void parseCode(int code, dxfReader *reader);
 
+    //! first corner in WCS
+	const DRW_Coord & firstCorner()
+	{ return basePoint; }
+    //! second corner in WCS
+	const DRW_Coord & secondCorner()
+	{ return secPoint; }
+    //! third corner in WCS
+	const DRW_Coord & thirdCorner()
+	{ return thirdPoint; }
+    //! fourth corner in WCS
+	const DRW_Coord & fourthCorner()
+	{ return thirdPoint; }
+    //! edge visibility flags
+    EdgeFlags edgeFlags()
+    { return (EdgeFlags)invisibleflag; }
+   
 public:
     int invisibleflag;       /*!< invisible edge flag, code 70 */
 

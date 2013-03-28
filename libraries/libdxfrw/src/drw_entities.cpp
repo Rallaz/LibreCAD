@@ -728,6 +728,8 @@ void DRW_3Dface::parseCode(int code, dxfReader *reader){
         invisibleflag = reader->getInt32();
         break;
     default:
+        /* TNick: by doing this we accept extra codes for this entity
+         * like 39, 210, 220 that are not defined in the specifications */
         DRW_Trace::parseCode(code, reader);
         break;
     }
