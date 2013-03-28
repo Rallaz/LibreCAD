@@ -325,6 +325,13 @@ public:
 */
 class DRW_3Dface : public DRW_Trace {
 public:
+	enum EdgeFlags {
+	    FirstEdge = 0x01,
+	    SecodEdge = 0x02,
+	    ThirdEdge = 0x04,
+	    FourthEdge = 0x08
+	};
+
     DRW_3Dface() {
         eType = DRW::E3DFACE;
         invisibleflag = 0;
