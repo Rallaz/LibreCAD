@@ -315,7 +315,31 @@ public:
         eType = DRW::SOLID;
     }
 
+    //! interpret code in dxf reading process or dispatch to inherited class
     void parseCode(int code, dxfReader *reader);
+    
+    //! first corner (2D)
+	const DRW_Coord & firstCorner()
+	{ return basePoint; }
+    //! second corner (2D)
+	const DRW_Coord & secondCorner()
+	{ return secPoint; }
+    //! third corner (2D)
+	const DRW_Coord & thirdCorner()
+	{ return thirdPoint; }
+    //! fourth corner (2D)
+	const DRW_Coord & fourthCorner()
+	{ return thirdPoint; }
+    //! thickness
+	double thick()
+	{ return thickness; }
+    //! elevation
+	double elevation()
+	{ return basePoint.z; }
+    //! extrusion
+	const DRW_Coord & extrusion()
+	{ return extPoint; }
+
 };
 
 //! Class to handle 3dface entity
@@ -326,10 +350,12 @@ public:
 class DRW_3Dface : public DRW_Trace {
 public:
 	enum EdgeFlags {
+	    NoEdge = 0x00,
 	    FirstEdge = 0x01,
 	    SecodEdge = 0x02,
 	    ThirdEdge = 0x04,
-	    FourthEdge = 0x08
+	    FourthEdge = 0x08,
+	    AllEdges = 0x15
 	};
 
     DRW_3Dface() {

@@ -719,7 +719,16 @@ void DRW_Trace::parseCode(int code, dxfReader *reader){
 }
 
 void DRW_Solid::parseCode(int code, dxfReader *reader){
-        DRW_Trace::parseCode(code, reader);
+    /* TNick: the dxf specification indicates proprietary data
+     *
+     * 100	Subclass marker (AcDbModelerGeometry)
+     * 70	Modeler format version number (currently = 1)
+     * 1	Proprietary data (multiple lines < 255 characters each)
+     * 3	Additional lines of proprietary data (if previous group 1 string is greater than 255 characters) 
+     * 100	Subclass marker (AcDb3dSolid)
+     * 350	Soft-owner ID/handle to history object
+     */
+    DRW_Trace::parseCode(code, reader);
 }
 
 void DRW_3Dface::parseCode(int code, dxfReader *reader){
