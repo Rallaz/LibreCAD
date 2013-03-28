@@ -19,6 +19,7 @@
 #include "dxfreader.h"
 #include "dxfwriter.h"
 #include <assert.h>
+#include <string.h> //strcmp
 
 #ifdef DRW_DBG
 #include <iostream> //for debug

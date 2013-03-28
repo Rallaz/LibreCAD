@@ -61,6 +61,8 @@ namespace DRW {
         RAY,
         XLINE,
         VIEWPORT,
+        ATTDEF,
+        ATTRIB,
         UNKNOWN
     };
 
@@ -534,6 +536,12 @@ public:
             HMiddle,       /*!< middle = 4 (if VAlign==0) */
             HFit           /*!< fit into point = 5 (if VAlign==0) */
         };
+
+    //! Text generation flags
+    enum GenFlags {
+        Backward = 0x02, /**< mirrored in X */
+        UpsideDown = 0x04 /**< mirrored in Y */
+    };
 
     DRW_Text() {
         eType = DRW::TEXT;
@@ -1262,6 +1270,78 @@ public:
     double centerPY;          /*!< view center piont Y, code 22 */
 };
 
+//! Class to handle attribute definition entity
+/*!
+*  An attribute definition
+*  @author TNick
+*/
+class DRW_AttrDef : public DRW_Text {
+public:
+
+    //! flags for an attribute
+    enum Flags {
+        NoFlag = 0,             /*!< No flag is set */
+
+        Invisible = 0x01,       /*!< Attribute is invisible (does not appear).*/
+        Constant = 0x02,        /*!< This is a constant attribute.*/
+        Verification = 0x04,    /*!< Verification is required on input of this attribute.*/
+        Present = 0x08,         /*!< Attribute is preset (no prompt during insertion).*/
+
+        LockPosition = 0x10,    /*!< Locks the position of the attribute within the block reference, code 280 */
+        DuplicateRecord = 0x20, /*!< Duplicate record cloning flag (determines how to merge duplicate entries), code 280 */
+
+        BaseFlags = 0x15,       /*!< only attribute flags, code 70 */
+        AllFlags = 0x45         /*!< All flags are set */
+    };
+
+    DRW_AttrDef() {
+        eType = DRW::ATTDEF;
+        flg = 0;
+    }
+
+    //! interpret code in dxf reading process or dispatch to inherited class
+    void parseCode(int code, dxfReader *reader);
+    //! interpret dwg data (was already determined to be part of this object)
+    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf);
+
+    //! first align point in OCS
+    const DRW_Coord & firstAlignPoint() { return basePoint; }
+    //! second align point in OCS
+    const DRW_Coord & secAlignPoint() { return secPoint; }
+    //! text height
+    double textHeight() { return height; }
+    //! default value for this attribute
+    std::string defaultValue() { return text; }
+    //! text rotation
+    double rotation() { return angle; }
+    //! Relative X scale factor (width)
+    double xScale() { return widthscale; }
+    //! oblique angle
+    double obliqueAngle() { return oblique; }
+    //! name of the text style to use
+    std::string textStyle() { return style; }
+    //! text generation flags
+    GenFlags generationFlags() { return (GenFlags)textgen; }
+    //! horizontal alignment
+    HAlign horizontalAlignment() { return alignH; }
+    //! vertical alignment
+    VAlign verticalAlignment() { return alignV; }
+    //! extrusion
+    const DRW_Coord & extrusion() { return extPoint; }
+    //! prompt presented when a value for attribute is required
+    std::string promptText() { return prompt; }
+    //! the tag for this attribute
+    std::string tagText() { return tag; }
+    //! bit switches
+    Flags flags() { return (Flags)flg; }
+
+public:
+//    dwgHandle styleH;     /*!< handle for text style */
+    std::string prompt;     /*!< the prompt, code 3 */
+    std::string tag;        /*!< the tag, code 2 */
+    int flg;                /*!< the flags, code 70 */
+    /* Field length (optional; default = 0) (not currently used), code 73 */
+};
 
 #endif
 
