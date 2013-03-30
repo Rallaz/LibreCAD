@@ -25,6 +25,7 @@ include(../../common.pro)
 
 SOURCES += \
     src/libdxfrw.cpp \
+    src/drw_header.cpp \
     src/drw_entities.cpp \
     src/drw_objects.cpp \
     src/drw_textcodec.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
     src/libdxfrw.h \
     src/drw_base.h \
+    src/drw_header.h \
     src/drw_entities.h \
     src/drw_objects.h \
     src/drw_textcodec.h \

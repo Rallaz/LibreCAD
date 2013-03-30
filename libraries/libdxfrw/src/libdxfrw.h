@@ -14,6 +14,7 @@
 #define LIBDXFRW_H
 
 #include <string>
+#include "drw_header.h"
 #include "drw_entities.h"
 #include "drw_objects.h"
 #include "drw_interface.h"
