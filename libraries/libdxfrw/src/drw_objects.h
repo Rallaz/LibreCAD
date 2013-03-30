@@ -19,6 +19,7 @@
 #include <map>
 #include "drw_base.h"
 
+class dwgBuffer;
 class dxfReader;
 class dxfWriter;
 

@@ -200,6 +200,23 @@ private:
     string data;
 };
 
+//! Class to handle dwg handles
+/*!
+*  Class to handle dwg handles
+*  @author Rallaz
+*/
+class dwgHandle{
+public:
+    dwgHandle(){
+        code=0;
+        size=0;
+        ref=0;
+    }
+    ~dwgHandle(){}
+    duint8 code;
+    duint8 size;
+    duint32 ref;
+};
 
 //! Class to convert between line width and integer
 /*!
