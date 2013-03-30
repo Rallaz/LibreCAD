@@ -13,6 +13,7 @@
 #include "drw_classes.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
+#include "dwgbuffer.h"
 //#include "libdwgr.h"// for debug
 
 
