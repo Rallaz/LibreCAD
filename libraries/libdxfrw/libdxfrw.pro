@@ -11,7 +11,7 @@ CONFIG += static warn_on
 
 DESTDIR = ../../generated/lib
 
-VERSION = 0.5.0
+VERSION = 0.5.7
 
 DLL_NAME = dxfrw
 TARGET = $$DLL_NAME
@@ -21,7 +21,10 @@ GENERATED_DIR = ../../generated/lib/libdxfrw
 include(../../settings.pro)
 include(../../common.pro)
 
-# DEFINES += DRW_DBG
+DEFINES += DRWG_DBG
+contains(DEFINES, DRWG_DBG) {
+QT       += core
+}
 
 SOURCES += \
     src/libdxfrw.cpp \
